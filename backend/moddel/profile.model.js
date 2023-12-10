@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import profilepic from "../public/profilephoto.webp"
+
 const profileSchema = new mongoose.Schema({
     profilename: {
         type: String,
@@ -11,23 +11,25 @@ const profileSchema = new mongoose.Schema({
     },
     profilephoto: {
         type: String,
-        default: profilepic
     },
     posts: [{
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId, // Use mongoose.Schema.Types.ObjectId
         ref: "Post"
     }],
     followers: [{
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId, // Use mongoose.Schema.Types.ObjectId
         ref: "Follower"
     }],
     following: [{
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId, // Use mongoose.Schema.Types.ObjectId
         ref: "Following"
     }],
-    saved: [{
-        type: Schema.Types.ObjectId,
-        ref: "Saved"
-    }]
-})
-export const User = mongoose.model("Profile", profileSchema) 
+    // saved: [{
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: "Saved"
+    // }]
+});
+
+const Profile = mongoose.model("Profile", profileSchema);
+
+export default Profile;

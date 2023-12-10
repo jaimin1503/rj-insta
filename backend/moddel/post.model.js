@@ -5,19 +5,20 @@ const postSchema = new mongoose.Schema({
         type: String,
     },
     like: [{
-        type: Schema.Types.ObjectId,
+        type:mongoose.Schema.Types.ObjectId,
         ref: "Like"
     }],
     comment: [{
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Comment"
     }],
     user: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
     
 },{
     timestamps:true
 })
-export const User = mongoose.model("Post", postSchema) 
+const Post = mongoose.model("Post", postSchema) 
+export default Post
