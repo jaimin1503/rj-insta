@@ -3,11 +3,12 @@ const followingSchema = new mongoose.Schema({
     
     
     user: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
 
     
     
 })
-export const User = mongoose.model("Following", followingSchema) 
+ const Following = mongoose.model("Following", followingSchema) 
+ export default Following

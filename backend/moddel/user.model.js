@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 const userSchema=new mongoose.Schema({
-    firstname:{
+    firstName:{
         type:String,
         required:true,
         trim:true
     },
-    lastname:{
+    lastName:{
         type:String,
         required:true,
         trim:true
@@ -21,8 +21,9 @@ const userSchema=new mongoose.Schema({
         required:true,
     },
     profile:[{
-        type:Schema.Types.ObjectId,
+        type:mongoose.Schema.Types.ObjectId,
         ref:"Profile"
     }]
 })
-export const User=mongoose.model("User",userSchema) 
+const  User=mongoose.model("User",userSchema) 
+export default User
