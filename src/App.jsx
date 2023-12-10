@@ -1,5 +1,4 @@
 function App() {
-  return <div className=" text-xl">Instagram hello</div>;
+  return <div className=" text-xl">Hello People!</div>;
 }
-
 export default App;
