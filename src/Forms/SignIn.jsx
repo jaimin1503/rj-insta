@@ -42,6 +42,8 @@ const SignIn = () => {
     console.log({
       email: data.get("email"),
       password: data.get("password"),
+      remember: data.get("remember"),
+
     });
   };
 
@@ -92,6 +94,7 @@ const SignIn = () => {
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
+              name="remember"
             />
             <Button
               type="submit"
