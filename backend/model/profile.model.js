@@ -1,33 +1,39 @@
 import mongoose from "mongoose";
 
 const profileSchema = new mongoose.Schema({
-    profilename: {
-        type: String,
-        required: true,
-        trim: true
+  profilename: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  bio: {
+    type: String,
+  },
+  profilephoto: {
+    type: String,
+  },
+  posts: [
+    {
+      type: mongoose.Schema.Types.ObjectId, // Use mongoose.Schema.Types.ObjectId
+      ref: "Post",
     },
-    bio: {
-        type: String,
+  ],
+  followers: [
+    {
+      type: mongoose.Schema.Types.ObjectId, // Use mongoose.Schema.Types.ObjectId
+      ref: "Follower",
     },
-    profilephoto: {
-        type: String,
+  ],
+  following: [
+    {
+      type: mongoose.Schema.Types.ObjectId, // Use mongoose.Schema.Types.ObjectId
+      ref: "Following",
     },
-    posts: [{
-        type: mongoose.Schema.Types.ObjectId, // Use mongoose.Schema.Types.ObjectId
-        ref: "Post"
-    }],
-    followers: [{
-        type: mongoose.Schema.Types.ObjectId, // Use mongoose.Schema.Types.ObjectId
-        ref: "Follower"
-    }],
-    following: [{
-        type: mongoose.Schema.Types.ObjectId, // Use mongoose.Schema.Types.ObjectId
-        ref: "Following"
-    }],
-    // saved: [{
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: "Saved"
-    // }]
+  ],
+  // saved: [{
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: "Saved"
+  // }]
 });
 
 const Profile = mongoose.model("Profile", profileSchema);
