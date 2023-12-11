@@ -5,55 +5,55 @@ const UserPosts = () => {
   return (
     <div>
       <div className="posts flex flex-wrap">
-        <div class="w-1/3 p-[2px]">
-          <div class="aspect-square">
+        <div className="w-1/3 p-[2px]">
+          <div className="aspect-square">
             <img
-              class="w-full h-full object-cover"
+              className="w-full h-full object-cover"
               src={jatu}
               alt="Your Image"
             />
           </div>
         </div>
-        <div class="w-1/3 p-[2px]">
-          <div class="aspect-square">
+        <div className="w-1/3 p-[2px]">
+          <div className="aspect-square">
             <img
-              class="w-full h-full object-cover"
+              className="w-full h-full object-cover"
               src={jatu}
               alt="Your Image"
             />
           </div>
         </div>
-        <div class="w-1/3 p-[2px]">
-          <div class="aspect-square">
+        <div className="w-1/3 p-[2px]">
+          <div className="aspect-square">
             <img
-              class="w-full h-full object-cover"
+              className="w-full h-full object-cover"
               src={jatu}
               alt="Your Image"
             />
           </div>
         </div>
-        <div class="w-1/3 p-[2px]">
-          <div class="aspect-square">
+        <div className="w-1/3 p-[2px]">
+          <div className="aspect-square">
             <img
-              class="w-full h-full object-cover"
+              className="w-full h-full object-cover"
               src={jatu}
               alt="Your Image"
             />
           </div>
         </div>
-        <div class="w-1/3 p-[2px]">
-          <div class="aspect-square">
+        <div className="w-1/3 p-[2px]">
+          <div className="aspect-square">
             <img
-              class="w-full h-full object-cover"
+              className="w-full h-full object-cover"
               src={jatu}
               alt="Your Image"
             />
           </div>
         </div>
-        <div class="w-1/3 p-[2px]">
-          <div class="aspect-square">
+        <div className="w-1/3 p-[2px]">
+          <div className="aspect-square">
             <img
-              class="w-full h-full object-cover"
+              className="w-full h-full object-cover"
               src={jatu}
               alt="Your Image"
             />

@@ -52,7 +52,7 @@ export default function SignUp() {
         navigate("/");
       })
       .catch((error) => {
-        alert("Arror occured");
+        alert("Error occurred");
         console.log(error);
       });
   };

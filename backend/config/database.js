@@ -6,7 +6,7 @@ const mongo_url = process.env.MONGO_URL;
 
 export function databaseconnection() {
   mongoose
-    .connect(mongo_url)
+    .connect("mongodb://127.0.0.1:27017/myapp")
     .then(() => {
       console.log("connected to database");
     })
