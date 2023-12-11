@@ -1,5 +1,5 @@
-import User from "../moddel/user.model.js"
-import Profile from "../moddel/profile.model.js"
+import User from "../model/user.model.js"
+import Profile from "../model/profile.model.js"
 import bcrypt from "bcrypt"
 export const signup=async (req,res)=>{
     try{
