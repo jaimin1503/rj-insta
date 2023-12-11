@@ -8,10 +8,24 @@ export const signup=async (req,res)=>{
             !lastName||
             !email||
             !password){
-                res.status(400).json({
+               return  res.status(400).json({
                     success:false,
-                    message:`please fill all the details`                })
+                    message:`please fill all the details`               
+                 })
             }
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!email || !emailRegex.test(email)) {
+            return  res.status(400).json({
+                success:false,
+                message:`your email address in not valide please provide valide email`                
+            })
+          }
+          if(password.length<6){
+            return res.status(400).json({
+                success:false,
+                message:"password must be at least 6 charcters"
+            })
+          }
         const userexist=await User.findOne({email});
         console.log(userexist);
         if(userexist){
