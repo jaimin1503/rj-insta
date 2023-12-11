@@ -53,13 +53,13 @@ const Profile = () => {
       <div className="center flex justify-center">
         <div className="content_types flex w-full justify-around sm:justify-around sm:w-full items-center md:w-2/4">
           <div className="posts px-10">
-            <Grid stroke="gray" />
+            <Grid />
           </div>
           <div className="videos px-10">
             <Video />
           </div>
           <div className="saved px-10">
-            <Saved stroke="gray" />
+            <Saved />
           </div>
         </div>
       </div>

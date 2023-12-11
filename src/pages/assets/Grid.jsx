@@ -1,8 +1,14 @@
-const Grid = (props) => {
+import { useState } from "react";
+const Grid = () => {
+  const [isActive, setIsActive] = useState(false);
+
+  const toggleActive = () => {
+    setIsActive(!isActive);
+  };
   return (
-    <div>
+    <div onClick={toggleActive}>
       <svg
-        fill={props.stroke}
+        fill={isActive ? "blue" : "gray"}
         className=" h-6 w-6 cursor-pointer"
         viewBox="0 0 32 32"
         version="1.1"
