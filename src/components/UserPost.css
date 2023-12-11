@@ -1,0 +1,15 @@
+/* CSS file or style block */
+*{
+	box-sizing: border-box;
+}
+.aspect-square {
+	position: relative;
+	width: 100%;
+	/* Creates a square with respect to the width */
+  }
+  
+  .aspect-square::before {
+	content: '';
+	display: block; /* 1:1 Aspect Ratio (Square) */
+  }
+  

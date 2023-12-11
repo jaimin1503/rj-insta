@@ -3,6 +3,7 @@ import SetttingsLogo from "./assets/Settings.svg";
 import Saved from "./assets/Saved";
 import Video from "./assets/Video.jsx";
 import Grid from "./assets/Grid.jsx";
+import UserPosts from "../components/UserPosts.jsx";
 
 const Profile = () => {
   return (
@@ -62,6 +63,9 @@ const Profile = () => {
             <Saved />
           </div>
         </div>
+      </div>
+      <div className="posts my-5">
+        <UserPosts />
       </div>
     </div>
   );
