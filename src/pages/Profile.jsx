@@ -1,6 +1,8 @@
 import default_pic from "./assets/profilephoto.webp";
-import SetttingsLogo from "./assets/settings.svg";
-import GridLogo from "./assets/grid.svg"
+import SetttingsLogo from "./assets/Settings.svg";
+import Saved from "./assets/Saved";
+import Video from "./assets/Video.jsx";
+import Grid from "./assets/Grid.jsx";
 
 const Profile = () => {
   return (
@@ -38,16 +40,29 @@ const Profile = () => {
           <h2>20</h2>
           <h3>Posts</h3>
         </div>
-        <div className="posts px-10 text-center">
+        <div className="followers px-10 text-center">
           <h2>202</h2>
           <h3>Followers</h3>
         </div>
-        <div className="posts px-10 text-center">
+        <div className="following px-10 text-center">
           <h2>203</h2>
           <h3>Following</h3>
         </div>
       </div>
       <hr className="my-5" />
+      <div className="center flex justify-center">
+        <div className="content_types flex w-full justify-around sm:justify-around sm:w-full items-center md:w-2/4">
+          <div className="posts px-10">
+            <Grid stroke="gray" />
+          </div>
+          <div className="videos px-10">
+            <Video />
+          </div>
+          <div className="saved px-10">
+            <Saved stroke="gray" />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
