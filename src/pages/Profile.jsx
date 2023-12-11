@@ -1,11 +1,17 @@
 import default_pic from "./assets/profilephoto.webp";
-import SetttingsLogo from "./assets/Settings.svg";
+import SettingsLogo from "./assets/Settings.svg";
 import Saved from "./assets/Saved";
 import Video from "./assets/Video.jsx";
 import Grid from "./assets/Grid.jsx";
 import UserPosts from "../components/UserPosts.jsx";
+import { useState } from "react";
 
 const Profile = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const handleVideoClick = (index) => {
+    setActiveIndex(index);
+  };
   return (
     <div>
       <div className="profile_row1 flex p-5">
@@ -21,7 +27,7 @@ const Profile = () => {
             <h2 className=" pr-2">Jaimin_15.3</h2>
             <img
               className=" h-8 w-8 cursor-pointer hover:scale-105"
-              src={SetttingsLogo}
+              src={SettingsLogo}
             />
           </div>
           <div className="edit_profile">
@@ -54,13 +60,22 @@ const Profile = () => {
       <div className="center flex justify-center">
         <div className="content_types flex w-full justify-around sm:justify-around sm:w-full items-center md:w-2/4">
           <div className="posts px-10">
-            <Grid />
+            <Grid
+              isActive={activeIndex === 0}
+              onClick={() => handleVideoClick(0)}
+            />
           </div>
           <div className="videos px-10">
-            <Video />
+            <Video
+              isActive={activeIndex === 1}
+              onClick={() => handleVideoClick(1)}
+            />
           </div>
           <div className="saved px-10">
-            <Saved />
+            <Saved
+              isActive={activeIndex === 2}
+              onClick={() => handleVideoClick(2)}
+            />
           </div>
         </div>
       </div>

@@ -1,15 +1,9 @@
-import { useState } from "react";
-const Grid = () => {
-  const [isActive, setIsActive] = useState(false);
-
-  const toggleActive = () => {
-    setIsActive(!isActive);
-  };
+const Grid = ({ isActive, onClick }) => {
   return (
-    <div onClick={toggleActive}>
+    <div onClick={onClick}>
       <svg
         fill={isActive ? "blue" : "gray"}
-        className=" h-6 w-6 cursor-pointer"
+        className={`h-6 w-6 cursor-pointer`}
         viewBox="0 0 32 32"
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"

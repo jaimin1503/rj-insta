@@ -1,15 +1,8 @@
-import { useState } from "react";
-
-const Video = () => {
-  const [isActive, setIsActive] = useState(false);
-
-  const toggleActive = () => {
-    setIsActive(!isActive);
-  };
+const Video = ({ isActive, onClick }) => {
   return (
-    <div onClick={toggleActive}>
+    <div onClick={onClick}>
       <svg
-        className=" h-6 w-6 cursor-pointer"
+        className={`h-6 w-6 cursor-pointer`}
         width="800px"
         height="800px"
         viewBox="0 0 24 24"

@@ -1,11 +1,10 @@
 import express from "express";
-import cookieParser from "cookie-parser"
+import cookieParser from "cookie-parser";
 import { databaseconnection } from "./config/database.js";
 import dotenv from "dotenv";
 import user from "./routers/user.js";
 dotenv.config();
 import cors from "cors";
-// import cookieParser from "cookie-parser";
 
 databaseconnection();
 const app = express();
