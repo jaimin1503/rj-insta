@@ -1,4 +1,6 @@
 import default_pic from "./assets/profilephoto.webp";
+import SetttingsLogo from "./assets/settings.svg";
+import GridLogo from "./assets/grid.svg"
 
 const Profile = () => {
   return (
@@ -12,9 +14,12 @@ const Profile = () => {
           />
         </div>
         <div className="profile_info flex flex-col justify-center">
-          <div className="user_name flex my-2">
+          <div className="user_name flex my-2 items-center">
             <h2 className=" pr-2">Jaimin_15.3</h2>
-            <h2>SL</h2>
+            <img
+              className=" h-8 w-8 cursor-pointer hover:scale-105"
+              src={SetttingsLogo}
+            />
           </div>
           <div className="edit_profile">
             <button className=" py-2 px-5 rounded-lg bg-gray-300 cursor-pointer hover:bg-gray-400">
@@ -29,19 +34,20 @@ const Profile = () => {
       </div>
       <hr className="my-5" />
       <div className="states flex justify-center">
-        <div className="posts px-10">
+        <div className="posts px-10 text-center">
           <h2>20</h2>
           <h3>Posts</h3>
         </div>
-        <div className="posts px-10">
+        <div className="posts px-10 text-center">
           <h2>202</h2>
           <h3>Followers</h3>
         </div>
-        <div className="posts px-10">
+        <div className="posts px-10 text-center">
           <h2>203</h2>
           <h3>Following</h3>
         </div>
       </div>
+      <hr className="my-5" />
     </div>
   );
 };
