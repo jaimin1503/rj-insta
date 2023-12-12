@@ -34,7 +34,8 @@ function SignIn() {
     try {
       const response = await axios.post(
         "http://localhost:5555/user/login",
-        formData
+        formData,
+        { withCredentials: true }
       );
       if (response.status === 200) {
         navigate("/home");

@@ -1,31 +1,17 @@
-
 import User from "../model/user.model.js";
 export const getuser = async (req, res) => {
   try {
     const userdetail = req.user;
+    console.log("inside a getuser and user pased by auth", userdetail);
+    const email = userdetail.email;
     if (userdetail) {
-      const user = await User.findById(userdetail.id)
-        .populate({
-          path: "profile",
-          populate: {
-            path: "posts",
-            model: "Post",
-          },
-        })
-        .populate({
-          path: "profile",
-          populate: {
-            path: "followers",
-            model: "Follower",
-          },
-        })
-        .populate({
-          path: "profile",
-          populate: {
-            path: "following",
-            model: "Following",
-          },
-        });
+      const user = await User.findOne({ email }).populate({
+        path: "profile",
+        populate: {
+          path: "posts",
+          model: "Post",
+        },
+      });
 
       return res.status(200).json({
         success: true,
@@ -41,7 +27,7 @@ export const getuser = async (req, res) => {
   } catch (error) {
     return res.status(400).json({
       success: false,
-      message: `something want wrong and error is ${error}`,
+      message: `something went wrong`,
     });
   }
 };

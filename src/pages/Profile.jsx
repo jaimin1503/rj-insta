@@ -4,11 +4,22 @@ import Saved from "./assets/Saved";
 import Video from "./assets/Video.jsx";
 import Grid from "./assets/Grid.jsx";
 import UserPosts from "../components/UserPosts.jsx";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Profile = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:5555/user/getuser")
+  //     .then((res) => {
+  //       console.log(res.data.user);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }, []);
 
   const handleVideoClick = (index) => {
     setActiveIndex(index);

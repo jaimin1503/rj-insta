@@ -47,7 +47,9 @@ export default function SignUp() {
       data[key] = value;
     });
     axios
-      .post("http://localhost:5555/user/signup", data)
+      .post("http://localhost:5555/user/signup", data, {
+        withCredentials: true,
+      })
       .then(() => {
         navigate("/");
       })
