@@ -5,6 +5,7 @@ import Video from "./assets/Video.jsx";
 import Grid from "./assets/Grid.jsx";
 import UserPosts from "../components/UserPosts.jsx";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -31,9 +32,11 @@ const Profile = () => {
             />
           </div>
           <div className="edit_profile">
-            <button className=" py-2 px-5 rounded-lg bg-gray-300 cursor-pointer hover:bg-gray-400">
-              Edit profile
-            </button>
+            <Link to="/editprofile">
+              <button className=" py-2 px-5 rounded-lg bg-gray-300 cursor-pointer hover:bg-gray-400">
+                Edit profile
+              </button>
+            </Link>
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@ import SignUp from "./Forms/SignUp";
 import { Route, Routes } from "react-router-dom";
 import { Home } from "./pages/Home";
 import Profile from "./pages/Profile";
-import UserPosts from "./components/userPosts";
+import EditProfile from "./Forms/EditProfile";
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
         <Route path="/home" element={<Home />}></Route>
         <Route path="/signup" element={<SignUp />}></Route>
         <Route path="/profile" element={<Profile />}></Route>
-        <Route path="/userposts" element={<UserPosts />}></Route>
+        <Route path="/editprofile" element={<EditProfile />}></Route>
       </Routes>
     </div>
   );
