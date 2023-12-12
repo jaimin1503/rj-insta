@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import { Home } from "./pages/Home";
 import Profile from "./pages/Profile";
 import EditProfile from "./Forms/EditProfile";
+import ViewPost from "./components/ViewPost";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/signup" element={<SignUp />}></Route>
         <Route path="/profile" element={<Profile />}></Route>
         <Route path="/editprofile" element={<EditProfile />}></Route>
+        <Route path="/viewpost/:id" element={<ViewPost />}></Route>
       </Routes>
     </div>
   );
