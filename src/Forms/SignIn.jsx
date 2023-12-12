@@ -38,7 +38,7 @@ function SignIn() {
         { withCredentials: true }
       );
       if (response.status === 200) {
-        navigate("/home");
+        navigate("/profile");
       } else {
         throw new Error("Unexpected response from server");
       }

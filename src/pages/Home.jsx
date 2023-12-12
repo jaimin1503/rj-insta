@@ -6,7 +6,7 @@ export const Home = () => {
     axios
       .get("http://localhost:5555/user/getuser")
       .then((res) => {
-        console.log(res.data.user);
+        console.log(res.user);
       })
       .catch((error) => {
         console.log(error);

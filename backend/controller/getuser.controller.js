@@ -2,7 +2,7 @@ import User from "../model/user.model.js";
 export const getuser = async (req, res) => {
   try {
     const userdetail = req.user;
-    console.log("inside a getuser and user pased by auth", userdetail);
+    // console.log("inside a getuser and user pased by auth");
     const email = userdetail.email;
     if (userdetail) {
       const user = await User.findOne({ email }).populate({
@@ -12,6 +12,8 @@ export const getuser = async (req, res) => {
           model: "Post",
         },
       });
+
+      user.password = undefined;
 
       return res.status(200).json({
         success: true,

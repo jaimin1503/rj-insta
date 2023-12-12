@@ -26,25 +26,28 @@ const EditProfile = () => {
         </div>
       </div>
       <div className="form_area">
-        <form class="max-w-md mx-auto p-6 border border-gray-500 shadow-md rounded-md">
-          <div class="mb-4">
-            <label for="name" class="block text-gray-700 font-bold mb-2">
+        <form className="max-w-md mx-auto p-6 border border-gray-500 shadow-md rounded-md">
+          <div className="mb-4">
+            <label
+              htmlhtmlFor="name"
+              className="block text-gray-700 font-bold mb-2"
+            >
               Display name
             </label>
             <input
               id="name"
-              class="border border-gray-300 p-2 rounded-md w-full focus:outline-none focus:border-blue-500"
+              className="border border-gray-300 p-2 rounded-md w-full focus:outline-none focus:border-blue-500"
               type="text"
             />
           </div>
-          <div class="mb-4">
-            <label for="bio" class="block text-gray-700 font-bold mb-2">
+          <div className="mb-4">
+            <label htmlFor="bio" className="block text-gray-700 font-bold mb-2">
               Bio
             </label>
             <textarea
               id="bio"
               name="bio"
-              class="border border-gray-300 p-2 rounded-md w-full focus:outline-none focus:border-blue-500"
+              className="border border-gray-300 p-2 rounded-md w-full focus:outline-none focus:border-blue-500"
               rows="4"
             ></textarea>
           </div>
