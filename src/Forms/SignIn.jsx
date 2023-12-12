@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -15,50 +15,40 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="#">
-        rj-insta
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
-// TODO remove, this demo shouldn't need to reset the theme.
-
-const defaultTheme = createTheme();
-
-const SignIn = () => {
+function SignIn() {
   const navigate = useNavigate();
-  const handleSubmit = (event) => {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    remember: false,
+  });
+
+  const handleChange = (event) => {
+    const { name, value, checked, type } = event.target;
+    const newValue = type === "checkbox" ? checked : value;
+    setFormData({ ...formData, [name]: newValue });
+  };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const data = {};
-    formData.forEach((value, key) => {
-      data[key] = value;
-    });
-    axios
-      .post("http://localhost:5555/user/login", data)
-      .then(() => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5555/user/login",
+        formData
+      );
+      if (response.status === 200) {
         navigate("/home");
-      })
-      .catch((error) => {
-        alert("Error occurred");
-        console.log(error);
-      });
+      } else {
+        throw new Error("Unexpected response from server");
+      }
+    } catch (error) {
+      alert("Error occurred. Please try again.");
+      console.error("Login error:", error);
+    }
   };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <ThemeProvider theme={createTheme()}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -90,6 +80,8 @@ const SignIn = () => {
               name="email"
               autoComplete="email"
               autoFocus
+              value={formData.email}
+              onChange={handleChange}
             />
             <TextField
               margin="normal"
@@ -100,11 +92,19 @@ const SignIn = () => {
               type="password"
               id="password"
               autoComplete="current-password"
+              value={formData.password}
+              onChange={handleChange}
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              control={
+                <Checkbox
+                  checked={formData.remember}
+                  onChange={handleChange}
+                  name="remember"
+                  color="primary"
+                />
+              }
               label="Remember me"
-              name="remember"
             />
             <Button
               type="submit"
@@ -128,9 +128,17 @@ const SignIn = () => {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
+        <Typography variant="body2" color="text.secondary" align="center">
+          {"Copyright © "}
+          <Link color="inherit" href="#">
+            rj-insta
+          </Link>{" "}
+          {new Date().getFullYear()}
+          {"."}
+        </Typography>
       </Container>
     </ThemeProvider>
   );
-};
+}
+
 export default SignIn;
