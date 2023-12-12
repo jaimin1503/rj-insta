@@ -1,11 +1,10 @@
 import User from "../model/user.model.js"
-export const getuser=async (req,res)=>{
+export const getuserbyid=async (req,res)=>{
     try{
-        const userdetail=req.user
-        console.log("inside a getuser and user pased by auth",userdetail)
-        const email=userdetail.email
-        if(userdetail){
-            const user = await User.findOne({email})
+        const userid=req.params.userid
+        console.log("userid is",userid)
+        if(userid){
+            const user = await User.findById(userid)
             .populate({
               path: 'profile',
               populate: {
