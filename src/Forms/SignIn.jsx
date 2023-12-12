@@ -12,6 +12,8 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -36,15 +38,23 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 const SignIn = () => {
+  const navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-      remember: data.get("remember"),
-
+    const formData = new FormData(event.currentTarget);
+    const data = {};
+    formData.forEach((value, key) => {
+      data[key] = value;
     });
+    axios
+      .post("http://localhost:5555/user/login", data)
+      .then(() => {
+        navigate("/home");
+      })
+      .catch((error) => {
+        alert("Error occurred");
+        console.log(error);
+      });
   };
 
   return (
