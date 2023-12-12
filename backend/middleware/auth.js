@@ -14,7 +14,14 @@ export const auth = (req, res, next) => {
 
     // verify the token
     try {
-      const decode = jwt.verify(token, process.env.JWT_SECRET);
+        const token = req.body.token||req.cookies.token;
+        console.log("inside auth and token is",token);
+        if (!token) {
+            return res.status(401).json({
+                success: false,
+                message: "token missing"
+            })
+        }
 
       console.log(decode);
 
