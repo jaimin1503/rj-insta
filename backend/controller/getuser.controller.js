@@ -2,8 +2,10 @@ import User from "../model/user.model.js"
 export const getuser=async (req,res)=>{
     try{
         const userdetail=req.user
+        console.log("inside a getuser and user pased by auth",userdetail)
+        const email=userdetail.email
         if(userdetail){
-            const user = await User.findById(userdetail.id)
+            const user = await User.findOne({email})
             .populate({
               path: 'profile',
               populate: {
@@ -11,20 +13,6 @@ export const getuser=async (req,res)=>{
                 model: 'Post',
               },
             })
-            .populate({
-              path: 'profile',
-              populate: {
-                path: 'followers',
-                model: 'Follower',
-              },
-            })
-            .populate({
-              path: 'profile',
-              populate: {
-                path: 'following',
-                model: 'Following',
-              },
-            });
 
 
             return res.status(200).json({

@@ -4,8 +4,8 @@ export const getallpost=async (req,res)=>{
         const userdetail=req.user
         if(userdetail){
             const posts = await Post.find({})
-            .populate('like')  
-            .populate('comment');
+            .populate('likes')  
+            .populate('comments');
 
 
             return res.status(200).json({

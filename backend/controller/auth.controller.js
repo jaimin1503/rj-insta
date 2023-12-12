@@ -15,7 +15,7 @@ export const signup = async (req, res) => {
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         if (!email || !emailRegex.test(email)) {
             return res.status(400).json({
-                success:falsse,
+                success:false,
                 message:"please provide a valide email "
              });
           }
@@ -113,7 +113,7 @@ export const login = async (req, res) => {
         if (user) {
             if (await bcrypt.compare(password, user.password)) {
                 const payload = {
-                    userId: user._id,
+                    userid: user._id,
                     email: user.email,
                     username: user.username,
                 }

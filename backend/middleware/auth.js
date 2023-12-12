@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 dotenv.config();
 export const auth = (req, res, next) => {
     try {
-        const token = req.body.token||req.cookie.token;
+        const token = req.body.token||req.cookies.token;
         console.log("inside auth and token is",token);
         if (!token) {
             return res.status(401).json({

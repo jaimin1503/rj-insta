@@ -10,7 +10,7 @@ import cors from "cors";
 databaseconnection();
 const app = express();
 app.use(express.json());
-app.use(cookieParser);
+app.use(cookieParser());
 app.use(
   cors({
     origin: ["http://localhost:5173"],
@@ -23,7 +23,7 @@ const port = process.env.PORT;
 app.listen(port, () => {
   console.log(`app is listing on port ${port}`);
 });
-app.use(express.json());
+// app.use(express.json());
 app.use("/user", user);
 app.get("/", (req, res) => {
   res.send("Hello World!");
