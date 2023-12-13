@@ -11,7 +11,7 @@ import { auth } from "../middleware/auth.js";
 import { likePost } from "../controller/like.controller.js";
 import { commentpost } from "../controller/comment.controller.js";
 import { follow } from "../controller/folllower.controller.js";
-
+import {getlikepost} from "../controller/getlikepost.controller.js"
 router.post("/signup", signup);
 router.post("/login", login);
 router.get("/getuser", auth, getuser);
@@ -20,7 +20,7 @@ router.post("/createpost", auth, createpost);
 router.get("/getallpost", auth, getallpost);
 router.get("/getPostByid/:postid", auth, getPostByid);
 router.post("/likepost/:postid", auth, likePost);
-// router.post("/unlikepost/:postid", auth, unlikePost);
+router.get("/getlikepost/:postid", auth, getlikepost);
 router.post("/commentpost/:postid", auth, commentpost);
 router.post("/follow/:followid", auth, follow);
 export default router;
