@@ -1,16 +1,14 @@
-import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import jatu from "./assets/jatuu.jpg";
 import Heart from "./assets/Heart";
 import Comment from "./assets/Comment";
 
-const ViewPost = () => {
-  const { id } = useParams();
+const ViewPost = ({ postId }) => {
   const [post, setPost] = useState("");
   useEffect(() => {
     axios
-      .get(`http://localhost:5555/user/getPostByid/${id}`, {
+      .get(`http://localhost:5555/user/getPostByid/${postId}`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -19,10 +17,10 @@ const ViewPost = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, [id]);
+  }, [postId]);
   return (
     <div>
-      <div className="card rounded-lg bg-gray-800 mx-auto max-w-sm md:max-w-md">
+      <div className="card rounded-lg bg-gray-100 mx-auto">
         <div className="user_info flex p-5">
           <div className="profile_photo mr-5">
             <img
@@ -33,14 +31,14 @@ const ViewPost = () => {
           </div>
           <div className="profile_info flex flex-col justify-center">
             <div className="user_name flex items-center">
-              <h2 className=" pr-2 text-gray-100">Jaimin</h2>
+              <h2 className=" pr-2 text-gray-900">Jaimin</h2>
             </div>
             <div className="location">
-              <p className=" text-gray-300 text-sm">Location..</p>
+              <p className=" text-gray-600 text-sm">Location..</p>
             </div>
           </div>
         </div>
-        <div className="image">
+        <div className="image w-[350px] md:w-[400px]">
           <img
             className=" object-cover h-[400px] md:h-[450px] w-full"
             src={post}

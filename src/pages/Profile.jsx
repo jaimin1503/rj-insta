@@ -15,7 +15,6 @@ const Profile = () => {
     axios
       .get("http://localhost:5555/user/getuser", { withCredentials: true })
       .then((res) => {
-        console.log(res.data.user);
         setUser(res.data.user);
       })
       .catch((error) => {

@@ -1,27 +1,67 @@
-import jatu from "./assets/jatuu.jpg";
-import "./UserPost.css";
-import { Link } from "react-router-dom";
+import { useState, useRef, useEffect } from "react";
+import ViewPost from "./ViewPost";
 
 const UserPosts = ({ posts }) => {
-  // console.log(posts[0][0])
+  const [showComponent, setShowComponent] = useState(false);
+  const componentRef = useRef(null);
+  const [postId, setPostId] = useState(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        componentRef.current &&
+        !componentRef.current.contains(event.target)
+      ) {
+        setShowComponent(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const handlePostClick = (postId) => {
+    {
+      !showComponent ? setShowComponent(true) : setShowComponent(false);
+    }
+    setPostId(postId);
+  };
+
   return (
     <div>
       <div className="posts flex flex-wrap">
         {posts.map((post, index) => (
           <div key={index} className="w-1/3 p-[2px]">
             <div className="aspect-square">
-              <Link to={`/viewpost/${post._id}`}>
-                <img
-                  className="w-full h-full object-cover"
-                  src={post.posturl}
-                  alt="Your Image"
-                />
-              </Link>
+              <img
+                onClick={() => handlePostClick(post._id)}
+                className="w-full h-full object-cover"
+                src={post.posturl}
+                alt="Your Image"
+              />
             </div>
           </div>
         ))}
       </div>
+      {showComponent && (
+        <div
+          className=" rounded-lg"
+          ref={componentRef}
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            backgroundColor: "white",
+            boxShadow: "0 2px 5px rgba(0, 0, 0, 0.2)",
+          }}
+        >
+          <ViewPost postId={postId} />
+        </div>
+      )}
     </div>
   );
 };
+
 export default UserPosts;
