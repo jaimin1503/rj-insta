@@ -18,6 +18,13 @@ const ViewPost = ({ postId }) => {
         console.log(error);
       });
   }, [postId]);
+
+  const [liked, setLinked] = useState(false);
+
+  const likeClick = () => {
+    setLinked(!liked);
+  };
+
   return (
     <div>
       <div className="card rounded-lg bg-gray-100 mx-auto">
@@ -47,8 +54,8 @@ const ViewPost = ({ postId }) => {
         </div>
         <div className="postinfo">
           <div className="likes-comments flex">
-            <div className="p-2 cursor-pointer ml-2">
-              <Heart />
+            <div onClick={likeClick} className="p-2 cursor-pointer ml-2">
+              <Heart liked={liked} />
             </div>
             <div className="p-2 cursor-pointer">
               <Comment />

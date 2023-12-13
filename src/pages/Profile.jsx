@@ -31,7 +31,7 @@ const Profile = () => {
       <div className="profile_row1 flex p-5">
         <div className="profile_photo mr-5">
           <img
-            className=" rounded-full object-cover border-2 sm:w-[20vw] h-[20vw] md:w-[10vw] md:h-[10vw] "
+            className=" cursor-pointer rounded-full object-cover border-2 sm:w-[20vw] h-[20vw] md:w-[10vw] md:h-[10vw] "
             src={default_pic}
             alt="Profile_Pic"
           />
