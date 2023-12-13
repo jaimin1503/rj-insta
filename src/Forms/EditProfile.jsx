@@ -1,14 +1,18 @@
+import axios from "axios";
 import jatuu from "./assets/jatuu.jpg";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const EditProfile = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [url, setUrl] = useState("");
   const [image, setImage] = useState(null);
+  const [isDisabled, setIsDisabled] = useState(true);
   const [formData, setFormData] = useState({
-    name: "",
+    profilename: "",
     bio: "",
   });
+  const navigate = useNavigate();
 
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
@@ -22,6 +26,7 @@ const EditProfile = () => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setImage(file);
+    setIsDisabled(false);
   };
 
   const handleImageUpload = async () => {
@@ -42,8 +47,6 @@ const EditProfile = () => {
       if (!response.ok) {
         throw new Error(`Image upload failed with status: ${response.status}`);
       }
-
-      handleSubmit();
       const responseData = await response.json();
       setUrl(responseData.url);
     } catch (error) {
@@ -60,9 +63,21 @@ const EditProfile = () => {
   };
 
   const handleSubmit = () => {
-    console.log(formData);
+    axios
+      .put(
+        "http://localhost:5555/user/editprofile",
+        { url, formData },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        console.log(res.data.message);
+        navigate("/profile");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
-
+  console.log(url);
   return (
     <div
       onClick={isVisible ? toggleVisibility : null}
@@ -104,6 +119,7 @@ const EditProfile = () => {
                     onChange={handleImageChange}
                     style={{ display: "none" }}
                     id="profileImageInput"
+                    name="profilephoto"
                   />
                   <label className="text-blue-600" htmlFor="profileImageInput">
                     Update Profile Picture
@@ -116,6 +132,19 @@ const EditProfile = () => {
             </div>
           )}
         </div>
+        <div className="upload_button ml-2">
+          <button
+            disabled={isDisabled}
+            onClick={handleImageUpload}
+            className={
+              !isDisabled
+                ? "py-2 px-5 bg-blue-500 rounded-lg cursor-pointer"
+                : "py-2 px-5 bg-gray-500 rounded-lg"
+            }
+          >
+            Upload Photo
+          </button>
+        </div>
       </div>
       <div className="form_area">
         <form
@@ -124,18 +153,18 @@ const EditProfile = () => {
         >
           <div className="mb-4">
             <label
-              htmlFor="name"
+              htmlFor="profilename"
               className="block text-gray-700 font-bold mb-2"
             >
-              Display name
+              Profile name
             </label>
             <input
-              id="name"
+              id="profilename"
+              name="profilename"
               className="border border-gray-300 p-2 rounded-md w-full focus:outline-none focus:border-blue-500"
               type="text"
               onChange={handleInputChange}
-              value={formData.name}
-              name="profilename"
+              value={formData.profilename}
             />
           </div>
           <div className="mb-4">
@@ -158,7 +187,7 @@ const EditProfile = () => {
           <button
             className="mx-auto max-w-xs text-white"
             type="button"
-            onClick={handleImageUpload}
+            onClick={handleSubmit}
           >
             Save Changes
           </button>

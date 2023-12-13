@@ -1,4 +1,4 @@
-import default_pic from "./assets/profilephoto.webp";
+// import default_pic from "./assets/profilephoto.webp";
 import SettingsLogo from "./assets/Settings.svg";
 import Saved from "./assets/Saved";
 import Video from "./assets/Video.jsx";
