@@ -4,7 +4,17 @@ export const getPostByid = async (req, res) => {
   try {
     const postid = req.params.postid;
 
-    const post = await Post.findById(postid);
+    const post = await Post.findById(postid).populate({
+      path: 'comment',
+      populate: {
+        path: 'user',
+        model: 'User',
+        populate:{
+          path:"profile",
+          model:"Profile"
+        }
+      }
+    })
     if (!post) {
       return res.status(404).json({
         success: false,
