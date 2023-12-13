@@ -29,7 +29,7 @@ export const signup = async (req, res) => {
       });
     }
     const userexist = await User.findOne({ email });
-    // console.log(userexist);
+
     if (userexist) {
       return res.status(400).json({
         success: false,

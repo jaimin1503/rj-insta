@@ -3,6 +3,7 @@ import axios from "axios";
 import jatu from "./assets/jatuu.jpg";
 import Heart from "./assets/Heart";
 import Comment from "./assets/Comment";
+import { Link } from "react-router-dom";
 
 const ViewPost = ({ postId }) => {
   const [post, setPost] = useState({});
@@ -159,7 +160,9 @@ const ViewPost = ({ postId }) => {
         <div className="comments p-5">
           {comments.map((comment, index) => (
             <div className="p-1" key={index}>
-              <h2>{comment?.user?.username}</h2>
+              <Link to={`/viewprofile/${comment.user._id}`}>
+                <h2 className=" cursor-pointer">{comment?.user?.username}</h2>
+              </Link>
               <h2>{comment?.comment}</h2>
             </div>
           ))}

@@ -33,14 +33,13 @@ const EditProfile = () => {
     axios
       .get("http://localhost:5555/user/getprofile", { withCredentials: true })
       .then((res) => {
-        formData.bio = res.data.profile.bio;
-        formData.profilename = res.data.profile.profilename;
+        setFormData(res.data.profile);
       })
       .catch((error) => {
         console.error(error);
       });
   }, []);
-  console.log(formData);
+
   const handleImageUpload = useCallback(async () => {
     try {
       const data = new FormData();

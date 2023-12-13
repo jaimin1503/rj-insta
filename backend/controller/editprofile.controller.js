@@ -4,9 +4,7 @@ import User from "../model/user.model.js";
 export const editprofile = async (req, res) => {
   try {
     const url = req.body.url;
-    console.log(req.body.formData);
     const profilename = req.body.formData.profilename;
-    console.log(profilename);
     const bio = req.body.formData.bio;
     const userid = req.user.userid;
     const userdetails = await User.findById(userid);

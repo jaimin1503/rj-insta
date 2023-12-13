@@ -6,9 +6,7 @@ import Profile from "../model/profile.model.js";
 export const createpost = async (req, res) => {
     try {
         const userid = req.user.userid;
-        console.log(userid)
         const posturl = req.body.posturl;
-        console.log(posturl)
 
         if (userid) {
             console.log("fatching userdata")
