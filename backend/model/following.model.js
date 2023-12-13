@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 const followingSchema = new mongoose.Schema({
     
     
-    user: {
+    followingid: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },

@@ -10,10 +10,12 @@ const commentSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref : "User" //reference to the post model
     },    
-    body: {
+    comment: {
         type:String,
         required:true,
     }    
+},{
+    timestamps:true
 })
 
 
