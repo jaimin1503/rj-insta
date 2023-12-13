@@ -21,7 +21,6 @@ const ViewPost = ({ postId }) => {
         setPost(res.data.post);
         setLikeCount(res.data.post.like.length);
         setComments(res.data.post.comment);
-        console.log(comments);
       })
       .catch((error) => {
         console.log(error);
@@ -57,7 +56,6 @@ const ViewPost = ({ postId }) => {
       .then((res) => {
         if (res.status == 200) {
           setLiked(!liked);
-          console.log(liked);
           setLikeCount(likeCount);
         } else {
           setLiked(!liked);

@@ -1,6 +1,6 @@
 import axios from "axios";
 import jatuu from "./assets/jatuu.jpg";
-import { useState } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const EditProfile = () => {
@@ -14,22 +14,34 @@ const EditProfile = () => {
   });
   const navigate = useNavigate();
 
-  const toggleVisibility = () => {
-    setIsVisible(!isVisible);
-  };
+  const toggleVisibility = useCallback(() => {
+    setIsVisible((prev) => !prev);
+  }, []);
 
-  const handleUpdateClick = (event) => {
+  const handleUpdateClick = useCallback((event) => {
     event.stopPropagation();
     // Your logic for handling the update click here
-  };
+  }, []);
 
-  const handleImageChange = (e) => {
+  const handleImageChange = useCallback((e) => {
     const file = e.target.files[0];
     setImage(file);
     setIsDisabled(false);
-  };
+  }, []);
 
-  const handleImageUpload = async () => {
+  useEffect(() => {
+    axios
+      .get("http://localhost:5555/user/getprofile", { withCredentials: true })
+      .then((res) => {
+        formData.bio = res.data.profile.bio;
+        formData.profilename = res.data.profile.profilename;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+  console.log(formData);
+  const handleImageUpload = useCallback(async () => {
     try {
       const data = new FormData();
       data.append("file", image);
@@ -52,17 +64,17 @@ const EditProfile = () => {
     } catch (error) {
       console.error("Error while uploading image:", error);
     }
-  };
+  }, [image]);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = useCallback((e) => {
     const { id, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [id]: value,
-    });
-  };
+    }));
+  }, []);
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     axios
       .put(
         "http://localhost:5555/user/editprofile",
@@ -76,8 +88,8 @@ const EditProfile = () => {
       .catch((error) => {
         console.error(error);
       });
-  };
-  console.log(url);
+  }, [url, formData, navigate]);
+
   return (
     <div
       onClick={isVisible ? toggleVisibility : null}
