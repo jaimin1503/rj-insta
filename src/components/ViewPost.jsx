@@ -158,9 +158,10 @@ const ViewPost = ({ postId }) => {
             Post
           </button>
         </div>
-        <div className="comments">
+        <div className="comments p-5">
           {comments.map((comment, index) => (
-            <div key={index}>
+            <div className="p-1" key={index}>
+              <h2>{comment?.user?.username}</h2>
               <h2>{comment?.comment}</h2>
             </div>
           ))}
