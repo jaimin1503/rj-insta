@@ -19,10 +19,36 @@ const ViewPost = ({ postId }) => {
       });
   }, [postId]);
 
-  const [liked, setLinked] = useState(false);
+  const [liked, setLiked] = useState(false);
 
-  const likeClick = () => {
-    setLinked(!liked);
+  const likeClick = async () => {
+    try {
+      if (!liked) {
+        const response = await axios.post(
+          `http://localhost:5555/user/likepost/${postId}`,
+          { postid: postId },
+          { withCredentials: true }
+        );
+        if (response.status === 200) {
+          setLiked(true);
+        } else {
+          console.error("Failed to like the post");
+        }
+      } else {
+        const response = await axios.delete(
+          `http://localhost:5555/user/unlikepost/${postId}`,
+          { postid: postId },
+          { withCredentials: true }
+        );
+        if (response.status === 200) {
+          setLiked(false);
+        } else {
+          console.error("Failed to unlike the post");
+        }
+      }
+    } catch (error) {
+      console.error("Error occurred while liking/unliking the post", error);
+    }
   };
 
   return (
@@ -47,7 +73,7 @@ const ViewPost = ({ postId }) => {
         </div>
         <div className="image w-[350px] md:w-[400px]">
           <img
-            className=" object-cover h-[400px] md:h-[450px] w-full"
+            className=" object-cover h-[450px] md:h-[520px] w-full"
             src={post}
             alt=""
           />
