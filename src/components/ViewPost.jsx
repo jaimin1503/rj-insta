@@ -7,6 +7,8 @@ import Comment from "./assets/Comment";
 const ViewPost = ({ postId }) => {
   const [post, setPost] = useState({});
   const [liked, setLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(0);
+
   useEffect(() => {
     axios
       .get(`http://localhost:5555/user/getPostByid/${postId}`, {
@@ -14,6 +16,24 @@ const ViewPost = ({ postId }) => {
       })
       .then((res) => {
         setPost(res.data.post);
+        setLikeCount(res.data.post.like.length);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [postId]);
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5555/user/getlikepost/${postId}`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        if (res.status == 200) {
+          setLiked(true);
+          setLikeCount(res.data.post.like.length);
+        } else {
+          setLiked(false);
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -33,6 +53,7 @@ const ViewPost = ({ postId }) => {
         if (res.status == 200) {
           setLiked(!liked);
           console.log(liked);
+          setLikeCount(likeCount);
         } else {
           setLiked(!liked);
         }
@@ -80,7 +101,7 @@ const ViewPost = ({ postId }) => {
           </div>
           <div className="counts">
             <p className=" text-sm mx-5 pb-2">
-              Liked by <span>{post?.like?.length}</span> people
+              Liked by <span>{likeCount}</span> people
             </p>
           </div>
         </div>
