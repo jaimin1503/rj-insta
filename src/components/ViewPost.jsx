@@ -22,6 +22,9 @@ const ViewPost = ({ postId }) => {
         setPost(res.data.post);
         setLikeCount(res.data.post.like.length);
         setComments(res.data.post.comment);
+        console.log("array of comments",comments)
+        console.log("res of comments",res.data.post.comment[0].user._id)
+
       })
       .catch((error) => {
         console.log(error);
@@ -160,7 +163,7 @@ const ViewPost = ({ postId }) => {
         <div className="comments p-5">
           {comments.map((comment, index) => (
             <div className="p-1" key={index}>
-              <Link to={`/viewprofile/${comment.user._id}`}>
+              <Link to={`/viewprofile/${comment?.user?._id}`}>
                 <h2 className=" cursor-pointer">{comment?.user?.username}</h2>
               </Link>
               <h2>{comment?.comment}</h2>
