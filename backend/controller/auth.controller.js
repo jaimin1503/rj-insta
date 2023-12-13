@@ -42,7 +42,7 @@ export const signup = async (req, res) => {
     } catch (error) {
       return res.status(400).json({
         success: false,
-        message: `error accure while hasing password and error is ${error}`,
+        message: `error occurred while hashing password and error is ${error}`,
       });
     }
     let profile;
@@ -117,15 +117,14 @@ export const login = async (req, res) => {
     if (!user) {
       return res.status(400).json({
         success: false,
-        message: "User does not exist",
+        message: "User does not exist please check Username or Email",
       });
     }
 
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
-      return res.status(400).json({
-        success: false,
-        message: "Password is incorrect",
+      return res.status(401).send({
+        message: "Invalid email or password. Please try again.",
       });
     }
 

@@ -29,8 +29,10 @@ function SignIn() {
     setFormData({ ...formData, [name]: newValue });
   };
 
+  const [error, setError] = useState("");
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setError("");
     try {
       const response = await axios.post(
         "http://localhost:5555/user/login",
@@ -43,8 +45,12 @@ function SignIn() {
         throw new Error("Unexpected response from server");
       }
     } catch (error) {
-      alert("Error occurred. Please try again.");
-      console.error("Login error:", error);
+      if (error.response && error.response.data.message) {
+        setError(error.response.data.message);
+      } else {
+        setError("An error occurred during login.");
+      }
+      console.log(error);
     }
   };
 
@@ -66,6 +72,7 @@ function SignIn() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
+          {error && <div className="text-red-500 mb-4">{error}</div>}
           <Box
             component="form"
             onSubmit={handleSubmit}
