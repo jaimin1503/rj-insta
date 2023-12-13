@@ -5,50 +5,41 @@ import Heart from "./assets/Heart";
 import Comment from "./assets/Comment";
 
 const ViewPost = ({ postId }) => {
-  const [post, setPost] = useState("");
+  const [post, setPost] = useState({});
+  const [liked, setLiked] = useState(false);
   useEffect(() => {
     axios
       .get(`http://localhost:5555/user/getPostByid/${postId}`, {
         withCredentials: true,
       })
       .then((res) => {
-        setPost(res.data.post.posturl);
+        setPost(res.data.post);
       })
       .catch((error) => {
         console.log(error);
       });
   }, [postId]);
 
-  const [liked, setLiked] = useState(false);
-
   const likeClick = async () => {
-    try {
-      if (!liked) {
-        const response = await axios.post(
-          `http://localhost:5555/user/likepost/${postId}`,
-          { postid: postId },
-          { withCredentials: true }
-        );
-        if (response.status === 200) {
-          setLiked(true);
-        } else {
-          console.error("Failed to like the post");
+    axios
+      .post(
+        `http://localhost:5555/user/likepost/${postId}`,
+        { postid: postId },
+        {
+          withCredentials: true,
         }
-      } else {
-        const response = await axios.delete(
-          `http://localhost:5555/user/unlikepost/${postId}`,
-          { postid: postId },
-          { withCredentials: true }
-        );
-        if (response.status === 200) {
-          setLiked(false);
+      )
+      .then((res) => {
+        if (res.status == 200) {
+          setLiked(!liked);
+          console.log(liked);
         } else {
-          console.error("Failed to unlike the post");
+          setLiked(!liked);
         }
-      }
-    } catch (error) {
-      console.error("Error occurred while liking/unliking the post", error);
-    }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
@@ -74,7 +65,7 @@ const ViewPost = ({ postId }) => {
         <div className="image w-[350px] md:w-[400px]">
           <img
             className=" object-cover h-[450px] md:h-[520px] w-full"
-            src={post}
+            src={post.posturl}
             alt=""
           />
         </div>
@@ -86,6 +77,11 @@ const ViewPost = ({ postId }) => {
             <div className="p-2 cursor-pointer">
               <Comment />
             </div>
+          </div>
+          <div className="counts">
+            <p className=" text-sm mx-5 pb-2">
+              Liked by <span>{post?.like?.length}</span> people
+            </p>
           </div>
         </div>
       </div>
