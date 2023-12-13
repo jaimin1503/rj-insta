@@ -31,13 +31,13 @@ const Profile = () => {
       <div className="profile_row1 flex p-5">
         <div className="profile_photo mr-5">
           <img
-            className=" cursor-pointer rounded-full object-cover border-2 sm:w-[20vw] h-[20vw] md:w-[10vw] md:h-[10vw] "
-            src={default_pic}
+            className=" cursor-pointer rounded-full object-cover border-2 h-[110px] w-[110px] "
+            src={user?.profile?.profilephoto}
             alt="Profile_Pic"
           />
         </div>
         <div className="profile_info flex flex-col justify-center">
-          <div className="user_name flex my-2 items-center">
+          <div className="user_name flex items-center pb-2">
             <h2 className=" pr-2">{user?.username}</h2>
             <img
               className=" h-8 w-8 cursor-pointer hover:scale-105"
@@ -55,7 +55,7 @@ const Profile = () => {
       </div>
       <div className="profile_row2 mx-5 max-w-[40vw]">
         <h2>{user?.profile?.profilename}</h2>
-        <p>kjhdf kshf sha fh kajhfkah kajhdf akjh kah dfas skhf gls</p>
+        <p>{user?.profile?.bio}</p>
       </div>
       <hr className="my-5" />
       <div className="states flex justify-center">
@@ -98,19 +98,6 @@ const Profile = () => {
       <div className="posts my-5">
         <UserPosts posts={posts} />
       </div>
-      {/* <div className="posts flex flex-wrap">
-        {posts.map((post, index) => (
-          <div key={index} className="w-1/3 p-[2px]">
-            <div className="aspect-square">
-              <img
-                className="w-full h-full object-cover"
-                src={post.posturl}
-                alt="Your Image"
-              />
-            </div>
-          </div>
-        ))}
-      </div> */}
     </div>
   );
 };

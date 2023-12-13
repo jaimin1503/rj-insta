@@ -33,7 +33,7 @@ const UserPosts = ({ posts }) => {
       <div className="posts flex flex-wrap">
         {posts.map((post, index) => (
           <div key={index} className="w-1/3 p-[2px]">
-            <div className="aspect-square">
+            <div className="aspect-square cursor-pointer">
               <img
                 onClick={() => handlePostClick(post._id)}
                 className="w-full h-full object-cover"
