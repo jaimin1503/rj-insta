@@ -21,7 +21,7 @@ const ViewPost = ({ postId }) => {
       .catch((error) => {
         console.log(error);
       });
-  }, [postId]);
+  }, [postId, liked]);
   useEffect(() => {
     axios
       .get(`http://localhost:5555/user/getlikepost/${postId}`, {
