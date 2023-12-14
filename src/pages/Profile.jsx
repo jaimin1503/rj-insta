@@ -10,6 +10,7 @@ import axios from "axios";
 
 const Profile = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+
   const [user, setUser] = useState({});
   useEffect(() => {
     axios
@@ -27,8 +28,8 @@ const Profile = () => {
   };
   const posts = user.profile?.posts || [];
   return (
-    <div>
-      <div className="profile_row1 flex p-5">
+    <div className="">
+      <div className="profile_row1 flex p-5 ">
         <div className="profile_photo mr-5">
           <img
             className=" cursor-pointer rounded-full object-cover border-2 h-[110px] w-[110px] "
@@ -96,7 +97,7 @@ const Profile = () => {
         </div>
       </div>
       <div className="posts my-5">
-        <UserPosts posts={posts} />
+        <UserPosts posts={posts} userid={user} user={user} />
       </div>
     </div>
   );

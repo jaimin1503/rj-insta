@@ -8,6 +8,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 const Profile = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+
   const [user, setUser] = useState({});
   const { id } = useParams();
 
@@ -89,7 +90,7 @@ const Profile = () => {
         </div>
       </div>
       <div className="posts my-5">
-        <UserPosts posts={posts} />
+        <UserPosts posts={posts} user={user} />
       </div>
     </div>
   );

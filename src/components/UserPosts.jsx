@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import ViewPost from "./ViewPost";
 
-const UserPosts = ({ posts }) => {
+const UserPosts = ({ posts ,userid,user}) => {
   const [showComponent, setShowComponent] = useState(false);
   const componentRef = useRef(null);
   const [postId, setPostId] = useState(null);
@@ -11,15 +11,18 @@ const UserPosts = ({ posts }) => {
       if (
         componentRef.current &&
         !componentRef.current.contains(event.target)
+        
       ) {
+        console.log("userid inside userpost",userid)
         setShowComponent(false);
+        console.log(showComponent)
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [postId]);
+  }, [postId,userid]);
 
   const handlePostClick = (postId) => {
     {
@@ -57,7 +60,7 @@ const UserPosts = ({ posts }) => {
             boxShadow: "0 2px 5px rgba(0, 0, 0, 0.2)",
           }}
         >
-          <ViewPost postId={postId} />
+          <ViewPost postId={postId} setShowComponent={setShowComponent} user={user}/>
         </div>
       )}
     </div>
