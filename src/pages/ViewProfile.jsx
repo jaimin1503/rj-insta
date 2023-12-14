@@ -1,5 +1,4 @@
-// import default_pic from "./assets/profilephoto.webp";
-import SettingsLogo from "./assets/Settings.svg";
+
 import Saved from "./assets/Saved";
 import Video from "./assets/Video.jsx";
 import Grid from "./assets/Grid.jsx";
@@ -11,19 +10,20 @@ import { useParams } from "react-router-dom";
 const Profile = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [user, setUser] = useState({});
-  const {id}=useParams();
-  console.log(id)
+  const { id } = useParams();
+
   useEffect(() => {
     axios
-      .get(`http://localhost:5555/user/getuserbyid/${id}`, { withCredentials: true })
+      .get(`http://localhost:5555/user/getuserbyid/${id}`, {
+        withCredentials: true,
+      })
       .then((res) => {
-        console.log(res);
         setUser(res.data.user);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
-  }, []);
+  }, [id]);
 
   const handleVideoClick = (index) => {
     setActiveIndex(index);
@@ -42,18 +42,9 @@ const Profile = () => {
         <div className="profile_info flex flex-col justify-center">
           <div className="user_name flex items-center pb-2">
             <h2 className=" pr-2">{user?.username}</h2>
-            {/* <img
-              className=" h-8 w-8 cursor-pointer hover:scale-105"
-              src={SettingsLogo}
-            /> */}
+
           </div>
-          {/* <div className="edit_profile">
-            <Link to="/editprofile">
-              <button className=" py-2 px-5 rounded-lg bg-gray-300 cursor-pointer hover:bg-gray-400">
-                Edit profile
-              </button>
-            </Link>
-          </div> */}
+      
         </div>
       </div>
       <div className="profile_row2 mx-5 max-w-[40vw]">
