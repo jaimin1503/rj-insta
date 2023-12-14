@@ -19,11 +19,11 @@ const UserPosts = ({ posts }) => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [postId]);
 
   const handlePostClick = (postId) => {
     {
-      !showComponent ? setShowComponent(true) : setShowComponent(false);
+      !showComponent ? setShowComponent(true) : null;
     }
     setPostId(postId);
   };

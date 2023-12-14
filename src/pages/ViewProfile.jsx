@@ -4,7 +4,6 @@ import Video from "./assets/Video.jsx";
 import Grid from "./assets/Grid.jsx";
 import UserPosts from "../components/UserPosts.jsx";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 const Profile = () => {
