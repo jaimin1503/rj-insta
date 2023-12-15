@@ -8,10 +8,11 @@ import ViewProfile from "./pages/ViewProfile";
 import ExplorePage from "./pages/ExplorePage";
 import ChatPage from "./pages/ChatPage";
 import VideoPage from "./pages/VideoPage";
-
+import { AppContext } from "./context/contextApi";
 function App() {
   return (
-    <div>
+    <AppContext>
+ <div>
       <Routes>
         <Route path="/" element={<SignIn />}></Route>
         <Route path="/home" element={<Home />}></Route>
@@ -24,6 +25,8 @@ function App() {
         <Route path="/viewprofile/:id" element={<ViewProfile />}></Route>
       </Routes>
     </div>
+    </AppContext>
+   
   );
 }
 export default App;
