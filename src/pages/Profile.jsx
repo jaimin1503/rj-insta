@@ -23,6 +23,10 @@ const Profile = () => {
       });
   }, []);
 
+  const formatBioWithLineBreaks = (bio) => {
+    return bio?.replace(/\n/g, "<br>");
+  };
+
   const handleVideoClick = (index) => {
     setActiveIndex(index);
   };
@@ -54,9 +58,13 @@ const Profile = () => {
           </div>
         </div>
       </div>
-      <div className="profile_row2 mx-5 max-w-[40vw]">
+      <div className="profile_row2 mx-5 max-w-[60vw]">
         <h2>{user?.profile?.profilename}</h2>
-        <p>{user?.profile?.bio}</p>
+        <p
+          dangerouslySetInnerHTML={{
+            __html: formatBioWithLineBreaks(user?.profile?.bio),
+          }}
+        />
       </div>
       <hr className="my-5" />
       <div className="states flex justify-center">

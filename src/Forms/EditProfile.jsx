@@ -1,5 +1,4 @@
 import axios from "axios";
-import jatuu from "./assets/jatuu.jpg";
 import { useState, useCallback, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
