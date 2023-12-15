@@ -13,3 +13,7 @@
 	display: block; /* 1:1 Aspect Ratio (Square) */
   }
   
+    .webkit-scrollbar::-webkit-scrollbar{
+      display:none
+    }
+  
