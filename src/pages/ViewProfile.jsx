@@ -1,4 +1,3 @@
-
 import Saved from "./assets/Saved";
 import Video from "./assets/Video.jsx";
 import Grid from "./assets/Grid.jsx";
@@ -6,7 +5,9 @@ import UserPosts from "../components/UserPosts.jsx";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-const Profile = () => {
+import { Link } from "react-router-dom";
+
+const ViewProfile = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const [user, setUser] = useState({});
@@ -42,9 +43,17 @@ const Profile = () => {
         <div className="profile_info flex flex-col justify-center">
           <div className="user_name flex items-center pb-2">
             <h2 className=" pr-2">{user?.username}</h2>
-
           </div>
-      
+          <div className="buttons flex">
+            <button className=" py-1 px-5 bg-blue-400 hover:bg-blue-500 text-white rounded-lg cursor-pointer mr-2">
+              Follow
+            </button>
+            <div className="message  py-1 px-5 bg-gray-300 hover:bg-gray-400 text-black rounded-lg cursor-pointer">
+              <Link to="/chat">
+                <button>Message</button>
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
       <div className="profile_row2 mx-5 max-w-[40vw]">
@@ -95,4 +104,4 @@ const Profile = () => {
     </div>
   );
 };
-export default Profile;
+export default ViewProfile;

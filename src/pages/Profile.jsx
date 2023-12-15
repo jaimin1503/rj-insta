@@ -11,13 +11,14 @@ import BottomBar from "../components/BottomBar.jsx";
 
 const Profile = () => {
   const [activeIndex, setActiveIndex] = useState(0);
-
   const [user, setUser] = useState({});
   useEffect(() => {
     axios
       .get("http://localhost:5555/user/getuser", { withCredentials: true })
       .then((res) => {
         setUser(res.data.user);
+        setLoginId(res.data.user._id);
+        console.log("userid:", loginId);
       })
       .catch((error) => {
         console.log(error);
@@ -33,7 +34,7 @@ const Profile = () => {
   };
   const posts = user.profile?.posts || [];
   return (
-    <div className="">
+    <div className=" h-screen">
       <div className="profile_row1 flex p-5 ">
         <div className="profile_photo mr-5">
           <img
@@ -108,7 +109,9 @@ const Profile = () => {
       <div className="posts my-5">
         <UserPosts posts={posts} userid={user} user={user} />
       </div>
-      <BottomBar />
+      <div className="fixed w-screen bottom-0 bg-gray-100 py-2">
+        <BottomBar />
+      </div>
     </div>
   );
 };

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import jatu from "./assets/jatuu.jpg";
 import Heart from "./assets/Heart";
 import Comment from "./assets/Comment";
 import { Link } from "react-router-dom";
@@ -12,7 +11,8 @@ const ViewPost = ({ postId, setShowComponent, user }) => {
   const [likeCount, setLikeCount] = useState(0);
   const [comment, setComment] = useState("");
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-
+  const [loginId, setLoginId] = useState("");
+  
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,

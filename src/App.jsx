@@ -5,6 +5,9 @@ import { Home } from "./pages/Home";
 import Profile from "./pages/Profile";
 import EditProfile from "./Forms/EditProfile";
 import ViewProfile from "./pages/ViewProfile";
+import ExplorePage from "./pages/ExplorePage";
+import ChatPage from "./pages/ChatPage";
+import VideoPage from "./pages/VideoPage";
 
 function App() {
   return (
@@ -14,6 +17,9 @@ function App() {
         <Route path="/home" element={<Home />}></Route>
         <Route path="/signup" element={<SignUp />}></Route>
         <Route path="/profile" element={<Profile />}></Route>
+        <Route path="/explore" element={<ExplorePage />}></Route>
+        <Route path="/chat" element={<ChatPage />}></Route>
+        <Route path="/video" element={<VideoPage />}></Route>
         <Route path="/editprofile/:id" element={<EditProfile />}></Route>
         <Route path="/viewprofile/:id" element={<ViewProfile />}></Route>
       </Routes>
