@@ -123,9 +123,9 @@ const ViewPost = ({ postId, setShowComponent, user }) => {
   return windowSize.width > 670 ? (
     <div className=" filter-none">
       <div className="card rounded-lg bg-gray-100 mx-auto ">
-        <div className="flex flex-row shadow-xl bg-gray-100 h-[320px]  md:h-[480px] w-[82vw] overflow-y-scroll webkit-scrollbar">
+        <div className="flex flex-row justify-center items-center shadow-xl bg-gray-100 h-[320px]  md:h-[480px] w-[82vw] overflow-y-scroll webkit-scrollbar">
           {/*post*/}
-          <div className=" h-[320px] md:h-[480px]  w-[50%] flex justify-center items-center bg-black">
+          <div className="h-[320px] md:h-[480px]  w-[50%] flex justify-center items-center bg-black">
             <div className="image h-[320px] w-[240px] md:h-[480px] md:w-[360px]  flex items-center justify-center">
               <img
                 className=" object-cover h-full w-full"
@@ -207,7 +207,7 @@ const ViewPost = ({ postId, setShowComponent, user }) => {
             {/*comment input*/}
             <div className="comment h-[7.5%] w-full border-t  flex relative">
               <input
-                className=" w-full p-2 rounded-b-lg pl-5 outline-none "
+                className="  p-2 rounded-b-lg pl-5 outline-none bg-gray-100 w-[90%]  "
                 type="text"
                 placeholder="Add a comment..."
                 name="comment"
@@ -217,8 +217,8 @@ const ViewPost = ({ postId, setShowComponent, user }) => {
               <button
                 className={`${isButtonDisabled
                     ? "hidden"
-                    : "pr-5 cursor-pointer text-blue-600 font-medium"
-                  } absolute top-0 bottom-0 right-0`}
+                    : "p-2 cursor-pointer text-blue-600 font-medium"
+                  }  top-0 bottom-0 right-0 border-l-2`}
                 onClick={handleSubmit}
                 disabled={isButtonDisabled}
               >
@@ -237,13 +237,13 @@ const ViewPost = ({ postId, setShowComponent, user }) => {
             <div className="profile_photo mr-5">
               <img
                 className="object-cover rounded-full w-[44px] h-[44px]"
-                src={jatu}
+                src={user?.profile?.profilephoto}
                 alt="Profile_Pic"
               />
             </div>
             <div className="profile_info flex flex-col justify-center">
-              <div className="user_name flex items-center">
-                <h2 className=" mr-2 text-gray-900">Jaimin</h2>
+              <div className="user_name flex items-center font-medium text-base">
+                <h2 className=" mr-2 text-gray-900">{user?.username}</h2>
               </div>
               <div className="location">
                 <p className=" text-gray-600 text-sm">Location..</p>
