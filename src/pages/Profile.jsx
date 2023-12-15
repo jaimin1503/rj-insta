@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import BottomBar from "../components/BottomBar.jsx";
+import Leftnav from "../components/leftnav.jsx";
 
 const Profile = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -34,7 +35,9 @@ const Profile = () => {
   };
   const posts = user.profile?.posts || [];
   return (
-    <div className=" h-screen">
+    <div className=" h-screen flex overflow-hidden">
+     <div className="hidden sm:block"> <Leftnav user={user}/></div>
+      <div className="w-full sm:w-[85vw] overflow-y-scroll">
       <div className="profile_row1 flex p-5 ">
         <div className="profile_photo mr-5">
           <img
@@ -109,8 +112,9 @@ const Profile = () => {
       <div className="posts my-5">
         <UserPosts posts={posts} userid={user} user={user} />
       </div>
-      <div className="fixed w-screen bottom-0 bg-gray-100 py-2">
+      <div className="fixed w-screen bottom-0 bg-gray-100 py-2 block sm:hidden">
         <BottomBar />
+      </div>
       </div>
     </div>
   );
