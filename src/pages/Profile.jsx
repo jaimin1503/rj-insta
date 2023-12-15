@@ -7,6 +7,7 @@ import UserPosts from "../components/UserPosts.jsx";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import BottomBar from "../components/BottomBar.jsx";
 
 const Profile = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -107,6 +108,7 @@ const Profile = () => {
       <div className="posts my-5">
         <UserPosts posts={posts} userid={user} user={user} />
       </div>
+      <BottomBar />
     </div>
   );
 };
