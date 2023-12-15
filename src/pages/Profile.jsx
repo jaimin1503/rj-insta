@@ -46,7 +46,7 @@ const Profile = () => {
             />
           </div>
           <div className="edit_profile">
-            <Link to="/editprofile">
+            <Link to={`/editprofile/${user._id}`}>
               <button className=" py-2 px-5 rounded-lg bg-gray-300 cursor-pointer hover:bg-gray-400">
                 Edit profile
               </button>

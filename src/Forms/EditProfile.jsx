@@ -1,13 +1,15 @@
 import axios from "axios";
 import jatuu from "./assets/jatuu.jpg";
 import { useState, useCallback, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const EditProfile = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [url, setUrl] = useState("");
   const [image, setImage] = useState(null);
   const [isDisabled, setIsDisabled] = useState(true);
+  const { id } = useParams();
+  const [user, setUser] = useState({});
   const [formData, setFormData] = useState({
     profilename: "",
     bio: "",
@@ -28,6 +30,19 @@ const EditProfile = () => {
     setImage(file);
     setIsDisabled(false);
   }, []);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5555/user/getuserbyid/${id}`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        setUser(res.data.user);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [id]);
 
   useEffect(() => {
     axios
@@ -98,13 +113,13 @@ const EditProfile = () => {
         <div className="profile_photo mr-5">
           <img
             className="rounded-full object-cover border-2 w-[50px] h-[50px]"
-            src={jatuu}
+            src={user?.profile?.profilephoto}
             alt="Profile_Pic"
           />
         </div>
         <div className="profile_info flex flex-col justify-center">
           <div className="user_name flex items-center">
-            <h2 className="pr-2">Jaimin_15.3</h2>
+            <h2 className="pr-2">{user.username}</h2>
           </div>
           <div className="change_photo">
             <p

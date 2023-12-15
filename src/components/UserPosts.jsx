@@ -1,28 +1,32 @@
 import { useState, useRef, useEffect } from "react";
 import ViewPost from "./ViewPost";
+import { useLocation } from "react-router-dom";
 
-const UserPosts = ({ posts ,userid,user}) => {
+const UserPosts = ({ posts, userid, user }) => {
   const [showComponent, setShowComponent] = useState(false);
   const componentRef = useRef(null);
   const [postId, setPostId] = useState(null);
+  const location = useLocation();
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
         componentRef.current &&
         !componentRef.current.contains(event.target)
-        
       ) {
-        console.log("userid inside userpost",userid)
         setShowComponent(false);
-        console.log(showComponent)
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [postId,userid]);
+  }, [postId, userid]);
+
+  useEffect(() => {
+    // Hide the component when the route changes
+    setShowComponent(false);
+  }, [location]);
 
   const handlePostClick = (postId) => {
     {
@@ -60,7 +64,11 @@ const UserPosts = ({ posts ,userid,user}) => {
             boxShadow: "0 2px 5px rgba(0, 0, 0, 0.2)",
           }}
         >
-          <ViewPost postId={postId} setShowComponent={setShowComponent} user={user}/>
+          <ViewPost
+            postId={postId}
+            setShowComponent={setShowComponent}
+            user={user}
+          />
         </div>
       )}
     </div>

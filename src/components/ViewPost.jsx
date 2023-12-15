@@ -26,14 +26,14 @@ const ViewPost = ({ postId, setShowComponent, user }) => {
   };
 
   useEffect(() => {
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
     setWindowSize({
       width: window.innerWidth,
       height: window.innerHeight,
     });
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -43,7 +43,7 @@ const ViewPost = ({ postId, setShowComponent, user }) => {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(user.username)
+        console.log(user.username);
         setPost(res.data.post);
         setLikeCount(res.data.post.like.length);
         setComments(res.data.post.comment);
@@ -124,7 +124,7 @@ const ViewPost = ({ postId, setShowComponent, user }) => {
     <div className=" filter-none">
       <div className="card rounded-lg bg-gray-100 mx-auto ">
         <div className="flex flex-row shadow-xl bg-gray-100  h-[85vh] w-[82vw] overflow-y-scroll">
-          { /*post*/}
+          {/*post*/}
           <div className="image h-full w-[50%] ">
             <img
               className=" object-cover h-full w-full"
@@ -133,7 +133,7 @@ const ViewPost = ({ postId, setShowComponent, user }) => {
             />
           </div>
           <div className="comment section h-[full] w-[50%]">
-            { /*//info*/}
+            {/*//info*/}
             <div className="user_info flex items-center p-5 h-[10%]  ">
               <div className=" flex">
                 <div className="profile_photo mr-5 my-auto">
@@ -157,7 +157,11 @@ const ViewPost = ({ postId, setShowComponent, user }) => {
             <div className="comments p-5  h-[70%] flex flex-col gap-5">
               {comments.map((comment, index) => (
                 <div className="p-1 flex " key={index}>
-                  <div onClick={() => { setShowComponent(false) }}>
+                  <div
+                    onClick={() => {
+                      setShowComponent(false);
+                    }}
+                  >
                     <Link to={`/viewprofile/${comment?.user?._id}`}>
                       <div className="flex items-center">
                         <div className="profile_photo mr-5 my-auto ">
@@ -172,7 +176,9 @@ const ViewPost = ({ postId, setShowComponent, user }) => {
                   </div>
                   <div>
                     <Link to={`/viewprofile/${comment?.user?._id}`}>
-                    <span className="block cursor-pointer font-medium text-base">{comment?.user?.username}</span>
+                      <span className="block cursor-pointer font-medium text-base">
+                        {comment?.user?.username}
+                      </span>
                     </Link>
                     <h2 className=" text-sm">{comment?.comment}</h2>
                   </div>
@@ -274,7 +280,7 @@ const ViewPost = ({ postId, setShowComponent, user }) => {
               value={comment}
               onChange={handleInputChange}
             />
-            <span>{windowSize.width}</span>
+
             <button
               className={
                 isButtonDisabled
@@ -288,10 +294,8 @@ const ViewPost = ({ postId, setShowComponent, user }) => {
             </button>
           </div>
         </div>
-
       </div>
     </div>
-
   );
 };
 
