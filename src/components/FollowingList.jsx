@@ -1,20 +1,20 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-function FollowingList({ userId }) {
-  const [followings, setFollowings] = useState([]);
-  useEffect(() => {
-    axios
-      .get(`http://localhost:5555/user/getuserbyid/${userId}`, {
-        withCredentials: true,
-      })
-      .then((res) => {
-        setFollowings(res.data.user.profile.following);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [userId]);
+function FollowingList({ following }) {
+  // const [followings, setFollowings] = useState([]);
+  // useEffect(() => {
+  //   axios
+  //     .get(`http://localhost:5555/user/getuserbyid/${userId}`, {
+  //       withCredentials: true,
+  //     })
+  //     .then((res) => {
+  //       setFollowings(res.data.user.profile.following);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }, [userId]);
 
   return (
     <div>
@@ -23,9 +23,9 @@ function FollowingList({ userId }) {
           <p className="p-2">Following</p>
         </div>
         <div className="list">
-          {followings.map((following) => (
-            <div className=" px-5 py-3" key={following}>
-              {following}
+          {following.map((follow) => (
+            <div className=" px-5 py-3" key={follow.username}>
+              {follow.username}
             </div>
           ))}
         </div>

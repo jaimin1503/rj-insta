@@ -10,16 +10,17 @@ const UserPosts = ({ posts, userid, user }) => {
 
   useEffect(() => {
     let handler = (e) => {
-      if (!imgRef.current.contains(e.target)) {
+      if (imgRef.current && !imgRef.current.contains(e.target)) {
         setShowComponent(false);
       }
     };
+
     document.addEventListener("mousedown", handler);
 
     return () => {
       document.removeEventListener("mousedown", handler);
     };
-  });
+  }, []);
 
   useEffect(() => {
     // Hide the component when the route changes

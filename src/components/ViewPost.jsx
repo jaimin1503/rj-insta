@@ -11,7 +11,6 @@ const ViewPost = ({ postId, setShowComponent, user }) => {
   const [likeCount, setLikeCount] = useState(0);
   const [comment, setComment] = useState("");
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-  const [loginId, setLoginId] = useState("");
 
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
@@ -39,9 +38,13 @@ const ViewPost = ({ postId, setShowComponent, user }) => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5555/user/getPostByid/${postId}`, {
-        withCredentials: true,
-      })
+      .get(
+        `http://localhost:5555/user/getPostByid/${postId}`,
+
+        {
+          withCredentials: true,
+        }
+      )
       .then((res) => {
         setPost(res.data.post);
         setLikeCount(res.data.post.like.length);
@@ -127,6 +130,7 @@ const ViewPost = ({ postId, setShowComponent, user }) => {
           <div className="h-[320px] md:h-[480px]  w-[50%] flex justify-center items-center bg-black">
             <div className="image h-[320px] w-[240px] md:h-[480px] md:w-[360px]  flex items-center justify-center">
               <img
+                onClick={alert("click")}
                 className=" object-cover h-full w-full"
                 src={post.posturl}
                 alt=""

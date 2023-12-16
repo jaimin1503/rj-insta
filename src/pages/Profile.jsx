@@ -11,6 +11,7 @@ import Leftnav from "../components/leftnav.jsx";
 import VideoPage from "./VideoPage.jsx";
 import FollowingList from "../components/FollowingList.jsx";
 import FollowersList from "../components/FollowersList.jsx";
+import default_pic from "./assets/profilephoto.webp";
 
 const Profile = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -67,7 +68,7 @@ const Profile = () => {
           <div className="profile_photo mr-5">
             <img
               className=" cursor-pointer rounded-full object-cover border-2 h-[110px] w-[110px] "
-              src={user?.profile?.profilephoto}
+              src={user?.profile?.profilephoto || default_pic}
               alt="Profile_Pic"
             />
           </div>
@@ -115,7 +116,7 @@ const Profile = () => {
           </div>
 
           <div ref={followingRef}>
-            {showFollowing ? <FollowingList userId={user._id} /> : ""}
+            {showFollowing ? <FollowingList following={user.profile.following} /> : ""}
             <div
               onClick={() => setShowFollowing(!showFollowing)}
               className="following px-10 text-center leading-4 cursor-pointer"

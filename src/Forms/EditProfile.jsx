@@ -103,6 +103,10 @@ const EditProfile = () => {
       });
   }, [url, formData, navigate]);
 
+  const handleRemove = () => {
+    setUrl(" ");
+  };
+
   return (
     <div
       onClick={isVisible ? toggleVisibility : null}
@@ -131,12 +135,12 @@ const EditProfile = () => {
           {isVisible && (
             <div onClick={(e) => e.stopPropagation()}>
               <div className="flex flex-col border rounded-lg bg-gray-300 top-[15%] absolute max-w-xs items-center z-20">
-                <h2
+                {/* <h2
                   onClick={handleUpdateClick}
                   className="p-5 text-blue-600 border-b border-gray-400"
                 >
                   Update Profile Picture
-                </h2>
+                </h2> */}
                 <div onClick={(e) => e.stopPropagation()} className="p-5">
                   <input
                     type="file"
@@ -146,11 +150,17 @@ const EditProfile = () => {
                     id="profileImageInput"
                     name="profilephoto"
                   />
-                  <label className="text-blue-600" htmlFor="profileImageInput">
+                  <label
+                    className="text-blue-600 cursor-pointer"
+                    htmlFor="profileImageInput"
+                  >
                     Update Profile Picture
                   </label>
                 </div>
-                <h2 className="p-5 text-red-600 border-t border-gray-500">
+                <h2
+                  onClick={handleRemove}
+                  className="p-5 text-red-600 border-t border-gray-500 cursor-pointer"
+                >
                   Remove Profile Picture
                 </h2>
               </div>
