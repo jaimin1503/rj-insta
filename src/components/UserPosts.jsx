@@ -4,7 +4,6 @@ import { useLocation } from "react-router-dom";
 
 const UserPosts = ({ posts, userid, user }) => {
   const [showComponent, setShowComponent] = useState(false);
-  const componentRef = useRef(null);
   const [postId, setPostId] = useState(null);
   const location = useLocation();
   const imgRef = useRef();

@@ -15,7 +15,8 @@ import FollowersList from "../components/FollowersList.jsx";
 const Profile = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [user, setUser] = useState({});
-  const [show, setShow] = useState(false);
+  const [showFollowing, setShowFollowing] = useState(false);
+  const [showFollowers, setShowFollowers] = useState(false);
 
   useEffect(() => {
     axios
@@ -28,12 +29,16 @@ const Profile = () => {
       });
   }, []);
 
-  let listRef = useRef();
+  let followingRef = useRef();
+  let followersRef = useRef();
 
   useEffect(() => {
     let handler = (e) => {
-      if (!listRef.current.contains(e.target)) {
-        setShow(false);
+      if (!followingRef.current.contains(e.target)) {
+        setShowFollowing(false);
+      }
+      if (!followersRef.current.contains(e.target)) {
+        setShowFollowers(false);
       }
     };
     document.addEventListener("mousedown", handler);
@@ -98,15 +103,21 @@ const Profile = () => {
             <h2>{user?.profile?.posts.length}</h2>
             <h3>Posts</h3>
           </div>
-          <div className="followers px-10 text-center leading-4 cursor-pointer">
-            <h2>{user?.profile?.followers.length}</h2>
-            <h3>Followers</h3>
+          <div ref={followersRef}>
+            {showFollowers ? <FollowersList userId={user._id} /> : ""}
+            <div
+              onClick={() => setShowFollowers(!showFollowers)}
+              className="followers px-10 text-center leading-4 cursor-pointer"
+            >
+              <h2>{user?.profile?.followers.length}</h2>
+              <h3>Followers</h3>
+            </div>
           </div>
 
-          <div ref={listRef}>
-            {show ? <FollowingList userId={user._id} /> : ""}
+          <div ref={followingRef}>
+            {showFollowing ? <FollowingList userId={user._id} /> : ""}
             <div
-              onClick={() => setShow(!show)}
+              onClick={() => setShowFollowing(!showFollowing)}
               className="following px-10 text-center leading-4 cursor-pointer"
             >
               <h2>{user?.profile?.following.length}</h2>

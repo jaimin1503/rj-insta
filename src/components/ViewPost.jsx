@@ -154,7 +154,7 @@ const ViewPost = ({ postId, setShowComponent, user }) => {
                 </div>
               </div>
             </div>
-            <hr className=" mt-3 font-medium border-gray-300 border"></hr>
+            <hr className=" mt-3 font-medium border-gray-200 border"></hr>
             {/*show comment commpoment*/}
             <div className="comments p-5  h-[65%] flex flex-col gap-5 overflow-y-scroll webkit-scrollbar">
               {comments.map((comment, index) => (
@@ -187,6 +187,8 @@ const ViewPost = ({ postId, setShowComponent, user }) => {
                 </div>
               ))}
             </div>
+            <hr className="font-medium border-gray-200 border"></hr>
+
             {/*postinfo*/}
             <div className="postinfo h[10%]">
               <div className="likes-comments flex">
@@ -206,7 +208,7 @@ const ViewPost = ({ postId, setShowComponent, user }) => {
             {/*comment input*/}
             <div className="comment h-[7.5%] w-full border-t  flex relative">
               <input
-                className="  p-2 rounded-b-lg pl-5 outline-none bg-gray-100 w-[90%]  "
+                className="  p-2 pl-5 outline-none bg-gray-100 w-[90%]  "
                 type="text"
                 placeholder="Add a comment..."
                 name="comment"
