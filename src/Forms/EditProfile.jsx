@@ -158,7 +158,9 @@ const EditProfile = () => {
                   </label>
                 </div>
                 <h2
-                  onClick={handleRemove}
+                  onClick={() => {
+                    handleRemove;
+                  }}
                   className="p-5 text-red-600 border-t border-gray-500 cursor-pointer"
                 >
                   Remove Profile Picture

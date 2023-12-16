@@ -14,7 +14,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
   const [likeCount, setLikeCount] = useState(0);
   const [comment, setComment] = useState("");
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-  const { user } = useSelector((state) => state.user)
+  const { user } = useSelector((state) => state.user);
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -133,10 +133,12 @@ const ViewPost = ({ postId, setShowComponent }) => {
           <div className="h-[320px] md:h-[480px]  w-[50%] flex justify-center items-center bg-black">
             <div className="image h-[320px] w-[240px] md:h-[480px] md:w-[360px]  flex items-center justify-center">
               <img
-                onDoubleClick={() => { likeClick() }}
+                onDoubleClick={() => {
+                  likeClick();
+                }}
                 className=" object-cover h-full w-full"
                 src={post.posturl}
-                alt=""
+                alt="post"
               />
             </div>
           </div>
@@ -185,14 +187,24 @@ const ViewPost = ({ postId, setShowComponent }) => {
                   </div>
                   <div>
                     {comment?.user?.username === user.username ? (
-                        <span className="block cursor-pointer font-medium text-base" onClick={()=>{navigate(`/profile`)}}>
-                          {comment?.user?.username}and{user.username}
-                        </span>
+                      <span
+                        className="block cursor-pointer font-medium text-base"
+                        onClick={() => {
+                          navigate(`/profile`);
+                        }}
+                      >
+                        {comment?.user?.username}and{user.username}
+                      </span>
                     ) : (
                       // <Link to={`/viewprofile/${comment?.user?._id}`}>
-                        <span className="block cursor-pointer font-medium text-base" onClick={()=>{navigate(`/viewprofile/${comment?.user?._id}`)}}>
+                      <span
+                        className="block cursor-pointer font-medium text-base"
+                        onClick={() => {
+                          navigate(`/viewprofile/${comment?.user?._id}`);
+                        }}
+                      >
                         {comment?.user?.username}and{user.username}
-                        </span>
+                      </span>
                       // </Link>
                     )}
                     <h2 className=" text-sm">{comment?.comment}</h2>
@@ -229,10 +241,11 @@ const ViewPost = ({ postId, setShowComponent }) => {
                 onChange={handleInputChange}
               />
               <button
-                className={`${isButtonDisabled
-                  ? "hidden"
-                  : "p-2 cursor-pointer text-blue-600 font-medium"
-                  }  top-0 bottom-0 right-0 border-l-2`}
+                className={`${
+                  isButtonDisabled
+                    ? "hidden"
+                    : "p-2 cursor-pointer text-blue-600 font-medium"
+                }  top-0 bottom-0 right-0 border-l-2`}
                 onClick={handleSubmit}
                 disabled={isButtonDisabled}
               >

@@ -1,12 +1,14 @@
 import { useState, useRef, useEffect } from "react";
 import ViewPost from "./ViewPost";
 import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-const UserPosts = ({ posts, userid, user }) => {
+const UserPosts = ({ posts }) => {
   const [showComponent, setShowComponent] = useState(false);
   const [postId, setPostId] = useState(null);
   const location = useLocation();
   const imgRef = useRef();
+  const { user } = useSelector((state) => state.user);
 
   useEffect(() => {
     let handler = (e) => {

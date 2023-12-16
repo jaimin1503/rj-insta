@@ -5,48 +5,20 @@ import Grid from "./assets/Grid.jsx";
 import UserPosts from "../components/UserPosts.jsx";
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
-import axios from "axios";
 import BottomBar from "../components/BottomBar.jsx";
 import Leftnav from "../components/leftnav.jsx";
 import VideoPage from "./VideoPage.jsx";
 import FollowingList from "../components/FollowingList.jsx";
 import FollowersList from "../components/FollowersList.jsx";
 import default_pic from "./assets/profilephoto.webp";
-import { useSelector, useDispatch } from "react-redux";
-import {getuser} from "../reducers/userReducer.js"
-import {fetchuserdata} from "../utils/fetchuserdata.js"
+import { useSelector } from "react-redux";
+
 const Profile = () => {
   const [activeIndex, setActiveIndex] = useState(0);
-  // const [user, setUser] = useState({});
   const [showFollowing, setShowFollowing] = useState(false);
   const [showFollowers, setShowFollowers] = useState(false);
-  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
-  console.log("before data",user);
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:5555/user/getuser", { withCredentials: true })
-      .then((res) => {
-        // setUser(res.data.user);
-        dispatch(getuser(res.data.user))
-        console.log("afterdata",user)
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:5555/user/getuser", { withCredentials: true })
-  //     .then((res) => {
-  //       setUser(res.data.user);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }, []);
-
+  const location = useLocation();
   let followingRef = useRef();
   let followersRef = useRef();
 
@@ -176,7 +148,7 @@ const Profile = () => {
         </div>
         {activeIndex === 0 ? (
           <div className="posts my-5">
-            <UserPosts posts={posts} userid={user} user={user} />
+            <UserPosts posts={posts} />
           </div>
         ) : (
           ""

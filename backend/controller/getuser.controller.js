@@ -8,11 +8,18 @@ export const getuser = async (req, res) => {
       const user = await User.findOne({ email }).populate({
         path: "profile",
         populate: [
-          { path: 'posts', model: 'Post' },
-          { path: 'followers', model: 'User' },
-          { path: 'following', model: 'User' },
+          { path: "posts", model: "Post" },
+          { path: "followers", model: "User" },
+          {
+            path: "following",
+            model: "User",
+            populate: {
+              path: "profile",
+              model: "Profile",
+            },
+          },
         ],
-      })
+      });
 
       user.password = undefined;
 
