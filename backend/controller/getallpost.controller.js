@@ -1,11 +1,9 @@
-import Post from "../model/post.model.js"
-export const getallpost=async (req,res)=>{
-    try{
-        const userdetail=req.user
-        if(userdetail){
-            const posts = await Post.find({})
-            .populate('likes')  
-            .populate('comments');
+import Post from "../model/post.model.js";
+export const getallpost = async (req, res) => {
+  try {
+    const userdetail = req.user;
+    if (userdetail) {
+      const posts = await Post.find({}).populate("like").populate("comment");
 
       return res.status(200).json({
         success: true,

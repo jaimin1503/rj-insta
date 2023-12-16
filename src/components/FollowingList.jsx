@@ -16,7 +16,6 @@ function FollowingList({ userId }) {
       });
   }, [userId]);
 
-  console.log(followings);
   return (
     <div>
       <div className="following absolute top-[50%] left-[50%] max-w-xs translate-x-[-50%] translate-y-[-50%] z-10 bg-white rounded-lg shadow-xl">

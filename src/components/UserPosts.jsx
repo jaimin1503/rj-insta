@@ -7,21 +7,20 @@ const UserPosts = ({ posts, userid, user }) => {
   const componentRef = useRef(null);
   const [postId, setPostId] = useState(null);
   const location = useLocation();
+  const imgRef = useRef();
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        componentRef.current &&
-        !componentRef.current.contains(event.target)
-      ) {
+    let handler = (e) => {
+      if (!imgRef.current.contains(e.target)) {
         setShowComponent(false);
       }
     };
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", handler);
+
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mousedown", handler);
     };
-  }, [postId, userid]);
+  });
 
   useEffect(() => {
     // Hide the component when the route changes
@@ -29,9 +28,7 @@ const UserPosts = ({ posts, userid, user }) => {
   }, [location]);
 
   const handlePostClick = (postId) => {
-    {
-      !showComponent ? setShowComponent(true) : null;
-    }
+    setShowComponent(!showComponent);
     setPostId(postId);
   };
 
@@ -54,7 +51,7 @@ const UserPosts = ({ posts, userid, user }) => {
       {showComponent && (
         <div
           className=" rounded-lg"
-          ref={componentRef}
+          ref={imgRef}
           style={{
             position: "absolute",
             top: "50%",

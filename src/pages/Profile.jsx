@@ -3,7 +3,7 @@ import Saved from "./assets/Saved";
 import Video from "./assets/Video.jsx";
 import Grid from "./assets/Grid.jsx";
 import UserPosts from "../components/UserPosts.jsx";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import BottomBar from "../components/BottomBar.jsx";
@@ -28,9 +28,20 @@ const Profile = () => {
       });
   }, []);
 
-  const toggleVisibility = () => {
-    setShow(!show);
-  };
+  let listRef = useRef();
+
+  useEffect(() => {
+    let handler = (e) => {
+      if (!listRef.current.contains(e.target)) {
+        setShow(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+
+    return () => {
+      document.removeEventListener("mousedown", handler);
+    };
+  });
 
   const formatBioWithLineBreaks = (bio) => {
     return bio?.replace(/\n/g, "<br>");
@@ -41,10 +52,7 @@ const Profile = () => {
   };
   const posts = user.profile?.posts || [];
   return (
-    <div
-      onClick={show ? toggleVisibility : null}
-      className=" h-screen flex overflow-hidden"
-    >
+    <div className=" h-screen flex overflow-hidden">
       <div className="hidden sm:block">
         {" "}
         <Leftnav user={user} />
@@ -94,14 +102,17 @@ const Profile = () => {
             <h2>{user?.profile?.followers.length}</h2>
             <h3>Followers</h3>
           </div>
-          <div
-            onClick={toggleVisibility}
-            className="following px-10 text-center leading-4 cursor-pointer"
-          >
-            <h2>{user?.profile?.following.length}</h2>
-            <h3>Following</h3>
+
+          <div ref={listRef}>
+            {show ? <FollowingList userId={user._id} /> : ""}
+            <div
+              onClick={() => setShow(!show)}
+              className="following px-10 text-center leading-4 cursor-pointer"
+            >
+              <h2>{user?.profile?.following.length}</h2>
+              <h3>Following</h3>
+            </div>
           </div>
-          {show ? <FollowingList userId={user._id} /> : ""}
         </div>
         <hr className="my-5" />
         <div className="center flex justify-center">

@@ -3,7 +3,7 @@ import axios from "axios";
 import Heart from "./assets/Heart";
 import Comment from "./assets/Comment";
 import { Link } from "react-router-dom";
-import "./UserPost.css"
+import "./UserPost.css";
 const ViewPost = ({ postId, setShowComponent, user }) => {
   const [post, setPost] = useState({});
   const [comments, setComments] = useState([]);
@@ -12,7 +12,7 @@ const ViewPost = ({ postId, setShowComponent, user }) => {
   const [comment, setComment] = useState("");
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [loginId, setLoginId] = useState("");
-  
+
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -43,7 +43,6 @@ const ViewPost = ({ postId, setShowComponent, user }) => {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(user.username);
         setPost(res.data.post);
         setLikeCount(res.data.post.like.length);
         setComments(res.data.post.comment);
@@ -215,10 +214,11 @@ const ViewPost = ({ postId, setShowComponent, user }) => {
                 onChange={handleInputChange}
               />
               <button
-                className={`${isButtonDisabled
+                className={`${
+                  isButtonDisabled
                     ? "hidden"
                     : "p-2 cursor-pointer text-blue-600 font-medium"
-                  }  top-0 bottom-0 right-0 border-l-2`}
+                }  top-0 bottom-0 right-0 border-l-2`}
                 onClick={handleSubmit}
                 disabled={isButtonDisabled}
               >
