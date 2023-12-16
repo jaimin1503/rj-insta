@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function FollowersList({ followers }) {
   return (
     <div>
@@ -6,9 +8,11 @@ function FollowersList({ followers }) {
           <p className="p-2">Followers</p>
         </div>
         <div className="list">
-          {followers?.map((follower) => (
+          {followers.map((follower) => (
             <div className=" px-5 py-3" key={follower._id}>
-              {follower}
+              <Link to={`/viewprofile/${follower._id}`}>
+                {follower.username}
+              </Link>
             </div>
           ))}
         </div>

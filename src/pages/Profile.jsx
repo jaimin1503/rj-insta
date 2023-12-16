@@ -4,7 +4,7 @@ import Video from "./assets/Video.jsx";
 import Grid from "./assets/Grid.jsx";
 import UserPosts from "../components/UserPosts.jsx";
 import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import BottomBar from "../components/BottomBar.jsx";
 import Leftnav from "../components/leftnav.jsx";
@@ -18,6 +18,7 @@ const Profile = () => {
   const [user, setUser] = useState({});
   const [showFollowing, setShowFollowing] = useState(false);
   const [showFollowers, setShowFollowers] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     axios
@@ -47,7 +48,7 @@ const Profile = () => {
     return () => {
       document.removeEventListener("mousedown", handler);
     };
-  });
+  }, [location]);
 
   const formatBioWithLineBreaks = (bio) => {
     return bio?.replace(/\n/g, "<br>");

@@ -2,14 +2,17 @@ import Saved from "./assets/Saved";
 import Video from "./assets/Video.jsx";
 import Grid from "./assets/Grid.jsx";
 import UserPosts from "../components/UserPosts.jsx";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import FollowersList from "../components/FollowersList.jsx";
+import FollowingList from "../components/FollowingList.jsx";
 
 const ViewProfile = () => {
   const [activeIndex, setActiveIndex] = useState(0);
-
+  const [showFollowing, setShowFollowing] = useState(false);
+  const [showFollowers, setShowFollowers] = useState(false);
   const [user, setUser] = useState({});
   const { id } = useParams();
 
@@ -25,6 +28,25 @@ const ViewProfile = () => {
         console.error(error);
       });
   }, [id]);
+
+  let followingRef = useRef();
+  let followersRef = useRef();
+
+  useEffect(() => {
+    let handler = (e) => {
+      if (!followingRef.current.contains(e.target)) {
+        setShowFollowing(false);
+      }
+      if (!followersRef.current.contains(e.target)) {
+        setShowFollowers(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+
+    return () => {
+      document.removeEventListener("mousedown", handler);
+    };
+  });
 
   const handleVideoClick = (index) => {
     setActiveIndex(index);
@@ -66,13 +88,33 @@ const ViewProfile = () => {
           <h2>{user?.profile?.posts.length}</h2>
           <h3>Posts</h3>
         </div>
-        <div className="followers px-10 text-center">
-          <h2>{user?.profile?.followers.length}</h2>
-          <h3>Followers</h3>
+        <div ref={followersRef}>
+          {showFollowers ? (
+            <FollowersList followers={user.profile.followers} />
+          ) : (
+            ""
+          )}
+          <div
+            onClick={() => setShowFollowers(!showFollowers)}
+            className="followers px-10 text-center leading-4 cursor-pointer"
+          >
+            <h2>{user?.profile?.followers.length}</h2>
+            <h3>Followers</h3>
+          </div>
         </div>
-        <div className="following px-10 text-center">
-          <h2>{user?.profile?.following.length}</h2>
-          <h3>Following</h3>
+        <div ref={followingRef}>
+          {showFollowing ? (
+            <FollowingList following={user.profile.following} />
+          ) : (
+            ""
+          )}
+          <div
+            onClick={() => setShowFollowing(!showFollowing)}
+            className="following px-10 text-center leading-4 cursor-pointer"
+          >
+            <h2>{user?.profile?.following.length}</h2>
+            <h3>Following</h3>
+          </div>
         </div>
       </div>
       <hr className="my-5" />
