@@ -105,7 +105,11 @@ const Profile = () => {
             <h3>Posts</h3>
           </div>
           <div ref={followersRef}>
-            {showFollowers ? <FollowersList userId={user._id} /> : ""}
+            {showFollowers ? (
+              <FollowersList followers={user.profile.followers} />
+            ) : (
+              ""
+            )}
             <div
               onClick={() => setShowFollowers(!showFollowers)}
               className="followers px-10 text-center leading-4 cursor-pointer"
@@ -116,7 +120,11 @@ const Profile = () => {
           </div>
 
           <div ref={followingRef}>
-            {showFollowing ? <FollowingList following={user.profile.following} /> : ""}
+            {showFollowing ? (
+              <FollowingList following={user.profile.following} />
+            ) : (
+              ""
+            )}
             <div
               onClick={() => setShowFollowing(!showFollowing)}
               className="following px-10 text-center leading-4 cursor-pointer"
