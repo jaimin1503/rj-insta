@@ -78,7 +78,7 @@ const Profile = () => {
     <div className=" h-screen flex overflow-hidden">
       <div className="hidden sm:block">
         {" "}
-        <Leftnav user={user} />
+        <Leftnav />
       </div>
       <div className="w-full sm:w-[85vw] overflow-y-scroll">
         <div className="profile_row1 flex p-5 ">

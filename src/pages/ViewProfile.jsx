@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-
+import Leftnav from "../components/leftnav.jsx";
 const ViewProfile = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -31,7 +31,12 @@ const ViewProfile = () => {
   };
   const posts = user.profile?.posts || [];
   return (
-    <div>
+    <div className=" h-screen flex overflow-hidden">
+      <div className="hidden sm:block">
+        {" "}
+        <Leftnav />
+      </div>
+      <div className="w-full sm:w-[85vw] overflow-y-scroll">
       <div className="profile_row1 flex p-5">
         <div className="profile_photo mr-5">
           <img
@@ -101,6 +106,7 @@ const ViewProfile = () => {
       <div className="posts my-5">
         <UserPosts posts={posts} user={user} />
       </div>
+    </div>
     </div>
   );
 };

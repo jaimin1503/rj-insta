@@ -4,11 +4,12 @@ import Leftnavitem from "./leftnavitem";
 import { useNavigate } from "react-router";
 import { Context } from "../context/contextApi";
 import instagramlogo from "./assets/writtenlogo.jpg";
-function Leftnav({ user }) {
+import { useSelector } from "react-redux";
+function Leftnav() {
   const navigate = useNavigate();
   const { selectedCategory, setSelectedCategory, mobileMenu } =
     useContext(Context);
-
+    const { user } = useSelector((state) => state.user);
   const clickHandler = (name, type) => {
     switch (type) {
       case "explore":
@@ -46,8 +47,8 @@ function Leftnav({ user }) {
           );
         })}
         <div className="user_info flex  items-start   ">
-          <div className=" flex">
-            <div className="profile_photo mr-5 my-auto">
+          <div className=" flex cursor-pointer " onClick={()=>{navigate("/profile")}}>
+            <div className="profile_photo mr-5 my-auto ">
               <img
                 className="object-cover rounded-full w-[35px] h-[35px]"
                 src={user?.profile?.profilephoto}
