@@ -11,6 +11,10 @@ export const getuserbyid = async (req, res) => {
           path: "posts",
           model: "Post",
         },
+        populate:{
+          path:"follower",
+          model:"User"
+        }
       });
 
       if (user) {
