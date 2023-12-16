@@ -12,24 +12,40 @@ import VideoPage from "./VideoPage.jsx";
 import FollowingList from "../components/FollowingList.jsx";
 import FollowersList from "../components/FollowersList.jsx";
 import default_pic from "./assets/profilephoto.webp";
-
+import { useSelector, useDispatch } from "react-redux";
+import {getuser} from "../reducers/userReducer.js"
+import {fetchuserdata} from "../utils/fetchuserdata.js"
 const Profile = () => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [user, setUser] = useState({});
+  // const [user, setUser] = useState({});
   const [showFollowing, setShowFollowing] = useState(false);
   const [showFollowers, setShowFollowers] = useState(false);
-  const location = useLocation();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
+  console.log("before data",user);
 
   useEffect(() => {
     axios
       .get("http://localhost:5555/user/getuser", { withCredentials: true })
       .then((res) => {
-        setUser(res.data.user);
+        // setUser(res.data.user);
+        dispatch(getuser(res.data.user))
+        console.log("afterdata",user)
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:5555/user/getuser", { withCredentials: true })
+  //     .then((res) => {
+  //       setUser(res.data.user);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }, []);
 
   let followingRef = useRef();
   let followersRef = useRef();
@@ -62,7 +78,7 @@ const Profile = () => {
     <div className=" h-screen flex overflow-hidden">
       <div className="hidden sm:block">
         {" "}
-        <Leftnav user={user} />
+        <Leftnav />
       </div>
       <div className="w-full sm:w-[85vw] overflow-y-scroll">
         <div className="profile_row1 flex p-5 ">
