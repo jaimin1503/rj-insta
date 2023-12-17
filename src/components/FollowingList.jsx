@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useState } from "react";
 
 function FollowingList() {
   const { user } = useSelector((state) => state.user);
+  const [follow, setFollow] = useState(false);
 
   const handleFollow = (id) => {
     axios
@@ -15,7 +17,10 @@ function FollowingList() {
         }
       )
       .then((res) => {
-        console.log(res.data.message);
+        if (res.status === 200) {
+          setFollow(true);
+          console.log(res.data.message);
+        }
       })
       .catch((error) => {
         console.error(error);
@@ -24,7 +29,7 @@ function FollowingList() {
 
   return (
     <div>
-      <div className="following absolute top-[50%] left-[50%] w-[65vw] translate-x-[-50%] translate-y-[-50%] z-10 bg-white rounded-lg shadow-xl">
+      <div className="following absolute top-[50%] left-[50%] w-[65vw] translate-x-[-50%] translate-y-[-50%] z-10 bg-white rounded-lg shadow-xl sm:w-[350px] ">
         <div className=" border-b p-2 row1 flex justify-center items-center">
           <p className="p-2">Following</p>
         </div>
@@ -52,9 +57,13 @@ function FollowingList() {
                     onClick={() => {
                       handleFollow(follow._id);
                     }}
-                    className=" cursor-pointer py-2 px-5 bg-gray-300 rounded-lg"
+                    className={`py-1 px-5 text-white rounded-lg cursor-pointer mr-2 ${
+                      !follow
+                        ? " bg-blue-500 hover:bg-blue-600 "
+                        : "bg-gray-400 hover:bg-gray-500"
+                    }`}
                   >
-                    Following
+                    {!follow ? "Follow" : "Following"}
                   </button>
                 </div>
               </div>

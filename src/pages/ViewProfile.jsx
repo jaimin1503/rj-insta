@@ -9,7 +9,6 @@ import { Link } from "react-router-dom";
 import Leftnav from "../components/leftnav.jsx";
 import FollowersList from "../components/FollowersList.jsx";
 import FollowingList from "../components/FollowingList.jsx";
-import { useSelector } from "react-redux";
 
 const ViewProfile = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -18,7 +17,6 @@ const ViewProfile = () => {
   const [viewUser, setViewUser] = useState({});
   const { id } = useParams();
   const location = useLocation();
-  const { user } = useSelector((state) => state.user);
   const [follow, setFollow] = useState(false);
 
   useEffect(() => {
@@ -63,7 +61,10 @@ const ViewProfile = () => {
         }
       )
       .then((res) => {
-        console.log(res.data.message);
+        if (res.status === 200) {
+          setFollow(true);
+          console.log(res.data.message);
+        }
       })
       .catch((error) => {
         console.error(error);
@@ -135,16 +136,12 @@ const ViewProfile = () => {
             <h3>Posts</h3>
           </div>
           <div ref={followersRef}>
-            {showFollowers ? (
-              <FollowersList followers={viewUser.profile.followers} />
-            ) : (
-              ""
-            )}
+            {showFollowers ? <FollowersList /> : ""}
             <div
               onClick={() => setShowFollowers(!showFollowers)}
               className="followers px-10 text-center leading-4 cursor-pointer"
             >
-              <h2>{viewUser?.profile?.followers.length}</h2>
+              <h2>{viewUser?.profile?.followers?.length}</h2>
               <h3>Followers</h3>
             </div>
           </div>

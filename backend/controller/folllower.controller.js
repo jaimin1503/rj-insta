@@ -1,5 +1,3 @@
-import Follower from "../model/follower.model.js";
-import Following from "../model/following.model.js";
 import User from "../model/user.model.js";
 import Profile from "../model/profile.model.js";
 
