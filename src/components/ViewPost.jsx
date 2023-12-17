@@ -194,7 +194,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
                           navigate(`/profile`);
                         }}
                       >
-                        {comment?.user?.username}and{user.username}
+                        {comment?.user?.username}
                       </span>
                     ) : (
                       // <Link to={`/viewprofile/${comment?.user?._id}`}>
@@ -204,7 +204,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
                           navigate(`/viewprofile/${comment?.user?._id}`);
                         }}
                       >
-                        {comment?.user?.username}and{user.username}
+                        {comment?.user?.username}
                       </span>
                       // </Link>
                     )}
