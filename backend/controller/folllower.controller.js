@@ -7,57 +7,74 @@ export const follow = async (req, res) => {
   try {
     const followerid = req.params.followid;
     const userid = req.user.userid;
-
-    const followuser = await User.findById(followerid);
-    let followupdatedprofile;
-    let userupdatedprofile;
-
-    const user = await User.findById(userid);
-    if (user) {
-      const userprofileid = user.profile;
-      const userprofile = await Profile.findById(userprofileid);
-      const followingarray = userprofile.following;
-      if (!followingarray.includes(followerid)) {
-        userupdatedprofile = await Profile.findByIdAndUpdate(
-          userprofileid,
-          { $push: { following: followerid } },
-          { new: true }
-        );
-      } else {
-        return res.status(400).json({
-          success: false,
-          message: "you are already follow this guy",
-        });
-      }
-    } else {
+    if (followerid === userid) {
       return res.status(400).json({
         success: false,
-        message: `user is not found`,
+        message: "You cannot follow yourself",
       });
     }
-    if (followuser) {
-      const profileid = followuser.profile;
-      followupdatedprofile = await Profile.findByIdAndUpdate(
-        profileid,
+    const followuser = await User.findById(followerid);
+    if (!followuser) {
+      return res.status(404).json({
+        success: false,
+        message: "Follower not found",
+      });
+    }
+    const user = await User.findById(userid);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+    const userprofileid = user.profile;
+    const followprofileid = followuser.profile;
+    const userprofile = await Profile.findById(userprofileid);
+    if (!userprofile) {
+      return res.status(500).json({
+        success: false,
+        message: "User profile not found",
+      });
+    }
+    const followingarray = userprofile.following;
+    if (!followingarray.includes(followerid)) {
+      await Profile.findByIdAndUpdate(
+        userprofileid,
+        {$push:{following:followerid} },
+        {new:true}
+      );
+      await Profile.findByIdAndUpdate(
+        followprofileid,
         { $push: { followers: userid } },
         { new: true }
       );
+      return res.status(200).json({
+        success: true,
+        message: "followed successfully",
+        
+      });
     } else {
-      return res.status(400).json({
-        success: false,
-        message: `follower is not found`,
+      await Profile.findByIdAndUpdate(
+        userprofileid,
+        {$pull:{following:followerid} },
+        {new:true}
+      );
+      await Profile.findByIdAndUpdate(
+        followprofileid,
+        { $pull: { followers: userid } },
+        { new: true }
+      );
+      return res.status(200).json({
+        success: true,
+        message: "Unfollowed successfully",
+        
       });
     }
-    return res.status(400).json({
-      success: true,
-      message: `follow successfully`,
-      followprofile: followupdatedprofile,
-      userprofile: userupdatedprofile,
-    });
   } catch (error) {
-    res.status(400).json({
+    console.error("Error during follow:", error);
+    res.status(500).json({
       success: false,
-      message: `something went wrong while follow the user and error is ${error}`,
+      message: `Something went wrong while following the user. Error: ${error}`,
     });
   }
 };
