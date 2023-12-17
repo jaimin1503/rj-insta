@@ -19,6 +19,7 @@ const ViewProfile = () => {
   const { id } = useParams();
   const location = useLocation();
   const { user } = useSelector((state) => state.user);
+  const [follow, setFollow] = useState(false);
 
   useEffect(() => {
     axios
@@ -55,14 +56,14 @@ const ViewProfile = () => {
   const handleFollow = () => {
     axios
       .post(
-        `http://localhost:5555/user/follow/${user._id}`,
-        { followerid: user._id },
+        `http://localhost:5555/user/follow/${id}`,
+        { userid: id },
         {
           withCredentials: true,
         }
       )
-      .then(() => {
-        console.log("followed");
+      .then((res) => {
+        console.log(res.data.message);
       })
       .catch((error) => {
         console.error(error);
@@ -102,9 +103,13 @@ const ViewProfile = () => {
                 onClick={() => {
                   handleFollow();
                 }}
-                className=" py-1 px-5 bg-blue-500 hover:bg-blue-600 text-white rounded-lg cursor-pointer mr-2"
+                className={`py-1 px-5 text-white rounded-lg cursor-pointer mr-2 ${
+                  !follow
+                    ? " bg-blue-500 hover:bg-blue-600 "
+                    : "bg-gray-500 hover:bg-gray-600"
+                }`}
               >
-                Follow
+                {!follow ? "Follow" : "Following"}
               </button>
               <div className="message  py-1 px-5 bg-gray-300 hover:bg-gray-400 text-black rounded-lg cursor-pointer">
                 <Link to="/chat">

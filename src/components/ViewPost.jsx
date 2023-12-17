@@ -6,6 +6,7 @@ import Comment from "./assets/Comment";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "./UserPost.css";
+
 const ViewPost = ({ postId, setShowComponent }) => {
   const [post, setPost] = useState({});
   const navigate = useNavigate();

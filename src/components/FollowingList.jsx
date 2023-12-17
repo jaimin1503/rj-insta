@@ -5,6 +5,23 @@ import { Link } from "react-router-dom";
 function FollowingList() {
   const { user } = useSelector((state) => state.user);
 
+  const handleFollow = (id) => {
+    axios
+      .post(
+        `http://localhost:5555/user/follow/${id}`,
+        { userid: id },
+        {
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        console.log(res.data.message);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   return (
     <div>
       <div className="following absolute top-[50%] left-[50%] w-[65vw] translate-x-[-50%] translate-y-[-50%] z-10 bg-white rounded-lg shadow-xl">
@@ -31,7 +48,12 @@ function FollowingList() {
                   </p>
                 </div>
                 <div className="followButton w-[45%] flex justify-center">
-                  <button className=" cursor-pointer py-2 px-5 bg-gray-300 rounded-lg">
+                  <button
+                    onClick={() => {
+                      handleFollow(follow._id);
+                    }}
+                    className=" cursor-pointer py-2 px-5 bg-gray-300 rounded-lg"
+                  >
                     Following
                   </button>
                 </div>
