@@ -15,6 +15,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { getuser } from "../reducers/userReducer.js";
 import axios from "axios";
+
 const Profile = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [showFollowing, setShowFollowing] = useState(false);

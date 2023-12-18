@@ -1,4 +1,4 @@
-import React, { useContext, useState,useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { categories } from "../context/constant";
 import Leftnavitem from "./leftnavitem";
 import { useNavigate } from "react-router";
@@ -6,23 +6,22 @@ import { Context } from "../context/contextApi";
 import instagramlogo from "./assets/writtenlogo.jpg";
 import axios from "axios";
 function Leftnav() {
- 
   const navigate = useNavigate();
-  const [user,setUser]=useState(null);
+  const [user, setUser] = useState(null);
   const { selectedCategory, setSelectedCategory, mobileMenu } =
     useContext(Context);
-    useEffect(() => {
-      axios
-        .get("http://localhost:5555/user/getuser", { withCredentials: true })
-        .then((res) => {
-          setUser(res.data.user);
-          // dispatch(getuser(res.data.user));
-          console.log("afterdata", user);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }, []);
+  useEffect(() => {
+    axios
+      .get("http://localhost:5555/user/getuser", { withCredentials: true })
+      .then((res) => {
+        setUser(res.data.user);
+        // dispatch(getuser(res.data.user));
+        console.log("afterdata", user);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
   const clickHandler = (name, type) => {
     switch (type) {
       case "explore":
@@ -60,7 +59,12 @@ function Leftnav() {
           );
         })}
         <div className="user_info flex  items-start   ">
-          <div className=" flex cursor-pointer " onClick={()=>{navigate("/profile")}}>
+          <div
+            className=" flex cursor-pointer "
+            onClick={() => {
+              navigate("/profile");
+            }}
+          >
             <div className="profile_photo mr-5 my-auto ">
               <img
                 className="object-cover rounded-full w-[35px] h-[35px]"
@@ -68,7 +72,7 @@ function Leftnav() {
                 alt="Profile_Pic"
               />
             </div>
-            <p>Profile</p>
+            <p className=" text-xl">Profile</p>
           </div>
         </div>
       </div>

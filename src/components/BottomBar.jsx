@@ -20,7 +20,9 @@ const BottomBar = () => {
           </Link>
         </div>
         <div className=" cursor-pointer">
-          <Create />
+          <Link to="/createpost">
+            <Create />
+          </Link>
         </div>
         <div className=" cursor-pointer">
           <Link to="/video">

@@ -9,24 +9,26 @@ import ExplorePage from "./pages/ExplorePage";
 import ChatPage from "./pages/ChatPage";
 import VideoPage from "./pages/VideoPage";
 import { AppContext } from "./context/contextApi";
+import CreatePost from "./components/createpost/CreatePost";
+
 function App() {
   return (
     <AppContext>
- <div>
-      <Routes>
-        <Route path="/" element={<SignIn />}></Route>
-        <Route path="/home" element={<Home />}></Route>
-        <Route path="/signup" element={<SignUp />}></Route>
-        <Route path="/profile" element={<Profile />}></Route>
-        <Route path="/explore" element={<ExplorePage />}></Route>
-        <Route path="/chat" element={<ChatPage />}></Route>
-        <Route path="/video" element={<VideoPage />}></Route>
-        <Route path="/editprofile/:id" element={<EditProfile />}></Route>
-        <Route path="/viewprofile/:id" element={<ViewProfile />}></Route>
-      </Routes>
-    </div>
+      <div>
+        <Routes>
+          <Route path="/" element={<SignIn />}></Route>
+          <Route path="/home" element={<Home />}></Route>
+          <Route path="/signup" element={<SignUp />}></Route>
+          <Route path="/profile" element={<Profile />}></Route>
+          <Route path="/explore" element={<ExplorePage />}></Route>
+          <Route path="/chat" element={<ChatPage />}></Route>
+          <Route path="/video" element={<VideoPage />}></Route>
+          <Route path="/createpost" element={<CreatePost />}></Route>
+          <Route path="/editprofile/:id" element={<EditProfile />}></Route>
+          <Route path="/viewprofile/:id" element={<ViewProfile />}></Route>
+        </Routes>
+      </div>
     </AppContext>
-   
   );
 }
 export default App;
