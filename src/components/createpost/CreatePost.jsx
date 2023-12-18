@@ -1,17 +1,19 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import PostOverView from "./PostOverView";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const CreatePost = () => {
   const [url, setUrl] = useState("");
   const [image, setImage] = useState(null);
   const [showpost, setShowpost] = useState(false);
+  const navigate = useNavigate();
 
   const handleImageChange = useCallback((e) => {
     const file = e.target.files[0];
     setImage(file);
     setShowpost(true);
   }, []);
-  console.log(image);
 
   const handleImageUpload = useCallback(async () => {
     try {
@@ -33,14 +35,31 @@ const CreatePost = () => {
       }
       const responseData = await response.json();
       setUrl(responseData.url);
+      console.log("url is",url);
+      console.log("response of could",responseData.url);
+      axios
+        .post(
+          `http://localhost:5555/user/createpost`,
+          { posturl: responseData.url },
+          { withCredentials: true }
+        )
+        .then((res) => {
+          console.log(res.data.message);
+          navigate("/profile");
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     } catch (error) {
       console.error("Error while uploading image:", error);
     }
   }, [image]);
+
+  //console.log(url);
   return (
     <>
       <div className="flex justify-center items-center w-screen h-screen">
-        <div className="createpost max-w-sm h-[80vh] w-[80vw] bg-gray-100 rounded-xl flex justify-center flex-col items-center">
+        <div className="createpost max-w-sm h-[80vh] w-[85vw] bg-gray-100 rounded-xl flex justify-center flex-col items-center shadow-xl ">
           <div className="image pb-10">
             <svg
               ariaLabel="Icon to represent media such as images or videos"
@@ -82,7 +101,9 @@ const CreatePost = () => {
               Select From Computer
             </label>
           </div>
-          {showpost && <PostOverView image={image} />}
+          {showpost && (
+            <PostOverView image={image} upload={handleImageUpload} url={url} />
+          )}
         </div>
       </div>
     </>
