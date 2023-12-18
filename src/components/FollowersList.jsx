@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 function FollowersList() {
   const { user } = useSelector((state) => state.user);
-
+console.log("inside follower list",user)
   return (
     <div>
       <div className="following absolute top-[50%] left-[50%] w-[65vw] translate-x-[-50%] translate-y-[-50%] z-10 bg-white rounded-lg shadow-xl sm:w-[350px] ">

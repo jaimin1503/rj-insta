@@ -1,15 +1,28 @@
-import React, { useContext } from "react";
+import React, { useContext, useState,useEffect } from "react";
 import { categories } from "../context/constant";
 import Leftnavitem from "./leftnavitem";
 import { useNavigate } from "react-router";
 import { Context } from "../context/contextApi";
 import instagramlogo from "./assets/writtenlogo.jpg";
-import { useSelector } from "react-redux";
+import axios from "axios";
 function Leftnav() {
+ 
   const navigate = useNavigate();
+  const [user,setUser]=useState(null);
   const { selectedCategory, setSelectedCategory, mobileMenu } =
     useContext(Context);
-    const { user } = useSelector((state) => state.user);
+    useEffect(() => {
+      axios
+        .get("http://localhost:5555/user/getuser", { withCredentials: true })
+        .then((res) => {
+          setUser(res.data.user);
+          // dispatch(getuser(res.data.user));
+          console.log("afterdata", user);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }, []);
   const clickHandler = (name, type) => {
     switch (type) {
       case "explore":

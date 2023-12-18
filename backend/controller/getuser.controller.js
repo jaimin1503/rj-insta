@@ -9,7 +9,13 @@ export const getuser = async (req, res) => {
         path: "profile",
         populate: [
           { path: "posts", model: "Post" },
-          { path: "followers", model: "User" },
+          {
+            path: "followers", model: "User",
+            populate: {
+              path: "profile",
+              model: "Profile",
+            },
+          },
           {
             path: "following",
             model: "User",

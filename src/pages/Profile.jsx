@@ -12,16 +12,31 @@ import FollowingList from "../components/FollowingList.jsx";
 import FollowersList from "../components/FollowersList.jsx";
 import default_pic from "./assets/profilephoto.webp";
 import { useSelector } from "react-redux";
-
+import { useDispatch } from "react-redux";
+import { getuser } from "../reducers/userReducer.js";
+import axios from "axios";
 const Profile = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [showFollowing, setShowFollowing] = useState(false);
   const [showFollowers, setShowFollowers] = useState(false);
+  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
+  console.log("user inside profile",user)
   const location = useLocation();
   let followingRef = useRef();
   let followersRef = useRef();
-
+  useEffect(() => {
+    axios
+      .get("http://localhost:5555/user/getuser", { withCredentials: true })
+      .then((res) => {
+        // setUser(res.data.user);
+        dispatch(getuser(res.data.user));
+        console.log("afterdata", user);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [showFollowers,showFollowing]);
   useEffect(() => {
     let handler = (e) => {
       if (!followingRef.current.contains(e.target)) {
@@ -50,7 +65,7 @@ const Profile = () => {
     <div className=" h-screen flex overflow-hidden">
       <div className="hidden sm:block">
         {" "}
-        <Leftnav />
+        <Leftnav  />
       </div>
       <div className="w-full sm:w-[85vw] overflow-y-scroll">
         <div className="profile_row1 flex p-5 ">

@@ -1,12 +1,13 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { useState } from "react";
-
+import { useState,useContext} from "react";
+import { Context } from "../context/contextApi";
 function FollowingList() {
   const { user } = useSelector((state) => state.user);
+  console.log("inside following ",user)
   const [follow, setFollow] = useState(false);
-
+  const{loading,setLoading}=useContext(Context)
   const handleFollow = (id) => {
     axios
       .post(
@@ -19,6 +20,8 @@ function FollowingList() {
       .then((res) => {
         if (res.status === 200) {
           setFollow(true);
+          setLoading(!loading)
+          console.log(loading)
           console.log(res.data.message);
         }
       })

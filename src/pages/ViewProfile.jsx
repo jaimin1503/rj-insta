@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import Leftnav from "../components/leftnav.jsx";
 import FollowersList from "../components/FollowersList.jsx";
 import FollowingList from "../components/FollowingList.jsx";
+import { useSelector } from "react-redux";
 
 const ViewProfile = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -18,7 +19,7 @@ const ViewProfile = () => {
   const { id } = useParams();
   const location = useLocation();
   const [follow, setFollow] = useState(false);
-
+  const {user}=useSelector((state)=>state.user)
   useEffect(() => {
     axios
       .get(`http://localhost:5555/user/getuserbyid/${id}`, {
@@ -84,7 +85,7 @@ const ViewProfile = () => {
     <div className=" h-screen flex overflow-hidden">
       <div className="hidden sm:block">
         {" "}
-        <Leftnav />
+        <Leftnav  />
       </div>
       <div className="w-full sm:w-[85vw] overflow-y-scroll">
         <div className="profile_row1 flex p-5">
