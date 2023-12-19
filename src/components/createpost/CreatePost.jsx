@@ -35,8 +35,6 @@ const CreatePost = () => {
       }
       const responseData = await response.json();
       setUrl(responseData.url);
-      console.log("url is",url);
-      console.log("response of could",responseData.url);
       axios
         .post(
           `http://localhost:5555/user/createpost`,
@@ -44,7 +42,6 @@ const CreatePost = () => {
           { withCredentials: true }
         )
         .then((res) => {
-          console.log(res.data.message);
           navigate("/profile");
         })
         .catch((error) => {
@@ -55,7 +52,7 @@ const CreatePost = () => {
     }
   }, [image]);
 
-  //console.log(url);
+
   return (
     <>
       <div className="flex justify-center items-center w-screen h-screen">

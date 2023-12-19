@@ -2,11 +2,9 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useState, useContext } from "react";
 import { Context } from "../context/contextApi";
-
-function FollowingList({ following }) {
-  const [followBtn, setFollow] = useState(false);
-  const { loading, setLoading } = useContext(Context);
-
+function FollowingList({following}) {
+  const [followbtn, setFollow] = useState(true);
+  const{loading,setLoading}=useContext(Context)
   const handleFollow = (id) => {
     axios
       .post(
@@ -18,10 +16,8 @@ function FollowingList({ following }) {
       )
       .then((res) => {
         if (res.status === 200) {
-          setFollow(true);
-          setLoading(!loading);
-          console.log(loading);
-          console.log(res.data.message);
+          setFollow(!followbtn);
+          setLoading(!loading)
         }
       })
       .catch((error) => {
@@ -60,12 +56,12 @@ function FollowingList({ following }) {
                       handleFollow(follow._id);
                     }}
                     className={`py-1 px-5 text-white rounded-lg cursor-pointer mr-2 ${
-                      !followBtn
+                      !followbtn
                         ? " bg-blue-500 hover:bg-blue-600 "
                         : "bg-gray-400 hover:bg-gray-500"
                     }`}
                   >
-                    {!followBtn ? "Follow" : "Following"}
+                    {!followbtn? "Follow" : "Following"}
                   </button>
                 </div>
               </div>

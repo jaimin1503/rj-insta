@@ -50,7 +50,7 @@ function SignIn() {
       } else {
         setError("An error occurred during login.");
       }
-      console.log(error);
+     
     }
   };
 

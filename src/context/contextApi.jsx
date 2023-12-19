@@ -18,7 +18,6 @@ export const AppContext = (props) => {
     axios
       .get("http://localhost:5555/user/getallpost", { withCredentials: true })
       .then((res) => {
-        // console.log(res);
         setSearchResults(res.data);
         setLoading(false);
       });

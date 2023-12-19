@@ -10,7 +10,7 @@ import { getPostByid } from "../controller/getPostByid.controller.js";
 import { auth } from "../middleware/auth.js";
 import { likePost } from "../controller/like.controller.js";
 import { commentpost } from "../controller/comment.controller.js";
-import { follow } from "../controller/folllower.controller.js";
+import { follow,removefollow } from "../controller/folllower.controller.js";
 import {getlikepost} from "../controller/getlikepost.controller.js";
 import {editprofile} from "../controller/editprofile.controller.js";
 import {getprofile} from "../controller/getprofile.controller.js";
@@ -27,6 +27,8 @@ router.post("/likepost/:postid", auth, likePost);
 router.get("/getlikepost/:postid", auth, getlikepost);
 router.post("/commentpost/:postid", auth, commentpost);
 router.post("/follow/:followid", auth, follow);
+router.post("/removefollow/:followid", auth, removefollow);
+
 router.put("/editprofile",auth,editprofile);
 router.get("/getprofile",auth,getprofile);
 router.get("/getprofilebyid/:profileid",auth,getprofilebyid);
