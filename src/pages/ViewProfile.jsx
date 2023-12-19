@@ -10,6 +10,8 @@ import Leftnav from "../components/leftnav.jsx";
 import FollowersList from "../components/FollowersList.jsx";
 import FollowingList from "../components/FollowingList.jsx";
 import { useSelector } from "react-redux";
+import ViewprofileFollowingList from "../components/ViewprofileFollowingList.jsx";
+import ViewprofileFollowersList from "../components/ViewprofileFollowersList.jsx";
 
 const ViewProfile = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -137,7 +139,7 @@ const ViewProfile = () => {
             <h3>Posts</h3>
           </div>
           <div ref={followersRef}>
-            {showFollowers ? <FollowersList followers={viewUser.profile.followers} /> : ""}
+            {showFollowers ? <ViewprofileFollowersList followers={viewUser.profile.followers} /> : ""}
             <div
               onClick={() => setShowFollowers(!showFollowers)}
               className="followers px-10 text-center leading-4 cursor-pointer"
@@ -148,7 +150,7 @@ const ViewProfile = () => {
           </div>
           <div ref={followingRef}>
             {showFollowing ? (
-              <FollowingList following={viewUser.profile.following} />
+              <ViewprofileFollowingList following={viewUser.profile.following} />
             ) : (
               ""
             )}

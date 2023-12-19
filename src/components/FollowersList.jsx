@@ -53,13 +53,10 @@ const handleFollow = (id) => {
                     onClick={() => {
                       handleFollow(follower._id);
                     }}
-                    className={`py-1 px-5 text-white rounded-lg cursor-pointer mr-2 ${
-                      !followbtn
-                        ? " bg-blue-500 hover:bg-blue-600 "
-                        : "bg-gray-400 hover:bg-gray-500"
-                    }`}
+                    className={`py-1 px-5 text-white rounded-lg cursor-pointer mr-2  bg-gray-400 hover:bg-gray-500"
+                    `}
                   >
-                    {!followbtn? "Follow" : "Remove"}
+                   Remove
                   </button>
                 </div>
               </div>

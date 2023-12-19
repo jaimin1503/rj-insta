@@ -7,7 +7,7 @@ import { Context } from "../context/contextApi";
 import { getuser } from "../reducers/userReducer";
 
 
-function ViewprofileFollowingList({ following }) {
+function ViewprofileFollowersList({ followers }) {
     const { user } = useSelector(state => state.user);
     const dispatch=useDispatch()
     const [followbtn, setFollow] = useState(true);
@@ -51,7 +51,7 @@ function ViewprofileFollowingList({ following }) {
                     <p className="p-2">Following</p>
                 </div>
                 <div className="list">
-                    {following?.map((follow) => (
+                    {followers?.map((follow) => (
                         <div key={follow._id}>
                             <div className="container flex items-center py-1 m-3">
                                 <div className="image flex justify-center items-center w-[20%] ">
@@ -98,4 +98,4 @@ function ViewprofileFollowingList({ following }) {
         </div>
     );
 }
-export default ViewprofileFollowingList;
+export default ViewprofileFollowersList;
