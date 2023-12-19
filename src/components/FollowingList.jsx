@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useState,useContext} from "react";
 import { Context } from "../context/contextApi";
-function FollowingList() {
-  const { user } = useSelector((state) => state.user);
-  console.log("inside following ",user)
+function FollowingList({following}) {
+  // const { user } = useSelector((state) => state.user);
+  console.log("inside following ",following)
+
   const [follow, setFollow] = useState(false);
   const{loading,setLoading}=useContext(Context)
   
@@ -38,7 +39,7 @@ function FollowingList() {
           <p className="p-2">Following</p>
         </div>
         <div className="list">
-          {user?.profile?.following?.map((follow) => (
+          {following?.map((follow) => (
             <div key={follow._id}>
               <div className="container flex items-center py-1 m-3">
                 <div className="image flex justify-center items-center w-[20%] ">

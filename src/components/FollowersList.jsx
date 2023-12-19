@@ -1,9 +1,31 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import axios from "axios";
+import { useState } from "react";
+function FollowersList({followers}) {
+//   const { user } = useSelector((state) => state.user);
+console.log("inside follower list",followers)
+const [follow, setFollow] = useState(false);
 
-function FollowersList() {
-  const { user } = useSelector((state) => state.user);
-console.log("inside follower list",user)
+const handleFollow = (id) => {
+  axios
+    .post(
+      `http://localhost:5555/user/follow/${id}`,
+      { userid: id },
+      {
+        withCredentials: true,
+      }
+    )
+    .then((res) => {
+      if (res.status === 200) {
+        setFollow(true);
+        console.log(res.data.message);
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+};
   return (
     <div>
       <div className="following absolute top-[50%] left-[50%] w-[65vw] translate-x-[-50%] translate-y-[-50%] z-10 bg-white rounded-lg shadow-xl sm:w-[350px] ">
@@ -11,7 +33,7 @@ console.log("inside follower list",user)
           <p className="p-2">Followers</p>
         </div>
         <div className="list">
-          {user?.profile?.followers?.map((follower) => (
+          {followers?.map((follower) => (
             <div key={follower._id}>
               <div className="container flex items-center py-1 m-3">
                 <div className="image flex justify-center items-center w-[20%] ">

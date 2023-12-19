@@ -8,11 +8,24 @@ export const getuserbyid = async (req, res) => {
       const user = await User.findOne({ _id: userid }).populate({
         path: "profile",
         populate: [
-          { path: 'posts', model: 'Post' },
-          { path: 'followers', model: 'User' },
-          { path: 'following', model: 'User' },
+          { path: "posts", model: "Post" },
+          {
+            path: "followers", model: "User",
+            populate: {
+              path: "profile",
+              model: "Profile",
+            },
+          },
+          {
+            path: "following",
+            model: "User",
+            populate: {
+              path: "profile",
+              model: "Profile",
+            },
+          },
         ],
-      })
+      });
 
       if (user) {
         return res.status(200).json({
