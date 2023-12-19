@@ -8,6 +8,7 @@ function FollowingList() {
   console.log("inside following ",user)
   const [follow, setFollow] = useState(false);
   const{loading,setLoading}=useContext(Context)
+  
   const handleFollow = (id) => {
     axios
       .post(
