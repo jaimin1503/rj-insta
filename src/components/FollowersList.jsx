@@ -4,7 +4,7 @@ import axios from "axios";
 import { useState } from "react";
 function FollowersList({followers}) {
 //   const { user } = useSelector((state) => state.user);
-// console.log("inside follower list",followers)
+console.log("inside follower list",followers)
 const [follow, setFollow] = useState(false);
 
 const handleFollow = (id) => {
