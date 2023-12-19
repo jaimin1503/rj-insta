@@ -1,15 +1,12 @@
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { useState,useContext} from "react";
+import { useState, useContext } from "react";
 import { Context } from "../context/contextApi";
-function FollowingList({following}) {
-  // const { user } = useSelector((state) => state.user);
-  console.log("inside following ",following)
 
-  const [follow, setFollow] = useState(false);
-  const{loading,setLoading}=useContext(Context)
-  
+function FollowingList({ following }) {
+  const [followBtn, setFollow] = useState(false);
+  const { loading, setLoading } = useContext(Context);
+
   const handleFollow = (id) => {
     axios
       .post(
@@ -22,8 +19,8 @@ function FollowingList({following}) {
       .then((res) => {
         if (res.status === 200) {
           setFollow(true);
-          setLoading(!loading)
-          console.log(loading)
+          setLoading(!loading);
+          console.log(loading);
           console.log(res.data.message);
         }
       })
@@ -63,12 +60,12 @@ function FollowingList({following}) {
                       handleFollow(follow._id);
                     }}
                     className={`py-1 px-5 text-white rounded-lg cursor-pointer mr-2 ${
-                      !follow
+                      !followBtn
                         ? " bg-blue-500 hover:bg-blue-600 "
                         : "bg-gray-400 hover:bg-gray-500"
                     }`}
                   >
-                    {!follow ? "Follow" : "Following"}
+                    {!followBtn ? "Follow" : "Following"}
                   </button>
                 </div>
               </div>

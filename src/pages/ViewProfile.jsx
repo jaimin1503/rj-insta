@@ -19,7 +19,7 @@ const ViewProfile = () => {
   const { id } = useParams();
   const location = useLocation();
   const [follow, setFollow] = useState(false);
-  const { user } = useSelector((state) => state.user);
+  const {user}=useSelector((state)=>state.user)
   useEffect(() => {
     axios
       .get(`http://localhost:5555/user/getuserbyid/${id}`, {
@@ -85,7 +85,7 @@ const ViewProfile = () => {
     <div className=" h-screen flex overflow-hidden">
       <div className="hidden sm:block">
         {" "}
-        <Leftnav />
+        <Leftnav  />
       </div>
       <div className="w-full sm:w-[85vw] overflow-y-scroll">
         <div className="profile_row1 flex p-5">
@@ -108,7 +108,7 @@ const ViewProfile = () => {
                 className={`py-1 px-5 text-white rounded-lg cursor-pointer mr-2 ${
                   !follow
                     ? " bg-blue-500 hover:bg-blue-600 "
-                    : "bg-gray-400 hover:bg-gray-600"
+                    : "bg-gray-500 hover:bg-gray-600"
                 }`}
               >
                 {!follow ? "Follow" : "Following"}
@@ -137,7 +137,7 @@ const ViewProfile = () => {
             <h3>Posts</h3>
           </div>
           <div ref={followersRef}>
-            {showFollowers && <FollowersList />}
+            {showFollowers ? <FollowersList /> : ""}
             <div
               onClick={() => setShowFollowers(!showFollowers)}
               className="followers px-10 text-center leading-4 cursor-pointer"
@@ -147,7 +147,11 @@ const ViewProfile = () => {
             </div>
           </div>
           <div ref={followingRef}>
-            {showFollowing && <FollowingList />}
+            {showFollowing ? (
+              <FollowingList following={viewUser.profile.following} />
+            ) : (
+              ""
+            )}
             <div
               onClick={() => setShowFollowing(!showFollowing)}
               className="following px-10 text-center leading-4 cursor-pointer"
