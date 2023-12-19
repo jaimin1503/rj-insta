@@ -137,7 +137,7 @@ const ViewProfile = () => {
             <h3>Posts</h3>
           </div>
           <div ref={followersRef}>
-            {showFollowers ? <FollowersList /> : ""}
+            {showFollowers ? <FollowersList followers={viewUser.profile.followers} /> : ""}
             <div
               onClick={() => setShowFollowers(!showFollowers)}
               className="followers px-10 text-center leading-4 cursor-pointer"
