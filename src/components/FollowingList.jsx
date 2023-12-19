@@ -4,10 +4,7 @@ import axios from "axios";
 import { useState,useContext} from "react";
 import { Context } from "../context/contextApi";
 function FollowingList({following}) {
-  // const { user } = useSelector((state) => state.user);
-  console.log("inside following ",following)
-
-  const [follow, setFollow] = useState(false);
+  const [followbtn, setFollow] = useState(true);
   const{loading,setLoading}=useContext(Context)
   const handleFollow = (id) => {
     axios
@@ -20,10 +17,8 @@ function FollowingList({following}) {
       )
       .then((res) => {
         if (res.status === 200) {
-          setFollow(true);
+          setFollow(!followbtn);
           setLoading(!loading)
-          console.log(loading)
-          console.log(res.data.message);
         }
       })
       .catch((error) => {
@@ -62,12 +57,12 @@ function FollowingList({following}) {
                       handleFollow(follow._id);
                     }}
                     className={`py-1 px-5 text-white rounded-lg cursor-pointer mr-2 ${
-                      !follow
+                      !followbtn
                         ? " bg-blue-500 hover:bg-blue-600 "
                         : "bg-gray-400 hover:bg-gray-500"
                     }`}
                   >
-                    {!follow ? "Follow" : "Following"}
+                    {!followbtn? "Follow" : "Following"}
                   </button>
                 </div>
               </div>

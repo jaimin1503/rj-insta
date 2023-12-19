@@ -95,7 +95,6 @@ const EditProfile = () => {
         { withCredentials: true }
       )
       .then((res) => {
-        console.log(res.data.message);
         navigate("/profile");
       })
       .catch((error) => {

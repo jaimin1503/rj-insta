@@ -16,9 +16,7 @@ export const Home = () => {
     axios
       .get("http://localhost:5555/user/getuser", { withCredentials: true })
       .then((res) => {
-        // setUser(res.data.user);
         dispatch(getuser(res.data.user));
-        console.log("afterdata", user);
       })
       .catch((error) => {
         console.log(error);

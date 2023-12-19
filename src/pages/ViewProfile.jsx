@@ -26,12 +26,13 @@ const ViewProfile = () => {
         withCredentials: true,
       })
       .then((res) => {
-        setViewUser(res.data.user);
+        setViewUser(res.data.newuser);
+        setFollow(res.data.following);
       })
       .catch((error) => {
         console.error(error.message);
       });
-  }, [id]);
+  }, [id,follow]);
 
   let followingRef = useRef();
   let followersRef = useRef();
@@ -63,8 +64,7 @@ const ViewProfile = () => {
       )
       .then((res) => {
         if (res.status === 200) {
-          setFollow(true);
-          console.log(res.data.message);
+          setFollow(!follow);
         }
       })
       .catch((error) => {

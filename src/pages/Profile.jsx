@@ -22,7 +22,6 @@ const Profile = () => {
   const [showFollowers, setShowFollowers] = useState(false);
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
-  console.log("user inside profile",user)
   const location = useLocation();
   let followingRef = useRef();
   let followersRef = useRef();
@@ -32,7 +31,6 @@ const Profile = () => {
       .then((res) => {
         // setUser(res.data.user);
         dispatch(getuser(res.data.user));
-        console.log("afterdata", user);
       })
       .catch((error) => {
         console.log(error);

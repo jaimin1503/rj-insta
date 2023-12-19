@@ -3,14 +3,12 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { useState } from "react";
 function FollowersList({followers}) {
-//   const { user } = useSelector((state) => state.user);
-console.log("inside follower list",followers)
-const [follow, setFollow] = useState(false);
+const [followbtn, setFollow] = useState(true);
 
 const handleFollow = (id) => {
   axios
     .post(
-      `http://localhost:5555/user/follow/${id}`,
+      `http://localhost:5555/user/removefollow/${id}`,
       { userid: id },
       {
         withCredentials: true,
@@ -18,8 +16,7 @@ const handleFollow = (id) => {
     )
     .then((res) => {
       if (res.status === 200) {
-        setFollow(true);
-        console.log(res.data.message);
+        setFollow(!followbtn);
       }
     })
     .catch((error) => {
@@ -56,9 +53,13 @@ const handleFollow = (id) => {
                     onClick={() => {
                       handleFollow(follower._id);
                     }}
-                    className="py-1 px-5 text-white rounded-lg cursor-pointer mr-2 bg-gray-400 hover:bg-gray-500"
+                    className={`py-1 px-5 text-white rounded-lg cursor-pointer mr-2 ${
+                      !followbtn
+                        ? " bg-blue-500 hover:bg-blue-600 "
+                        : "bg-gray-400 hover:bg-gray-500"
+                    }`}
                   >
-                    Remove
+                    {!followbtn? "Follow" : "Remove"}
                   </button>
                 </div>
               </div>
