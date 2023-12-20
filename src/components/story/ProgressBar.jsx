@@ -30,7 +30,7 @@ const ProgressBar = () => {
             height: "2.5px",
             backgroundColor: "white",
             borderRadius: "5px",
-            transition: "width 0.3s ease-in-out", // Optional smooth animation
+            transition: "width 0.3s ease-in-out",
           }}
         />
       </div>
