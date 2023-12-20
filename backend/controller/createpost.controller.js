@@ -14,7 +14,7 @@ export const createpost = async (req, res) => {
       console.log("user is fatched", user);
       const profileid = user.profile;
       const post = await Post.create({
-        posturl,
+        posturl,user:userid
       });
       const updatedProfile = await Profile.findOneAndUpdate(
         { _id: profileid }, // Assuming profileid is the ID of the profile document you want to update
