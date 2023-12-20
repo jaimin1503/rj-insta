@@ -9,6 +9,7 @@ const EditProfile = () => {
   const [isDisabled, setIsDisabled] = useState(true);
   const { id } = useParams();
   const [user, setUser] = useState({});
+  console.log(id)
   const [formData, setFormData] = useState({
     profilename: "",
     bio: "",
@@ -36,7 +37,8 @@ const EditProfile = () => {
         withCredentials: true,
       })
       .then((res) => {
-        setUser(res.data.user);
+        setUser(res.data.newuser);
+        console.log(res.data.user);
       })
       .catch((error) => {
         console.error(error);
