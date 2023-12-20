@@ -10,6 +10,7 @@ import ChatPage from "./pages/ChatPage";
 import VideoPage from "./pages/VideoPage";
 import { AppContext } from "./context/contextApi";
 import CreatePost from "./components/createpost/CreatePost";
+import ViewStory from "./components/story/ViewStory";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/createpost" element={<CreatePost />}></Route>
           <Route path="/editprofile/:id" element={<EditProfile />}></Route>
           <Route path="/viewprofile/:id" element={<ViewProfile />}></Route>
+          <Route path="/viewstory" element={<ViewStory />}></Route>
         </Routes>
       </div>
     </AppContext>
