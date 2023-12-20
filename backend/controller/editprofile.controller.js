@@ -1,6 +1,5 @@
 import Profile from "../model/profile.model.js";
 import User from "../model/user.model.js";
-
 export const editprofile = async (req, res) => {
   try {
     const url = req.body.url;
@@ -8,7 +7,7 @@ export const editprofile = async (req, res) => {
     const bio = req.body.formData.bio;
     const userid = req.user.userid;
     const userdetails = await User.findById(userid);
-
+    console.log("url profilename bio userid userdetails",url,profilename,bio,userid)
     if (userdetails) {
       const profileid = userdetails.profile;
       const profileUpdate = {};
