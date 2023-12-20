@@ -3,7 +3,15 @@ export const getallpost = async (req, res) => {
   try {
     const userdetail = req.user;
     if (userdetail) {
-      const posts = await Post.find({}).populate("like").populate("comment");
+      const posts = await Post.find({})
+  .populate("like")
+  .populate("comment")
+  .populate({
+    path: "user",
+    populate: {
+      path: "profile",
+    },
+  });
 
       return res.status(200).json({
         success: true,
