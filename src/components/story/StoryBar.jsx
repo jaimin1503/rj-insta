@@ -3,31 +3,28 @@ const StoryBar = () => {
   return (
     <div className=" w-screen overflow-x-auto">
       <div className=" whitespace-nowrap w-max overflow-x-scroll flex">
-        <div className=" mx-2">
+        <div className=" m-2">
           <Story />
         </div>
-        <div className=" mx-2">
+        <div className=" m-2">
           <Story />
         </div>
-        <div className=" mx-2">
+        <div className=" m-2">
           <Story />
         </div>
-        <div className=" mx-2">
+        <div className=" m-2">
           <Story />
         </div>
-        <div className=" mx-2">
+        <div className=" m-2">
           <Story />
         </div>
-        <div className=" mx-2">
+        <div className=" m-2">
           <Story />
         </div>
-        <div className=" mx-2">
+        <div className=" m-2">
           <Story />
         </div>
-        <div className=" mx-2">
-          <Story />
-        </div>
-        <div className=" mx-2">
+        <div className=" m-2">
           <Story />
         </div>
       </div>
