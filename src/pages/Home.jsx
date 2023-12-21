@@ -8,6 +8,7 @@ import BottomBar from "../components/BottomBar.jsx";
 import { Context } from "../context/contextApi.jsx";
 import StoryBar from "../components/story/StoryBar.jsx";
 import HomepostCard from "../components/HomepostCard.jsx";
+
 export const Home = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
@@ -34,31 +35,30 @@ export const Home = () => {
       })
       .catch((error) => {
         console.log(error);
-      })
-
-  }, [])
+      });
+  }, []);
   return (
-    <div className=" h-screen flex overflow-hidden">
-      <div className="hidden sm:block">
-        {" "}
-        <Leftnav />
-      </div>
-      <div className="w-full sm:w-[85vw] overflow-y-scroll">
-        <div className="container flex flex-col items-center translate-x-[-12px]">
-          <div>
+    <div>
+      <div className="">
+        <div className="hidden sm:block sm:w-[30vw] md:w-[25vw] lg:w-[20vw] fixed ">
+          {" "}
+          <Leftnav />
+        </div>
+        <div>
+          <div className="w-[100vw] sm:w-[70vw] h-[80px] md:w-[75vw] lg:w-[80vw] sm:ml-[30vw] md:ml-[25vw] lg:ml-[20vw] px-16 sm:px-10 md:px-16 lg:px-28">
             <StoryBar />
           </div>
-          <div className="allposts w-[50%]  mt-6 flex justify-center">
-            <div className="">
-              {
-                allpost?.map((post,index) => {
-                  return <div className="mt-4" key={index}>
+          <div className="post-container overflow-y-scroll sm:ml-[30vw] md:ml-[25vw] lg:ml-[20vw]">
+            <div className=" flex flex-col items-center">
+              {allpost?.map((post, index) => {
+                return (
+                  <div className="mt-4" key={index}>
                     <HomepostCard post={post} />
                   </div>
-                })
-              }
-
+                );
+              })}
             </div>
+            ;
           </div>
         </div>
       </div>
