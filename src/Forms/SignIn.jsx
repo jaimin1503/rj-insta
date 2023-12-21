@@ -51,6 +51,7 @@ function SignIn() {
     } catch (error) {
       if (error.response && error.response.data.message) {
         setError(error.response.data.message);
+        setLoading(false)
       } else {
         setError("An error occurred during login.");
       }

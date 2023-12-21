@@ -17,6 +17,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
   const [likeCount, setLikeCount] = useState(0);
   const [comment, setComment] = useState("");
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [commentsuccess,setcommentsucess]=useState(false);
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -53,33 +54,35 @@ const ViewPost = ({ postId, setShowComponent }) => {
       )
       .then((res) => {
         setPost(res.data.post);
+        console.log(res.data.post)
         setLikeCount(res.data.post.like.length);
         setComments(res.data.post.comment);
+        console.log(res.data.post.comment)
         setLoading(false);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [postId, liked]);
+  }, [postId, liked,commentsuccess]);
 
-  useEffect(() => {
-    setLoading(true);
-    axios
-      .get(
-        `http://localhost:5555/user/getuserbyid/${post?.user}`,
+  // useEffect(() => {
+  //   setLoading(true);
+  //   axios
+  //     .get(
+  //       `http://localhost:5555/user/getuserbyid/${post?.user}`,
 
-        {
-          withCredentials: true,
-        }
-      )
-      .then((res) => {
-        setUser(res.data.newuser);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [post?.user]);
+  //       {
+  //         withCredentials: true,
+  //       }
+  //     )
+  //     .then((res) => {
+  //       setUser(res.data.newuser);
+  //       setLoading(false);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }, [post?.user]);
 
   useEffect(() => {
     setLoading(true);
@@ -102,7 +105,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
   }, [postId]);
 
   const likeClick = async () => {
-    setLoading(true);
+    // setLoading(true);
     axios
       .post(
         `http://localhost:5555/user/likepost/${postId}`,
@@ -118,7 +121,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
         } else {
           setLiked(!liked);
         }
-        setLoading(false);
+        // setLoading(false);
       })
       .catch((error) => {
         console.error(error);
@@ -144,6 +147,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
       .then((res) => {
         console.log(res.message);
         setLoading(false)
+        setcommentsucess(!commentsuccess)
       })
       .catch((error) => {
         console.error(error);
@@ -177,7 +181,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
                 <div className="profile_photo mr-5 my-auto">
                   <img
                     className="object-cover rounded-full w-[44px] h-[44px]"
-                    src={user?.profile?.profilephoto}
+                    src={post.user?.profile?.profilephoto}
                     alt="Profile_Pic"
                   />
                 </div>

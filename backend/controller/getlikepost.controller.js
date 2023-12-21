@@ -12,7 +12,7 @@ export const getlikepost = async (req, res) => {
                         message: "likepost is found "
                     })
                 } else {
-                    return res.status(400).json({
+                    return res.status(200).json({
                         success: false,
                         message: "likepost is not found "
                     })

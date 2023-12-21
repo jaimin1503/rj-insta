@@ -68,7 +68,7 @@ function HomepostCard({ post }) {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:5555/user/getlikepost/${post._id}`, {
+      .get(`http://localhost:5555/user/getlikepost/${post?._id}`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -78,6 +78,7 @@ function HomepostCard({ post }) {
         } else {
           setLiked(false);
           console.log(res.data.message);
+          setLoading(false);
         }
       })
       .catch((error) => {
@@ -90,7 +91,7 @@ function HomepostCard({ post }) {
       <div className="card rounded-lg bg-gray-100 mx-auto">
         <div className=" md:flex flex-col">
           <div className="user_info flex p-5 md:h-[20%] ">
-            <Link to={`/viewprofile/${post.user._id}`}>
+            <Link to={`/viewprofile/${post?.user?._id}`}>
               <div className="profile_photo mr-5 cursor-pointer">
                 <img
                   className="object-cover rounded-full w-[44px] h-[44px]"
@@ -101,8 +102,8 @@ function HomepostCard({ post }) {
             </Link>
             <div className="profile_info flex flex-col justify-center">
               <div className="user_name flex items-center font-medium text-base">
-                <Link to={`/viewprofile/${post.user._id}`}>
-                  <h2 className=" mr-2 text-gray-900">{post.user.username}</h2>
+                <Link to={`/viewprofile/${post?.user?._id}`}>
+                  <h2 className=" mr-2 text-gray-900">{post?.user?.username}</h2>
                 </Link>
               </div>
               <div className="location">
@@ -113,7 +114,7 @@ function HomepostCard({ post }) {
           <div className="image h-[420px] w-[340px] sm:h-[580px] sm:w-[470px]">
             <img
               className=" object-cover h-full w-full"
-              src={post.posturl}
+              src={post?.posturl}
               alt=""
             />
           </div>
@@ -121,7 +122,7 @@ function HomepostCard({ post }) {
             <div className="likes-comments flex">
               <div
                 onClick={() => {
-                  likeClick(post._id);
+                  likeClick(post?._id);
                 }}
                 className="p-2 cursor-pointer ml-2"
               >
