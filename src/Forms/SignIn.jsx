@@ -14,8 +14,10 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { FadeLoader } from "react-spinners";
 
 function SignIn() {
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -33,6 +35,7 @@ function SignIn() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError("");
+    setLoading(true);
     try {
       const response = await axios.post(
         "http://localhost:5555/user/login",
@@ -41,6 +44,7 @@ function SignIn() {
       );
       if (response.status === 200) {
         navigate("/home");
+        setLoading(false);
       } else {
         throw new Error("Unexpected response from server");
       }
@@ -50,102 +54,104 @@ function SignIn() {
       } else {
         setError("An error occurred during login.");
       }
-     
     }
   };
 
   return (
-    <ThemeProvider theme={createTheme()}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          {error && <div className="text-red-500 mb-4">{error}</div>}
+    <>
+      {loading && <FadeLoader />}
+      <ThemeProvider theme={createTheme()}>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
           <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}
+            sx={{
+              marginTop: 8,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
           >
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              value={formData.email}
-              onChange={handleChange}
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              value={formData.password}
-              onChange={handleChange}
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={formData.remember}
-                  onChange={handleChange}
-                  name="remember"
-                  color="primary"
-                />
-              }
-              label="Remember me"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign in
+            </Typography>
+            {error && <div className="text-red-500 mb-4">{error}</div>}
+            <Box
+              component="form"
+              onSubmit={handleSubmit}
+              noValidate
+              sx={{ mt: 1 }}
             >
-              Sign In
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                value={formData.email}
+                onChange={handleChange}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                value={formData.password}
+                onChange={handleChange}
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={formData.remember}
+                    onChange={handleChange}
+                    name="remember"
+                    color="primary"
+                  />
+                }
+                label="Remember me"
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Sign In
+              </Button>
+              <Grid container>
+                <Grid item xs>
+                  <Link href="#" variant="body2">
+                    Forgot password?
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Link href="/signup" variant="body2">
+                    {"Don't have an account? Sign Up"}
+                  </Link>
+                </Grid>
               </Grid>
-              <Grid item>
-                <Link href="/signup" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
+            </Box>
           </Box>
-        </Box>
-        <Typography variant="body2" color="text.secondary" align="center">
-          {"Copyright © "}
-          <Link color="inherit" href="#">
-            rj-insta
-          </Link>{" "}
-          {new Date().getFullYear()}
-          {"."}
-        </Typography>
-      </Container>
-    </ThemeProvider>
+          <Typography variant="body2" color="text.secondary" align="center">
+            {"Copyright © "}
+            <Link color="inherit" href="#">
+              rj-insta
+            </Link>{" "}
+            {new Date().getFullYear()}
+            {"."}
+          </Typography>
+        </Container>
+      </ThemeProvider>
+    </>
   );
 }
 

@@ -4,18 +4,19 @@ import axios from "axios";
 import Heart from "./assets/Heart";
 import Comment from "./assets/Comment";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 import "./UserPost.css";
+import Spinner from "./Spinner";
 
 const ViewPost = ({ postId, setShowComponent }) => {
   const [post, setPost] = useState({});
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [comments, setComments] = useState([]);
+  const [user, setUser] = useState({});
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
   const [comment, setComment] = useState("");
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-  const { user } = useSelector((state) => state.user);
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -41,6 +42,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
   }, []);
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(
         `http://localhost:5555/user/getPostByid/${postId}`,
@@ -53,6 +55,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
         setPost(res.data.post);
         setLikeCount(res.data.post.like.length);
         setComments(res.data.post.comment);
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
@@ -60,6 +63,26 @@ const ViewPost = ({ postId, setShowComponent }) => {
   }, [postId, liked]);
 
   useEffect(() => {
+    setLoading(true);
+    axios
+      .get(
+        `http://localhost:5555/user/getuserbyid/${post?.user}`,
+
+        {
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        setUser(res.data.newuser);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [post?.user]);
+
+  useEffect(() => {
+    setLoading(true);
     axios
       .get(`http://localhost:5555/user/getlikepost/${postId}`, {
         withCredentials: true,
@@ -71,6 +94,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
         } else {
           setLiked(false);
         }
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
@@ -78,6 +102,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
   }, [postId]);
 
   const likeClick = async () => {
+    setLoading(true);
     axios
       .post(
         `http://localhost:5555/user/likepost/${postId}`,
@@ -93,6 +118,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
         } else {
           setLiked(!liked);
         }
+        setLoading(false);
       })
       .catch((error) => {
         console.error(error);
@@ -106,7 +132,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
   };
 
   const handleSubmit = () => {
-    console.log("Submitted Comment:", comment);
+    setLoading(true);
     axios
       .post(
         `http://localhost:5555/user/commentpost/${postId}`,
@@ -117,6 +143,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
       )
       .then((res) => {
         console.log(res.message);
+        setLoading(false)
       })
       .catch((error) => {
         console.error(error);
@@ -128,9 +155,9 @@ const ViewPost = ({ postId, setShowComponent }) => {
 
   return windowSize.width > 670 ? (
     <div className=" filter-none">
+      {loading && <Spinner />}
       <div className="card rounded-lg bg-gray-100 mx-auto ">
         <div className="flex flex-row justify-center items-center shadow-xl bg-gray-100 h-[320px]  md:h-[480px] w-[82vw] overflow-y-scroll webkit-scrollbar">
-          {/*post*/}
           <div className="h-[320px] md:h-[480px]  w-[50%] flex justify-center items-center bg-black">
             <div className="image h-[320px] w-[240px] md:h-[480px] md:w-[360px]  flex items-center justify-center">
               <img
@@ -156,7 +183,9 @@ const ViewPost = ({ postId, setShowComponent }) => {
                 </div>
                 <div className="profile_info flex flex-col justify-center">
                   <div className="user_name flex items-center font-medium text-base">
-                    <h2 className=" mr-2 text-gray-900">{user?.username}</h2>
+                    <h2 className=" mr-2 text-gray-900">
+                      {post?.user?.username}
+                    </h2>
                   </div>
                   <div className="location">
                     <p className=" text-gray-600 text-sm">Location..</p>

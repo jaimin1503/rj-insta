@@ -1,30 +1,35 @@
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 import axios from "axios";
 import { useState } from "react";
-function FollowersList({followers}) {
-const [followbtn, setFollow] = useState(true);
+import Spinner from "./Spinner";
 
-const handleFollow = (id) => {
-  axios
-    .post(
-      `http://localhost:5555/user/removefollow/${id}`,
-      { userid: id },
-      {
-        withCredentials: true,
-      }
-    )
-    .then((res) => {
-      if (res.status === 200) {
-        setFollow(!followbtn);
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-};
+function FollowersList({ followers }) {
+  const [followbtn, setFollow] = useState(true);
+  const [loading, setLoading] = useState(false);
+
+  const handleFollow = (id) => {
+    setLoading(true);
+    axios
+      .post(
+        `http://localhost:5555/user/removefollow/${id}`,
+        { userid: id },
+        {
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          setFollow(!followbtn);
+          setLoading(false);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
   return (
     <div>
+      {loading && <Spinner />}
       <div className="following absolute top-[50%] left-[50%] w-[65vw] translate-x-[-50%] translate-y-[-50%] z-10 bg-white rounded-lg shadow-xl sm:w-[350px] ">
         <div className=" border-b p-2 row1 flex justify-center items-center">
           <p className="p-2">Followers</p>
@@ -56,7 +61,7 @@ const handleFollow = (id) => {
                     className={`py-1 px-5 text-white rounded-lg cursor-pointer mr-2  bg-gray-400 hover:bg-gray-500"
                     `}
                   >
-                   Remove
+                    Remove
                   </button>
                 </div>
               </div>

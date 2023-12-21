@@ -4,15 +4,17 @@ import { Link } from 'react-router-dom';
 import Heart from './assets/Heart';
 import Comment from './assets/Comment';
 import axios from 'axios';
+import Spinner from './Spinner';
 
 function HomepostCard({ post }) {
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(post.like.length);
   const [comment, setComment] = useState("");
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-
+  const[loading,setLoading] = useState(false);
 
   const likeClick = async (postId) => {
+    setLoading(true);
     axios
       .post(
         `http://localhost:5555/user/likepost/${postId}`,
@@ -25,6 +27,7 @@ function HomepostCard({ post }) {
         if (res.status === 200) {
           setLiked(!liked);
           setLikeCount(res.data.post.like.length);
+          setLoading(false)
         } else {
           setLiked(!liked);
         }
@@ -34,6 +37,7 @@ function HomepostCard({ post }) {
       });
   };
   useEffect(() => {
+    setLoading(true)
     axios
       .get(`http://localhost:5555/user/getlikepost/${post._id}`, {
         withCredentials: true,
@@ -41,8 +45,8 @@ function HomepostCard({ post }) {
       .then((res) => {
         if (res.status === 200) {
           setLiked(true);
-          // setLikeCount(res?.data?.post?.like?.length);
           console.log(res.data)
+          setLoading(false)
         } else {
           setLiked(false);
           console.log(res.data.message)
@@ -54,6 +58,7 @@ function HomepostCard({ post }) {
   }, []);
   return (
     <div>
+      {loading && <Spinner/>}
       <div className="card rounded-lg bg-gray-100 mx-auto">
         <div className=" md:flex flex-col">
           <div className="user_info flex p-5 md:h-[20%] ">

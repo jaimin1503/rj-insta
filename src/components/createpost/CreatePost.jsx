@@ -2,9 +2,11 @@ import { useState, useCallback } from "react";
 import PostOverView from "./PostOverView";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Spinner from "../Spinner";
 
 const CreatePost = () => {
   const [url, setUrl] = useState("");
+  const [loading, setLoading] = useState(false);
   const [image, setImage] = useState(null);
   const [showpost, setShowpost] = useState(false);
   const navigate = useNavigate();
@@ -17,6 +19,7 @@ const CreatePost = () => {
 
   const handleImageUpload = useCallback(async () => {
     try {
+      setLoading(true);
       const data = new FormData();
       data.append("file", image);
       data.append("upload_preset", "x8ekhtm9");
@@ -42,6 +45,7 @@ const CreatePost = () => {
           { withCredentials: true }
         )
         .then((res) => {
+          setLoading(false);
           navigate("/profile");
         })
         .catch((error) => {
@@ -52,9 +56,9 @@ const CreatePost = () => {
     }
   }, [image]);
 
-
   return (
     <>
+      {loading && <Spinner />}
       <div className="flex justify-center items-center w-screen h-screen">
         <div className="createpost max-w-sm h-[80vh] w-[85vw] bg-gray-100 rounded-xl flex justify-center flex-col items-center shadow-xl ">
           <div className="image pb-10">
