@@ -14,7 +14,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { FadeLoader } from "react-spinners";
+import Spinner from "../components/Spinner";
 
 function SignIn() {
   const [loading, setLoading] = useState(false);
@@ -59,7 +59,7 @@ function SignIn() {
 
   return (
     <>
-      {loading && <FadeLoader />}
+      {loading && <Spinner />}
       <ThemeProvider theme={createTheme()}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />

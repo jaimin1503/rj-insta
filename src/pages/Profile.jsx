@@ -15,7 +15,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { getuser } from "../reducers/userReducer.js";
 import axios from "axios";
-import { FadeLoader } from "react-spinners";
+import Spinner from "../components/Spinner.jsx";
 
 const Profile = () => {
   const [loading, setLoading] = useState(false);
@@ -66,7 +66,7 @@ const Profile = () => {
   const posts = user.profile?.posts || [];
   return (
     <>
-      {loading && <FadeLoader />}
+      {loading && <Spinner />}
       <div className=" h-screen flex overflow-hidden">
         <div className="hidden sm:block">
           {" "}

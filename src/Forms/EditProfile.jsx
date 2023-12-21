@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useCallback, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { FadeLoader } from "react-spinners";
+import Spinner from "../components/Spinner";
 
 const EditProfile = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -118,7 +118,7 @@ const EditProfile = () => {
 
   return (
     <>
-      {loading && <FadeLoader />}
+      {loading && <Spinner />}
       <div
         onClick={isVisible ? toggleVisibility : null}
         className="border border-gray-700 m-5 p-5 pb-10 max-w-lg mx-auto"

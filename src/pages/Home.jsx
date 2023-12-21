@@ -8,7 +8,7 @@ import BottomBar from "../components/BottomBar.jsx";
 import { Context } from "../context/contextApi.jsx";
 import StoryBar from "../components/story/StoryBar.jsx";
 import HomepostCard from "../components/HomepostCard.jsx";
-import { FadeLoader } from "react-spinners";
+import Spinner from "../components/Spinner.jsx";
 
 export const Home = () => {
   const dispatch = useDispatch();
@@ -41,7 +41,7 @@ export const Home = () => {
   }, []);
   return (
     <>
-      {loading && <FadeLoader />}
+      {isloading && <Spinner />}
       <div className=" h-screen flex overflow-hidden">
         <div className="hidden sm:block">
           {" "}

@@ -7,10 +7,9 @@ import axios from "axios";
 import { useLocation, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Leftnav from "../components/leftnav.jsx";
-import { useSelector } from "react-redux";
 import ViewprofileFollowingList from "../components/ViewprofileFollowingList.jsx";
 import ViewprofileFollowersList from "../components/ViewprofileFollowersList.jsx";
-import { FadeLoader } from "react-spinners";
+import Spinner from "../components/Spinner.jsx";
 
 const ViewProfile = () => {
   const [loading, setLoading] = useState(false);
@@ -21,7 +20,7 @@ const ViewProfile = () => {
   const { id } = useParams();
   const location = useLocation();
   const [follow, setFollow] = useState(false);
-  const { user } = useSelector((state) => state.user);
+
   useEffect(() => {
     setLoading(true);
     axios
@@ -89,7 +88,7 @@ const ViewProfile = () => {
   const posts = viewUser.profile?.posts || [];
   return (
     <>
-      {loading && <FadeLoader />}
+      {loading && <Spinner />}
       <div className=" h-screen flex overflow-hidden">
         <div className="hidden sm:block">
           {" "}

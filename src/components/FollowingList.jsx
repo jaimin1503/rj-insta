@@ -12,17 +12,19 @@ function ViewprofileFollowingList({ following }) {
   const [followbtn, setFollow] = useState(true);
   const { loading, setLoading } = useContext(Context);
   useEffect(() => {
+    setLoading(true);
     axios
       .get("http://localhost:5555/user/getuser", { withCredentials: true })
       .then((res) => {
-        // setUser(res.data.user);
         dispatch(getuser(res.data.user));
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
       });
   }, [followbtn]);
   const handleFollow = (id) => {
+    setLoading(true)
     axios
       .post(
         `http://localhost:5555/user/follow/${id}`,
@@ -35,6 +37,7 @@ function ViewprofileFollowingList({ following }) {
         if (res.status === 200) {
           setFollow(!followbtn);
           setLoading(!loading);
+          setLoading(false)
         }
         console.log(res.data.message);
       })
