@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-const ProgressBar = () => {
+const ProgressBar = ({ play }) => {
   const [progress, setProgress] = useState(0);
+  console.log(play);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -10,7 +11,7 @@ const ProgressBar = () => {
       } else {
         clearInterval(interval);
       }
-    }, 50); // Update every 50 milliseconds for a smooth transition (5 seconds / 100 steps)
+    }, 50);
 
     return () => clearInterval(interval); // Clean up the interval on unmount
   }, [progress]);
