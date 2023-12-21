@@ -23,7 +23,7 @@ const ViewStory = () => {
             alt="pp"
           />
           <div className=" opacity-80 pt-5 pb-3 progress_bar relative text-white">
-            <ProgressBar />
+            <ProgressBar play={play} />
           </div>
           <div className="user_info">
             <div className="user_photo flex items-center px-5 relative">

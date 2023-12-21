@@ -2,11 +2,10 @@ import React, { useState, useEffect } from "react";
 
 const ProgressBar = ({ play }) => {
   const [progress, setProgress] = useState(0);
-  console.log(play);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (progress < 1) {
+      if (play && progress < 1) {
         setProgress((prevProgress) => prevProgress + 0.01);
       } else {
         clearInterval(interval);
@@ -14,7 +13,7 @@ const ProgressBar = ({ play }) => {
     }, 50);
 
     return () => clearInterval(interval); // Clean up the interval on unmount
-  }, [progress]);
+  }, [progress, play]);
 
   return (
     <div className=" flex justify-center items-center">
