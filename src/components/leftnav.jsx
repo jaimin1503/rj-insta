@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import { categories } from "../context/constant";
 import Leftnavitem from "./leftnavitem";
 import { useNavigate } from "react-router";
@@ -6,11 +6,15 @@ import { Context } from "../context/contextApi";
 import instagramlogo from "./assets/writtenlogo.jpg";
 import axios from "axios";
 import Spinner from "./Spinner";
+import Search from "./assets/Search";
+import SearchCompo from "./SearchCompo";
 
 function Leftnav() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
+  const searchRef = useRef();
   const { selectedCategory, setSelectedCategory, mobileMenu } =
     useContext(Context);
   useEffect(() => {
@@ -25,6 +29,20 @@ function Leftnav() {
         console.log(error);
       });
   }, []);
+
+  useEffect(() => {
+    let handler = (e) => {
+      if (!searchRef.current.contains(e.target)) {
+        setShowSearch(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+
+    return () => {
+      document.removeEventListener("mousedown", handler);
+    };
+  }, []);
+
   const clickHandler = (name, type) => {
     switch (type) {
       case "explore":
@@ -45,7 +63,7 @@ function Leftnav() {
         <div
           className={` w-[240px] overflow-y-auto h-full py-4 text-black z-10 translate-x-[-240px] sm:translate-x-0 transition-all`}
         >
-          <div className="flex px-5 flex-col mx-auto gap-4    ">
+          <div ref={searchRef} className="flex px-5 flex-col mx-auto gap-4    ">
             <img
               src={instagramlogo}
               className="bg-white h-10 w-24 object-contain "
@@ -63,6 +81,16 @@ function Leftnav() {
                 />
               );
             })}
+            <div
+              onClick={() => setShowSearch(!showSearch)}
+              className=" flex mb-3 cursor-pointer"
+            >
+              <div>
+                <Search />
+              </div>
+              <p className="px-5 text-xl">Search</p>
+            </div>
+            {showSearch && <SearchCompo />}
             <div className="user_info flex  items-start   ">
               <div
                 className=" flex cursor-pointer "
@@ -77,7 +105,7 @@ function Leftnav() {
                     alt="Profile_Pic"
                   />
                 </div>
-                <p className=" text-xl">Profile</p>
+                <p className="text-xl">Profile</p>
               </div>
             </div>
           </div>
