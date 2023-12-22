@@ -30,10 +30,10 @@ const profileSchema = new mongoose.Schema({
       ref: "User",
     },
   ],
-  // saved: [{
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: "Saved"
-  // }]
+  saved: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Post"
+  }]
 });
 
 const Profile = mongoose.model("Profile", profileSchema);
