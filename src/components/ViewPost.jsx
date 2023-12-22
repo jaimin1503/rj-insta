@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Heart from "./assets/Heart";
@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import "./UserPost.css";
 import Spinner from "./Spinner";
 import jatu from "./assets/jatuu.jpg";
+import LikeList from "../components/LikeList";
 
 const ViewPost = ({ postId, setShowComponent }) => {
   const [post, setPost] = useState({});
@@ -19,10 +20,12 @@ const ViewPost = ({ postId, setShowComponent }) => {
   const [comment, setComment] = useState("");
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [commentsuccess, setcommentsucess] = useState(false);
+  const [showLikeList, setShowLikeList] = useState(false);
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
   });
+  const likeRef = useRef();
 
   const handleResize = () => {
     setWindowSize({
@@ -30,6 +33,22 @@ const ViewPost = ({ postId, setShowComponent }) => {
       height: window.innerHeight,
     });
   };
+
+  useEffect(() => {
+    let handler = (e) => {
+      if (!likeRef.current.contains(e.target)) {
+        setShowLikeList(false);
+      }
+      if (!likeRef.current.contains(e.target)) {
+        setShowLikeList(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+
+    return () => {
+      document.removeEventListener("mousedown", handler);
+    };
+  }, []);
 
   useEffect(() => {
     window.addEventListener("resize", handleResize);
@@ -95,6 +114,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
         if (res.status === 200) {
           setLiked(true);
           setLikeCount(res?.data?.post?.like?.length);
+          console.log(res.data.post.like);
         } else {
           setLiked(false);
         }
@@ -346,7 +366,13 @@ const ViewPost = ({ postId, setShowComponent }) => {
               </div>
             </div>
             <div className="counts flex pb-2">
-              <div className=" flex cursor-pointer">
+              <div
+                ref={likeRef}
+                onClick={() => {
+                  setShowLikeList(!showLikeList);
+                }}
+                className=" flex cursor-pointer"
+              >
                 <img
                   className=" h-[18px] w-[18px] object-cover rounded-full ml-2 -mr-2"
                   src={jatu}
@@ -367,6 +393,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
                 Liked by <span>{likeCount}</span> people
               </p>
             </div>
+            {showLikeList && <LikeList show={setShowLikeList} post={post} />}
           </div>
 
           <div className="comment border-t border-gray-300 flex">
