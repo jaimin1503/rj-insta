@@ -12,11 +12,10 @@ const UserPosts = ({ posts }) => {
 
   useEffect(() => {
     let handler = (e) => {
-      if (imgRef.current && !imgRef.current.contains(e.target)) {
+      if (!imgRef.current.contains(e.target)) {
         setShowComponent(false);
       }
     };
-
     document.addEventListener("mousedown", handler);
 
     return () => {
@@ -35,7 +34,7 @@ const UserPosts = ({ posts }) => {
   };
 
   return (
-    <div>
+    <div ref={imgRef}>
       <div className="posts flex flex-wrap">
         {posts.map((post, index) => (
           <div key={index} className="w-1/3 p-[2px]">
@@ -50,26 +49,27 @@ const UserPosts = ({ posts }) => {
           </div>
         ))}
       </div>
-      {showComponent && (
-        <div
-          className=" rounded-lg"
-          ref={imgRef}
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            backgroundColor: "white",
-            boxShadow: "0 2px 5px rgba(0, 0, 0, 0.2)",
-          }}
-        >
-          <ViewPost
-            postId={postId}
-            setShowComponent={setShowComponent}
-            user={user}
-          />
-        </div>
-      )}
+      <div>
+        {showComponent && (
+          <div
+            className=" rounded-lg"
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              backgroundColor: "white",
+              boxShadow: "0 2px 5px rgba(0, 0, 0, 0.2)",
+            }}
+          >
+            <ViewPost
+              postId={postId}
+              setShowComponent={setShowComponent}
+              user={user}
+            />
+          </div>
+        )}
+      </div>
     </div>
   );
 };

@@ -146,12 +146,6 @@ const EditProfile = () => {
             {isVisible && (
               <div onClick={(e) => e.stopPropagation()}>
                 <div className="flex flex-col border rounded-lg bg-gray-300 top-[15%] absolute max-w-xs items-center z-20">
-                  {/* <h2
-                  onClick={handleUpdateClick}
-                  className="p-5 text-blue-600 border-b border-gray-400"
-                >
-                  Update Profile Picture
-                </h2> */}
                   <div onClick={(e) => e.stopPropagation()} className="p-5">
                     <input
                       type="file"
