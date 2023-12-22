@@ -35,16 +35,16 @@ export const getallpost = async (req, res) => {
         options: { strictPopulate: false },
       });
     
-
+      // posts.user.password=undefined
       return res.status(200).json({
         success: true,
-        message: "user detail fatched successfully",
+        message: "all post fatched successfully",
         posts: posts,
       });
     } else {
       return res.status(400).json({
         success: false,
-        message: "userdetails is not find in req",
+        message: "please login or signup first",
       });
     }
   } catch (error) {

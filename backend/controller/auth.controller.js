@@ -66,7 +66,7 @@ export const signup = async (req, res) => {
       password: hashedpassword,
       profile,
     });
-
+    user.password=undefined
     return res.status(200).json({
       success: true,
       message: "User Created Successfully",
