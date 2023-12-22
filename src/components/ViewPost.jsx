@@ -6,6 +6,7 @@ import Comment from "./assets/Comment";
 import { Link } from "react-router-dom";
 import "./UserPost.css";
 import Spinner from "./Spinner";
+import jatu from "./assets/jatuu.jpg";
 
 const ViewPost = ({ postId, setShowComponent }) => {
   const [post, setPost] = useState({});
@@ -17,7 +18,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
   const [likeCount, setLikeCount] = useState(0);
   const [comment, setComment] = useState("");
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-  const [commentsuccess,setcommentsucess]=useState(false);
+  const [commentsuccess, setcommentsucess] = useState(false);
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -54,16 +55,16 @@ const ViewPost = ({ postId, setShowComponent }) => {
       )
       .then((res) => {
         setPost(res.data.post);
-        console.log(res.data.post)
+        console.log(res.data.post);
         setLikeCount(res.data.post.like.length);
         setComments(res.data.post.comment);
-        console.log(res.data.post.comment)
+        console.log(res.data.post.comment);
         setLoading(false);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [postId, liked,commentsuccess]);
+  }, [postId, liked, commentsuccess]);
 
   // useEffect(() => {
   //   setLoading(true);
@@ -146,8 +147,8 @@ const ViewPost = ({ postId, setShowComponent }) => {
       )
       .then((res) => {
         console.log(res.message);
-        setLoading(false)
-        setcommentsucess(!commentsuccess)
+        setLoading(false);
+        setcommentsucess(!commentsuccess);
       })
       .catch((error) => {
         console.error(error);
@@ -258,8 +259,25 @@ const ViewPost = ({ postId, setShowComponent }) => {
                   <Comment />
                 </div>
               </div>
-              <div className="counts">
-                <p className=" text-sm mx-5 pb-2">
+              <div className="counts flex items-center mb-2">
+                <div className=" flex cursor-pointer">
+                  <img
+                    className=" h-[18px] w-[18px] object-cover rounded-full ml-2 -mr-2"
+                    src={jatu}
+                    alt="kljhkj"
+                  />
+                  <img
+                    className=" h-[18px] w-[18px] object-cover rounded-full -mr-2"
+                    src={jatu}
+                    alt="kljhkj"
+                  />
+                  <img
+                    className=" h-[18px] w-[18px] object-cover rounded-full mr-2"
+                    src={jatu}
+                    alt="kljhkj"
+                  />
+                </div>
+                <p className=" text-sm mr-5">
                   Liked by <span>{likeCount}</span> people
                 </p>
               </div>
@@ -327,8 +345,25 @@ const ViewPost = ({ postId, setShowComponent }) => {
                 <Comment />
               </div>
             </div>
-            <div className="counts">
-              <p className=" text-sm mx-5 pb-2">
+            <div className="counts flex pb-2">
+              <div className=" flex cursor-pointer">
+                <img
+                  className=" h-[18px] w-[18px] object-cover rounded-full ml-2 -mr-2"
+                  src={jatu}
+                  alt="kljhkj"
+                />
+                <img
+                  className=" h-[18px] w-[18px] object-cover rounded-full -mr-2"
+                  src={jatu}
+                  alt="kljhkj"
+                />
+                <img
+                  className=" h-[18px] w-[18px] object-cover rounded-full mr-2"
+                  src={jatu}
+                  alt="kljhkj"
+                />
+              </div>
+              <p className=" text-sm">
                 Liked by <span>{likeCount}</span> people
               </p>
             </div>
