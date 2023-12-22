@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Heart from "./assets/Heart";
 import Comment from "./assets/Comment";
 import axios from "axios";
 import Spinner from "./Spinner";
+import ViewPost from "./ViewPost";
 
 function HomepostCard({ post }) {
   const [liked, setLiked] = useState(false);
@@ -12,13 +13,28 @@ function HomepostCard({ post }) {
   const [comment, setComment] = useState("");
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [showPost, setShowPost] = useState(false);
   const postId = post._id;
+  const postRef = useRef();
 
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
     setComment(inputValue);
     setIsButtonDisabled(inputValue.trim() === "");
   };
+
+  useEffect(() => {
+    let handler = (e) => {
+      if (!postRef.current.contains(e.target)) {
+        setShowPost(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+
+    return () => {
+      document.removeEventListener("mousedown", handler);
+    };
+  }, []);
 
   const handleSubmit = () => {
     setLoading(true);
@@ -103,7 +119,9 @@ function HomepostCard({ post }) {
             <div className="profile_info flex flex-col justify-center">
               <div className="user_name flex items-center font-medium text-base">
                 <Link to={`/viewprofile/${post?.user?._id}`}>
-                  <h2 className=" mr-2 text-gray-900">{post?.user?.username}</h2>
+                  <h2 className=" mr-2 text-gray-900">
+                    {post?.user?.username}
+                  </h2>
                 </Link>
               </div>
               <div className="location">
@@ -129,10 +147,30 @@ function HomepostCard({ post }) {
                 <Heart liked={liked} />
               </div>
 
-              <div className="p-2 cursor-pointer">
-                <Comment  />
+              <div ref={postRef} className="p-2 cursor-pointer">
+                <div
+                  onClick={() => {
+                    setShowPost(!showPost);
+                  }}
+                >
+                  {" "}
+                  <Comment />
+                </div>
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    backgroundColor: "white",
+                    boxShadow: "0 2px 5px rgba(0, 0, 0, 0.2)",
+                  }}
+                >
+                  {showPost && <ViewPost postId={postId} />}
+                </div>
               </div>
             </div>
+
             <div className="counts">
               <p className=" text-sm mx-5 pb-2">
                 Liked by <span>{likeCount}</span> people
