@@ -29,7 +29,7 @@ export const follow = async (req, res) => {
     const followprofileid = followuser.profile;
     const userprofile = await Profile.findById(userprofileid);
     if (!userprofile) {
-      return res.status(500).json({
+      return res.status(404).json({
         success: false,
         message: "User profile not found",
       });
@@ -104,7 +104,7 @@ export const removefollow = async (req, res) => {
     const followprofileid = followuser.profile;
     const userprofile = await Profile.findById(userprofileid);
     if (!userprofile) {
-      return res.status(500).json({
+      return res.status(404).json({
         success: false,
         message: "User profile not found",
       });

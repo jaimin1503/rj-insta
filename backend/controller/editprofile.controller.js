@@ -36,7 +36,7 @@ export const editprofile = async (req, res) => {
         profile: updatesprofile,
       });
     } else {
-      return res.status(400).json({
+      return res.status(404).json({
         success: false,
         message: "User not found",
       });

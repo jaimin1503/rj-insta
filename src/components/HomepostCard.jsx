@@ -71,6 +71,7 @@ function HomepostCard({ post }) {
       .then((res) => {
         if (res.status === 200) {
           setLiked(!liked);
+          console.log(res.data.post)
           setLikeCount(res.data.post.like.length);
           setLoading(false);
         } else {
@@ -88,8 +89,9 @@ function HomepostCard({ post }) {
         withCredentials: true,
       })
       .then((res) => {
-        if (res.status === 200) {
+        if (res.data.liked) {
           setLiked(true);
+          
           setLoading(false);
         } else {
           setLiked(false);

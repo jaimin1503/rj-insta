@@ -28,6 +28,7 @@ export const getuserbyid = async (req, res) => {
       });
       
       if (newuser) {
+        newuser.password=undefined
         const isPresant=newuser.profile.followers.some(follower=>follower._id==userid)
         return res.status(200).json({
           success: true,

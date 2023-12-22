@@ -71,10 +71,10 @@ const ViewPost = ({ postId, setShowComponent }) => {
       )
       .then((res) => {
         setPost(res.data.post);
-        console.log(res.data.post);
+        // console.log(res.data.post);
         setLikeCount(res.data.post.like.length);
         setComments(res.data.post.comment);
-        console.log(res.data.post.comment);
+        // console.log(res.data.post.comment);
         setLoading(false);
       })
       .catch((error) => {
@@ -89,10 +89,10 @@ const ViewPost = ({ postId, setShowComponent }) => {
         withCredentials: true,
       })
       .then((res) => {
-        if (res.status === 200) {
+        if (res.data.liked) {
           setLiked(true);
           setLikeCount(res?.data?.post?.like?.length);
-          console.log(res?.data?.post?.like);
+          // console.log(res?.data?.post?.like);
         } else {
           setLiked(false);
         }
@@ -144,7 +144,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
         }
       )
       .then((res) => {
-        console.log(res.message);
+        // console.log(res.message);
         setLoading(false);
         setcommentsucess(!commentsuccess);
       })
