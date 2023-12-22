@@ -130,7 +130,7 @@ function HomepostCard({ post }) {
               </div>
 
               <div className="p-2 cursor-pointer">
-                <Comment />
+                <Comment  />
               </div>
             </div>
             <div className="counts">
