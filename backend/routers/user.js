@@ -15,7 +15,8 @@ import {getlikepost} from "../controller/getlikepost.controller.js";
 import {editprofile} from "../controller/editprofile.controller.js";
 import {getprofile} from "../controller/getprofile.controller.js";
 import {getprofilebyid} from "../controller/getprofilebyid.controller.js";
-
+import {savedpost} from "../controller/savepost.controller.js"
+import { getalluser } from "../controller/getalluser.controller.js";
 router.post("/signup", signup);
 router.post("/login", login);
 router.get("/getuser", auth, getuser);
@@ -28,8 +29,10 @@ router.get("/getlikepost/:postid", auth, getlikepost);
 router.post("/commentpost/:postid", auth, commentpost);
 router.post("/follow/:followid", auth, follow);
 router.post("/removefollow/:followid", auth, removefollow);
-
+router.post("/savedpost/:postid", auth, savedpost);
 router.put("/editprofile",auth,editprofile);
 router.get("/getprofile",auth,getprofile);
 router.get("/getprofilebyid/:profileid",auth,getprofilebyid);
+router.get("/getalluser",auth,getalluser);
+
 export default router;

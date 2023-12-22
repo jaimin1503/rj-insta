@@ -15,7 +15,7 @@ const LikeList = ({ show, post }) => {
           left: "50%",
           transform: "translate(-50%, -50%)",
         }}
-        className="container h-[50vh] w-[55vw] max-w-xs bg-white rounded-xl"
+        className="container h-[50vh] w-[55vw] max-w-xs bg-white rounded-xl z-50"
       >
         <div className="row1 justify-center border-b">
           <div
