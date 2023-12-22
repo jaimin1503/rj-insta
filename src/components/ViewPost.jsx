@@ -8,6 +8,7 @@ import "./UserPost.css";
 import Spinner from "./Spinner";
 import jatu from "./assets/jatuu.jpg";
 import LikeList from "../components/LikeList";
+import Saved from "./assets/Saved";
 
 const ViewPost = ({ postId, setShowComponent }) => {
   const [post, setPost] = useState({});
@@ -16,6 +17,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
   const [comments, setComments] = useState([]);
   const [user, setUser] = useState({});
   const [liked, setLiked] = useState(false);
+  const [likes, setLikes] = useState([]);
   const [likeCount, setLikeCount] = useState(0);
   const [comment, setComment] = useState("");
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
@@ -74,7 +76,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
         // console.log(res.data.post);
         setLikeCount(res.data.post.like.length);
         setComments(res.data.post.comment);
-        // console.log(res.data.post.comment);
+        setLikes(res.data.post.like);
         setLoading(false);
       })
       .catch((error) => {
@@ -249,12 +251,17 @@ const ViewPost = ({ postId, setShowComponent }) => {
 
             {/*postinfo*/}
             <div className="postinfo h-[14%] md:h-[10%]">
-              <div className="likes-comments flex mt-1">
-                <div onClick={likeClick} className=" cursor-pointer ml-2">
-                  <Heart liked={liked} />
+              <div className="likes-comments justify-between flex">
+                <div className=" flex">
+                  <div onClick={likeClick} className="p-2 cursor-pointer ml-2">
+                    <Heart liked={liked} />
+                  </div>
+                  <div className="p-2 cursor-pointer">
+                    <Comment />
+                  </div>
                 </div>
-                <div className=" ml-2 cursor-pointer">
-                  <Comment />
+                <div className="p-2 cursor-pointer">
+                  <Saved />
                 </div>
               </div>
               <div ref={likeRef} className="counts flex items-center mb-2">
@@ -270,17 +277,17 @@ const ViewPost = ({ postId, setShowComponent }) => {
                   >
                     <img
                       className=" h-[18px] w-[18px] object-cover rounded-full ml-2 -mr-2"
-                      src={jatu}
+                      src={likes[0]?.user?.profile?.profilephoto}
                       alt="kljhkj"
                     />
                     <img
                       className=" h-[18px] w-[18px] object-cover rounded-full -mr-2"
-                      src={jatu}
+                      src={likes[1]?.user?.profile?.profilephoto}
                       alt="kljhkj"
                     />
                     <img
                       className=" h-[18px] w-[18px] object-cover rounded-full mr-2"
-                      src={jatu}
+                      src={likes[2]?.user?.profile?.profilephoto || jatu}
                       alt="kljhkj"
                     />
                   </div>
@@ -345,12 +352,17 @@ const ViewPost = ({ postId, setShowComponent }) => {
             />
           </div>
           <div className="postinfo">
-            <div className="likes-comments flex">
-              <div onClick={likeClick} className="p-2 cursor-pointer ml-2">
-                <Heart liked={liked} />
+            <div className="likes-comments justify-between flex">
+              <div className=" flex">
+                <div onClick={likeClick} className="p-2 cursor-pointer ml-2">
+                  <Heart liked={liked} />
+                </div>
+                <div className="p-2 cursor-pointer">
+                  <Comment />
+                </div>
               </div>
               <div className="p-2 cursor-pointer">
-                <Comment />
+                <Saved />
               </div>
             </div>
             <div className="counts flex pb-2">
@@ -366,17 +378,17 @@ const ViewPost = ({ postId, setShowComponent }) => {
                 >
                   <img
                     className=" h-[18px] w-[18px] object-cover rounded-full ml-2 -mr-2"
-                    src={jatu}
+                    src={likes[0]?.user?.profile?.profilephoto}
                     alt="kljhkj"
                   />
                   <img
                     className=" h-[18px] w-[18px] object-cover rounded-full -mr-2"
-                    src={jatu}
+                    src={likes[1]?.user?.profile?.profilephoto}
                     alt="kljhkj"
                   />
                   <img
                     className=" h-[18px] w-[18px] object-cover rounded-full mr-2"
-                    src={jatu}
+                    src={likes[2]?.user?.profile?.profilephoto}
                     alt="kljhkj"
                   />
                 </div>

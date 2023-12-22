@@ -5,36 +5,41 @@ export const getallpost = async (req, res) => {
     const userdetail = req.user;
     if (userdetail) {
       const posts = await Post.find({})
-      .populate({
-        path: "like", 
-        populate: {
+        .populate({
+          path: "like",
+          populate: {
+            path: "user",
+            model: "User",
+            populate: {
+              path: "profile",
+              model: "Profile",
+            },
+            options: { strictPopulate: false },
+          },
+          options: { strictPopulate: false },
+        })
+        .populate({
+          path: "comment",
+          populate: {
+            path: "user",
+            model: "User",
+            populate: {
+              path: "profile",
+              model: "Profile",
+            },
+            options: { strictPopulate: false },
+          },
+          options: { strictPopulate: false },
+        })
+        .populate({
           path: "user",
-          model: "User",
-        },
-        options: { strictPopulate: false },
-      })
-      .populate({
-        path: "comment",
-        populate: {
-          path: "user",
-          model: "User",
           populate: {
             path: "profile",
             model: "Profile",
           },
           options: { strictPopulate: false },
-        },
-        options: { strictPopulate: false },
-      })
-      .populate({
-        path: "user",
-        populate: {
-          path: "profile",
-          model: "Profile",
-        },
-        options: { strictPopulate: false },
-      });
-    
+        });
+
       // posts.user.password=undefined
       return res.status(200).json({
         success: true,

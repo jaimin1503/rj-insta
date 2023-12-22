@@ -6,6 +6,7 @@ const LikeList = ({ show, post }) => {
   useEffect(() => {
     setLikes(post.like);
   }, []);
+  console.log(likes);
   return (
     <div>
       <div
@@ -47,13 +48,13 @@ const LikeList = ({ show, post }) => {
                   <div className="info items-start bg-yello">
                     <p className=" text-sm font-bold">{like?.user?.username}</p>
                     <p className=" text-sm text-gray-500">
-                      {like?.user?.username}
+                      {like?.user?.profile?.profilename}
                     </p>
                   </div>
                 </div>
               </Link>
 
-              <div className="button py-1 px-2 bg-gray-200 rounded-xl font-bold sm:mx-2">
+              <div className="button py-1 px-2 bg-gray-200 rounded-xl font-bold sm:mx-2 text-sm">
                 <button>Following</button>
               </div>
             </div>

@@ -54,22 +54,24 @@ const UserPosts = ({ posts }) => {
       </div>
       <div>
         {showComponent && (
-          <div
-            className=" rounded-lg"
-            style={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              backgroundColor: "white",
-              boxShadow: "0 2px 5px rgba(0, 0, 0, 0.2)",
-            }}
-          >
-            <ViewPost
-              postId={postId}
-              setShowComponent={setShowComponent}
-              user={user}
-            />
+          <div>
+            <div
+              className=" rounded-lg"
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                backgroundColor: "white",
+                boxShadow: "0 2px 5px rgba(0, 0, 0, 0.2)",
+              }}
+            >
+              <ViewPost
+                postId={postId}
+                setShowComponent={setShowComponent}
+                user={user}
+              />
+            </div>
           </div>
         )}
       </div>

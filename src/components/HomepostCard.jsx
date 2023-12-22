@@ -6,16 +6,22 @@ import Comment from "./assets/Comment";
 import axios from "axios";
 import Spinner from "./Spinner";
 import ViewPost from "./ViewPost";
+import jatu from "./assets/jatuu.jpg";
+import LikeList from "./LikeList";
 
 function HomepostCard({ post }) {
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(post.like.length);
+  const [likes, setLikes] = useState([]);
   const [comment, setComment] = useState("");
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
   const [showPost, setShowPost] = useState(false);
+  const [showLikeList, setShowLikeList] = useState(false);
   const postId = post._id;
   const postRef = useRef();
+  const likeRef = useRef();
+  console.log(post);
 
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
@@ -27,6 +33,9 @@ function HomepostCard({ post }) {
     let handler = (e) => {
       if (!postRef.current.contains(e.target)) {
         setShowPost(false);
+      }
+      if (!likeRef.current.contains(e.target)) {
+        setShowLikeList(false);
       }
     };
     document.addEventListener("mousedown", handler);
@@ -71,7 +80,7 @@ function HomepostCard({ post }) {
       .then((res) => {
         if (res.status === 200) {
           setLiked(!liked);
-          console.log(res.data.post)
+          console.log(res.data.post);
           setLikeCount(res.data.post.like.length);
           setLoading(false);
         } else {
@@ -91,7 +100,7 @@ function HomepostCard({ post }) {
       .then((res) => {
         if (res.data.liked) {
           setLiked(true);
-          
+          setLikes(post.like);
           setLoading(false);
         } else {
           setLiked(false);
@@ -173,35 +182,62 @@ function HomepostCard({ post }) {
               </div>
             </div>
 
-            <div className="counts">
-              <p className=" text-sm mx-5 pb-2">
+            <div ref={likeRef} className="counts flex items-center mb-2">
+              <div className=" flex cursor-pointer">
+                {showLikeList && (
+                  <LikeList post={post} show={setShowLikeList} />
+                )}
+                <div
+                  onClick={() => {
+                    setShowLikeList(!showLikeList);
+                  }}
+                  className=" flex"
+                >
+                  <img
+                    className=" h-[18px] w-[18px] object-cover rounded-full ml-2 -mr-2"
+                    src={likes[0]?.user?.profile?.profilephoto || jatu}
+                    alt="kljhkj"
+                  />
+                  <img
+                    className=" h-[18px] w-[18px] object-cover rounded-full -mr-2"
+                    src={likes[1]?.user?.profile?.profilephoto || jatu}
+                    alt="kljhkj"
+                  />
+                  <img
+                    className=" h-[18px] w-[18px] object-cover rounded-full mr-2"
+                    src={likes[2]?.user?.profile?.profilephoto || jatu}
+                    alt="kljhkj"
+                  />
+                </div>
+              </div>
+              <p className=" text-sm mr-5">
                 Liked by <span>{likeCount}</span> people
               </p>
             </div>
           </div>
+        </div>
 
-          <div className="comment border-t border-gray-300 flex">
-            <input
-              className=" w-full p-2 rounded-b-lg pl-5 bg-gray-100 outline-none"
-              type="text"
-              placeholder="Add a comment..."
-              name="comment"
-              value={comment}
-              onChange={handleInputChange}
-            />
+        <div className="comment border-t border-gray-300 flex">
+          <input
+            className=" w-full p-2 rounded-b-lg pl-5 bg-gray-100 outline-none"
+            type="text"
+            placeholder="Add a comment..."
+            name="comment"
+            value={comment}
+            onChange={handleInputChange}
+          />
 
-            <button
-              className={
-                isButtonDisabled
-                  ? "pr-5 cursor-pointer text-gray-300"
-                  : "pr-5 cursor-pointer text-blue-600"
-              }
-              onClick={handleSubmit}
-              disabled={isButtonDisabled}
-            >
-              Post
-            </button>
-          </div>
+          <button
+            className={
+              isButtonDisabled
+                ? "pr-5 cursor-pointer text-gray-300"
+                : "pr-5 cursor-pointer text-blue-600"
+            }
+            onClick={handleSubmit}
+            disabled={isButtonDisabled}
+          >
+            Post
+          </button>
         </div>
       </div>
     </div>
