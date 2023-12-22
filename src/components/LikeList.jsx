@@ -1,6 +1,7 @@
 import { Close } from "@mui/icons-material";
 import jatu from "./assets/jatuu.jpg";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 const LikeList = ({ show, post }) => {
   const [likes, setLikes] = useState([]);
   useEffect(() => {
@@ -29,23 +30,28 @@ const LikeList = ({ show, post }) => {
           <p className=" mx-28 py-2 font-bold">Likes</p>
         </div>
 
-        <div>
+        <div className="flex flex-col justify-between items-start ">
           {likes.map((like, index) => (
             <div
               key={index}
-              className="likes flex justify-center items-center my-2"
+              className="likes flex justify-between w-full items-center my-2"
             >
-              <div className="photo mx-2">
-                <img
-                  className=" h-[40px] w-[40px] object-cover rounded-full"
-                  src={like?.user?.profile?.profilephoto}
-                  alt="sdd"
-                />
-              </div>
-              <div className="info">
-                <p className=" text-sm font-bold">{like?.user?.username}</p>
-                <p className=" text-sm text-gray-500">{like?.user?.username}</p>
-              </div>
+              <Link to={`/viewprofile/${like?.user?._id}`}>
+                <div className="flex gap-2 coursor-pointer">
+                  <div className="photo mx-2">
+                    <img
+                      className=" h-[40px] w-[40px] object-cover rounded-full"
+                      src={like?.user?.profile?.profilephoto}
+                      alt="sdd"
+                    />
+                  </div>
+                  <div className="info">
+                    <p className=" text-sm font-bold">{like?.user?.username}</p>
+                    <p className=" text-sm text-gray-500">{like?.user?.username}</p>
+                  </div>
+                </div>
+              </Link>
+
               <div className="button py-1 px-3 bg-gray-200 rounded-xl font-bold mx-2">
                 <button>Following</button>
               </div>

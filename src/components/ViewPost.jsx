@@ -114,7 +114,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
         if (res.status === 200) {
           setLiked(true);
           setLikeCount(res?.data?.post?.like?.length);
-          console.log(res.data.post.like);
+          console.log(res?.data?.post?.like);
         } else {
           setLiked(false);
         }
@@ -182,7 +182,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
     <div className=" filter-none">
       {loading && <Spinner />}
       <div className="card rounded-lg bg-gray-100 mx-auto ">
-        <div className="flex flex-row justify-center items-center shadow-xl bg-gray-100 h-[320px]  md:h-[480px] w-[82vw] overflow-y-scroll webkit-scrollbar">
+        <div className="flex flex-row justify-center items-center shadow-xl bg-gray-100 h-[360px]  md:h-[480px] w-[82vw] overflow-y-scroll webkit-scrollbar">
           <div className="h-[320px] md:h-[480px]  w-[50%] flex justify-center items-center bg-black">
             <div className="image h-[320px] w-[240px] md:h-[480px] md:w-[360px]  flex items-center justify-center">
               <img
@@ -195,7 +195,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
               />
             </div>
           </div>
-          <div className="comment section h-[320px] md:h-[480px] w-[50%]">
+          <div className="comment section h-[350px] md:h-[480px] w-[50%]">
             {/*//info*/}
             <div className="user_info flex items-center p-5 h-[10%]  ">
               <div className=" flex">
@@ -220,7 +220,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
             </div>
             <hr className=" mt-3 font-medium border-gray-200 border"></hr>
             {/*show comment commpoment*/}
-            <div className="comments p-5  h-[65%] flex flex-col gap-5 overflow-y-scroll webkit-scrollbar">
+            <div className="comments p-5  h-[56%] md:h-[65%] flex flex-col gap-5 overflow-y-scroll webkit-scrollbar">
               {comments.map((comment, index) => (
                 <div className="p-1 flex " key={index}>
                   <div
@@ -270,12 +270,12 @@ const ViewPost = ({ postId, setShowComponent }) => {
             <hr className="font-medium border-gray-200 border"></hr>
 
             {/*postinfo*/}
-            <div className="postinfo h[10%]">
-              <div className="likes-comments flex">
-                <div onClick={likeClick} className="p-2 cursor-pointer ml-2">
+            <div className="postinfo h-[14%] md:h-[10%]">
+              <div className="likes-comments flex mt-1">
+                <div onClick={likeClick} className=" cursor-pointer ml-2">
                   <Heart liked={liked} />
                 </div>
-                <div className="p-2 cursor-pointer">
+                <div className=" ml-2 cursor-pointer">
                   <Comment />
                 </div>
               </div>
@@ -336,13 +336,13 @@ const ViewPost = ({ postId, setShowComponent }) => {
             <div className="profile_photo mr-5">
               <img
                 className="object-cover rounded-full w-[44px] h-[44px]"
-                src={user?.profile?.profilephoto}
+                src={post?.user?.profile?.profilephoto}
                 alt="Profile_Pic"
               />
             </div>
             <div className="profile_info flex flex-col justify-center">
               <div className="user_name flex items-center font-medium text-base">
-                <h2 className=" mr-2 text-gray-900">{user?.username}</h2>
+                <h2 className=" mr-2 text-gray-900">{post?.user?.username}</h2>
               </div>
               <div className="location">
                 <p className=" text-gray-600 text-sm">Location..</p>

@@ -10,6 +10,11 @@ export const getPostByid = async (req, res) => {
       populate: {
         path: "user",
         model: "User",
+        populate: {
+          path: "profile",
+          model: "Profile",
+        },
+        options: { strictPopulate: false },
       },
       options: { strictPopulate: false },
     })
