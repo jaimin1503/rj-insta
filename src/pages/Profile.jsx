@@ -129,10 +129,8 @@ const Profile = () => {
             </div>
 
             <div ref={followingRef}>
-              {showFollowing ? (
+              {showFollowing && (
                 <FollowingList following={user.profile.following} />
-              ) : (
-                ""
               )}
               <div
                 onClick={() => setShowFollowing(!showFollowing)}

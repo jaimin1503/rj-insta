@@ -39,9 +39,6 @@ const ViewPost = ({ postId, setShowComponent }) => {
       if (!likeRef.current.contains(e.target)) {
         setShowLikeList(false);
       }
-      if (!likeRef.current.contains(e.target)) {
-        setShowLikeList(false);
-      }
     };
     document.addEventListener("mousedown", handler);
 
@@ -279,23 +276,33 @@ const ViewPost = ({ postId, setShowComponent }) => {
                   <Comment />
                 </div>
               </div>
-              <div className="counts flex items-center mb-2">
+              <div ref={likeRef} className="counts flex items-center mb-2">
                 <div className=" flex cursor-pointer">
-                  <img
-                    className=" h-[18px] w-[18px] object-cover rounded-full ml-2 -mr-2"
-                    src={jatu}
-                    alt="kljhkj"
-                  />
-                  <img
-                    className=" h-[18px] w-[18px] object-cover rounded-full -mr-2"
-                    src={jatu}
-                    alt="kljhkj"
-                  />
-                  <img
-                    className=" h-[18px] w-[18px] object-cover rounded-full mr-2"
-                    src={jatu}
-                    alt="kljhkj"
-                  />
+                  {showLikeList && (
+                    <LikeList post={post} show={setShowLikeList} />
+                  )}
+                  <div
+                    onClick={() => {
+                      setShowLikeList(!showLikeList);
+                    }}
+                    className=" flex"
+                  >
+                    <img
+                      className=" h-[18px] w-[18px] object-cover rounded-full ml-2 -mr-2"
+                      src={jatu}
+                      alt="kljhkj"
+                    />
+                    <img
+                      className=" h-[18px] w-[18px] object-cover rounded-full -mr-2"
+                      src={jatu}
+                      alt="kljhkj"
+                    />
+                    <img
+                      className=" h-[18px] w-[18px] object-cover rounded-full mr-2"
+                      src={jatu}
+                      alt="kljhkj"
+                    />
+                  </div>
                 </div>
                 <p className=" text-sm mr-5">
                   Liked by <span>{likeCount}</span> people
@@ -366,34 +373,37 @@ const ViewPost = ({ postId, setShowComponent }) => {
               </div>
             </div>
             <div className="counts flex pb-2">
-              <div
-                ref={likeRef}
-                onClick={() => {
-                  setShowLikeList(!showLikeList);
-                }}
-                className=" flex cursor-pointer"
-              >
-                <img
-                  className=" h-[18px] w-[18px] object-cover rounded-full ml-2 -mr-2"
-                  src={jatu}
-                  alt="kljhkj"
-                />
-                <img
-                  className=" h-[18px] w-[18px] object-cover rounded-full -mr-2"
-                  src={jatu}
-                  alt="kljhkj"
-                />
-                <img
-                  className=" h-[18px] w-[18px] object-cover rounded-full mr-2"
-                  src={jatu}
-                  alt="kljhkj"
-                />
+              <div ref={likeRef} className=" flex cursor-pointer">
+                {showLikeList && (
+                  <LikeList post={post} show={setShowLikeList} />
+                )}
+                <div
+                  onClick={() => {
+                    setShowLikeList(!showLikeList);
+                  }}
+                  className="flex"
+                >
+                  <img
+                    className=" h-[18px] w-[18px] object-cover rounded-full ml-2 -mr-2"
+                    src={jatu}
+                    alt="kljhkj"
+                  />
+                  <img
+                    className=" h-[18px] w-[18px] object-cover rounded-full -mr-2"
+                    src={jatu}
+                    alt="kljhkj"
+                  />
+                  <img
+                    className=" h-[18px] w-[18px] object-cover rounded-full mr-2"
+                    src={jatu}
+                    alt="kljhkj"
+                  />
+                </div>
               </div>
               <p className=" text-sm">
                 Liked by <span>{likeCount}</span> people
               </p>
             </div>
-            {showLikeList && <LikeList show={setShowLikeList} post={post} />}
           </div>
 
           <div className="comment border-t border-gray-300 flex">

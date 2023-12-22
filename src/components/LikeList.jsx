@@ -1,5 +1,4 @@
 import { Close } from "@mui/icons-material";
-import jatu from "./assets/jatuu.jpg";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 const LikeList = ({ show, post }) => {
@@ -21,7 +20,7 @@ const LikeList = ({ show, post }) => {
         <div className="row1  justify-center border-b">
           <div
             onClick={() => {
-              show(!showLikeClick);
+              show(false);
             }}
             className=" float-right m-2 cursor-pointer "
           >
