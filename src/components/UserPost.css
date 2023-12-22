@@ -16,4 +16,22 @@
     .webkit-scrollbar::-webkit-scrollbar{
       display:none
     }
+		.overlay {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			backdrop-filter: blur(5px); /* Adjust the amount of blur as needed */
+			z-index: 9998; /* Ensure it's below the modal but above the rest */
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		  }
+		  
+		  .blur-background {
+			filter: blur(5px); /* Same as before: Adjust the amount of blur as needed */
+		  }
+		  
+	
   

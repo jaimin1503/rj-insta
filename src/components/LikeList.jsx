@@ -17,41 +17,43 @@ const LikeList = ({ show, post }) => {
         }}
         className="container h-[50vh] w-[55vw] max-w-xs bg-white rounded-xl"
       >
-        <div className="row1  justify-center border-b">
+        <div className="row1 justify-center border-b">
           <div
             onClick={() => {
               show(false);
             }}
-            className=" float-right m-2 cursor-pointer "
+            className=" float-right p-2 cursor-pointer "
           >
             <Close />
           </div>
-          <p className=" mx-28 py-2 font-bold">Likes</p>
+          <p className=" text-center py-2 pl-5 font-bold">Likes</p>
         </div>
 
-        <div className="flex flex-col justify-between items-start ">
+        <div>
           {likes.map((like, index) => (
             <div
               key={index}
               className="likes flex justify-between w-full items-center my-2"
             >
               <Link to={`/viewprofile/${like?.user?._id}`}>
-                <div className="flex gap-2 coursor-pointer">
-                  <div className="photo mx-2">
+                <div className="flex gap-2 coursor-pointer w-34">
+                  <div className="photo sm:mx-2">
                     <img
                       className=" h-[40px] w-[40px] object-cover rounded-full"
                       src={like?.user?.profile?.profilephoto}
                       alt="sdd"
                     />
                   </div>
-                  <div className="info">
+                  <div className="info items-start bg-yello">
                     <p className=" text-sm font-bold">{like?.user?.username}</p>
-                    <p className=" text-sm text-gray-500">{like?.user?.username}</p>
+                    <p className=" text-sm text-gray-500">
+                      {like?.user?.username}
+                    </p>
                   </div>
                 </div>
               </Link>
 
-              <div className="button py-1 px-3 bg-gray-200 rounded-xl font-bold mx-2">
+              <div className="button py-1 px-2 bg-gray-200 rounded-xl font-bold sm:mx-2">
                 <button>Following</button>
               </div>
             </div>

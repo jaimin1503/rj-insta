@@ -82,25 +82,6 @@ const ViewPost = ({ postId, setShowComponent }) => {
       });
   }, [postId, liked, commentsuccess]);
 
-  // useEffect(() => {
-  //   setLoading(true);
-  //   axios
-  //     .get(
-  //       `http://localhost:5555/user/getuserbyid/${post?.user}`,
-
-  //       {
-  //         withCredentials: true,
-  //       }
-  //     )
-  //     .then((res) => {
-  //       setUser(res.data.newuser);
-  //       setLoading(false);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }, [post?.user]);
-
   useEffect(() => {
     setLoading(true);
     axios
@@ -196,7 +177,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
             {/*//info*/}
             <div className="user_info flex items-center p-5 h-[10%]  ">
               <div className=" flex">
-                <div className="profile_photo mr-5 my-auto">
+                <div className="profile_photo min-h-[44px] min-w-[44px] mr-5 my-auto">
                   <img
                     className="object-cover rounded-full w-[44px] h-[44px]"
                     src={post.user?.profile?.profilephoto}
@@ -227,7 +208,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
                   >
                     <Link to={`/viewprofile/${comment?.user?._id}`}>
                       <div className="flex items-center">
-                        <div className="profile_photo mr-5 my-auto ">
+                        <div className="profile_photo mr-5 my-auto min-w-[44px] ">
                           <img
                             className="object-cover rounded-full w-[44px] h-[44px]"
                             src={comment?.user?.profile?.profilephoto}
