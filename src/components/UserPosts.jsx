@@ -35,7 +35,10 @@ const UserPosts = ({ posts }) => {
 
   return (
     <div ref={imgRef}>
-      <div className="posts flex flex-wrap">
+      <div
+        onClick={() => setShowComponent(!showComponent)}
+        className="posts flex flex-wrap"
+      >
         {posts.map((post, index) => (
           <div key={index} className="w-1/3 p-[2px]">
             <div className="aspect-square cursor-pointer">
