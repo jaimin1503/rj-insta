@@ -12,7 +12,6 @@ const SavedPost = () => {
   const { user } = useSelector((state) => state.user);
 
   useEffect(() => {
-    console.log(user);
     setPosts(user.profile.saved);
   }, []);
 

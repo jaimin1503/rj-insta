@@ -8,8 +8,8 @@ import "./UserPost.css";
 import Spinner from "./Spinner";
 import jatu from "./assets/jatuu.jpg";
 import LikeList from "../components/LikeList";
-import Saved from "./assets/Saved";
 import { Context } from "../context/contextApi";
+import SavePostLogo from "./assets/SavePostLogo";
 
 const ViewPost = ({ postId, setShowComponent }) => {
   const [post, setPost] = useState({});
@@ -25,6 +25,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
   const [commentsuccess, setcommentsucess] = useState(false);
   const [showLikeList, setShowLikeList] = useState(false);
   const { likehome, setlikehome } = useContext(Context);
+  const [isSaved, setIsSaved] = useState(false);
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -167,7 +168,6 @@ const ViewPost = ({ postId, setShowComponent }) => {
         }
       )
       .then((res) => {
-        // console.log(res.message);
         setLoading(false);
         setcommentsucess(!commentsuccess);
       })
@@ -178,6 +178,22 @@ const ViewPost = ({ postId, setShowComponent }) => {
     setComment("");
     setIsButtonDisabled(true);
   };
+
+  useEffect(() => {
+    axios
+      .get(
+        `http://localhost:/user/${postId}/isSaved`,
+        { postid: postId },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        setIsSaved(res.data.Saved);
+        console.log(res.data.Saved);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [postId]);
 
   return windowSize.width > 670 ? (
     <div className=" filter-none">
@@ -282,7 +298,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
                   </div>
                 </div>
                 <div onClick={handelSave} className="p-2 cursor-pointer">
-                  <Saved />
+                  <SavePostLogo isSaved={isSaved} />
                 </div>
               </div>
               <div ref={likeRef} className="counts flex items-center mb-2">
@@ -385,7 +401,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
                 </div>
               </div>
               <div onClick={handelSave} className="p-2 cursor-pointer">
-                <Saved />
+                <SavePostLogo isSaved={isSaved} />
               </div>
             </div>
             <div className="counts flex pb-2">
