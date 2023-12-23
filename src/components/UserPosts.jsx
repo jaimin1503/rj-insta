@@ -1,14 +1,15 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect,useContext } from "react";
 import ViewPost from "./ViewPost";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-
+import { Context } from "../context/contextApi";
 const UserPosts = ({ posts }) => {
   const [showComponent, setShowComponent] = useState(false);
   const [postId, setPostId] = useState(null);
   const location = useLocation();
   const imgRef = useRef();
   const { user } = useSelector((state) => state.user);
+  const {likehome,setlikehome} = useContext(Context);
 
   useEffect(() => {
     let handler = (e) => {
@@ -34,24 +35,25 @@ const UserPosts = ({ posts }) => {
   };
 
   return (
-    <div ref={imgRef}>
+    <div ref={imgRef} className="userpost">
       <div
         onClick={() => setShowComponent(!showComponent)}
         className="posts flex flex-wrap"
       >
-        {posts.map((post, index) => (
-          <div key={index} className="w-1/3 p-[2px]">
-            <div className="aspect-square cursor-pointer">
-              <img
-                onClick={() => handlePostClick(post._id)}
-                className="w-full h-full object-cover"
-                src={post.posturl}
-                alt="Your Image"
-              />
-            </div>
+        {posts.slice().reverse().map((post, index) => (
+        <div key={post._id} className="w-1/3 p-[2px]">
+          <div className="aspect-square cursor-pointer">
+            <img
+              onClick={() => handlePostClick(post._id)}
+              className="w-full h-full object-cover"
+              src={post.posturl}
+              alt="Your Image"
+            />
           </div>
-        ))}
+        </div>
+      ))}
       </div>
+
       <div>
         {showComponent && (
           <div>

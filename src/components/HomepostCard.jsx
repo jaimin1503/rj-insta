@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import Heart from "./assets/Heart";
 import Comment from "./assets/Comment";
@@ -8,26 +8,50 @@ import Spinner from "./Spinner";
 import ViewPost from "./ViewPost";
 import jatu from "./assets/jatuu.jpg";
 import LikeList from "./LikeList";
+import { Context } from "../context/contextApi";
 
-function HomepostCard({ post }) {
+function HomepostCard({ postid }) {
   const [liked, setLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(post.like.length);
+  const [likeCount, setLikeCount] = useState(0);
   const [likes, setLikes] = useState([]);
   const [comment, setComment] = useState("");
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
   const [showPost, setShowPost] = useState(false);
   const [showLikeList, setShowLikeList] = useState(false);
-  const postId = post._id;
+  const { likehome, setlikehome } = useContext(Context);
+  const [post, setPost] = useState({})
+  const postId = postid;
   const postRef = useRef();
   const likeRef = useRef();
-  console.log(post);
+  console.log(likehome);
 
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
     setComment(inputValue);
     setIsButtonDisabled(inputValue.trim() === "");
   };
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get(
+        `http://localhost:5555/user/getPostByid/${postId}`,
+
+        {
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        setPost(res.data.post);
+        setLikeCount(res.data.post.like.length);
+        setLikes(res.data.post.like);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [postid, liked, likehome]);
+
 
   useEffect(() => {
     let handler = (e) => {
@@ -111,7 +135,7 @@ function HomepostCard({ post }) {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [likehome]);
   return (
     <div>
       {loading && <Spinner />}
@@ -187,7 +211,7 @@ function HomepostCard({ post }) {
                 {showLikeList && (
                   <LikeList post={post} show={setShowLikeList} />
                 )}
-                <div
+                {likes.length>3&&<div
                   onClick={() => {
                     setShowLikeList(!showLikeList);
                   }}
@@ -208,7 +232,7 @@ function HomepostCard({ post }) {
                     src={likes[2]?.user?.profile?.profilephoto || jatu}
                     alt="kljhkj"
                   />
-                </div>
+                </div>}
               </div>
               <p className=" text-sm mr-5">
                 Liked by <span>{likeCount}</span> people

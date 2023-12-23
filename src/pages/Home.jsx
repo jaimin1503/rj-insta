@@ -58,7 +58,7 @@ export const Home = () => {
                 {allpost?.map((post, index) => {
                   return (
                     <div className="mt-4" key={index}>
-                      <HomepostCard post={post} />
+                      <HomepostCard postid={post._id} />
                     </div>
                   );
                 })}

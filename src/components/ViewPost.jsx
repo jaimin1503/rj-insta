@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef,useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Heart from "./assets/Heart";
@@ -9,6 +9,7 @@ import Spinner from "./Spinner";
 import jatu from "./assets/jatuu.jpg";
 import LikeList from "../components/LikeList";
 import Saved from "./assets/Saved";
+import { Context } from "../context/contextApi";
 
 const ViewPost = ({ postId, setShowComponent }) => {
   const [post, setPost] = useState({});
@@ -23,6 +24,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [commentsuccess, setcommentsucess] = useState(false);
   const [showLikeList, setShowLikeList] = useState(false);
+  const {likehome,setlikehome} = useContext(Context);
   const [savedPosts, setSavedPosts] = useState([]);
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
@@ -118,6 +120,8 @@ const ViewPost = ({ postId, setShowComponent }) => {
         if (res.status === 200) {
           setLiked(!liked);
           setLikeCount(res.data.post.like.length);
+          setlikehome(!likehome);
+          console.log(!likehome)
         } else {
           setLiked(!liked);
         }
@@ -181,7 +185,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
   return windowSize.width > 670 ? (
     <div className=" filter-none">
       {loading && <Spinner />}
-      <div className="card rounded-lg bg-gray-100 mx-auto ">
+      <div className="card rounded-lg bg-gray-100 mx-auto z-50">
         <div className="flex flex-row justify-center items-center shadow-xl bg-gray-100 h-[360px]  md:h-[480px] w-[82vw] overflow-y-scroll webkit-scrollbar">
           <div className="h-[320px] md:h-[480px]  w-[50%] flex justify-center items-center bg-black">
             <div className="image h-[320px] w-[240px] md:h-[480px] md:w-[360px]  flex items-center justify-center">
@@ -289,7 +293,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
                   {showLikeList && (
                     <LikeList post={post} show={setShowLikeList} />
                   )}
-                  <div
+                 {likes.length>0&& <div
                     onClick={() => {
                       setShowLikeList(!showLikeList);
                     }}
@@ -307,10 +311,10 @@ const ViewPost = ({ postId, setShowComponent }) => {
                     />
                     <img
                       className=" h-[18px] w-[18px] object-cover rounded-full mr-2"
-                      src={likes[2]?.user?.profile?.profilephoto || jatu}
+                      src={likes[2]?.user?.profile?.profilephoto }
                       alt="kljhkj"
                     />
-                  </div>
+                  </div>}
                 </div>
                 <p className=" text-sm mr-5">
                   Liked by <span>{likeCount}</span> people
@@ -390,7 +394,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
                 {showLikeList && (
                   <LikeList post={post} show={setShowLikeList} />
                 )}
-                <div
+                {likes.length>0&&<div
                   onClick={() => {
                     setShowLikeList(!showLikeList);
                   }}
@@ -411,7 +415,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
                     src={likes[2]?.user?.profile?.profilephoto}
                     alt="kljhkj"
                   />
-                </div>
+                </div>}
               </div>
               <p className=" text-sm">
                 Liked by <span>{likeCount}</span> people
