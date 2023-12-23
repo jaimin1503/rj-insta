@@ -23,6 +23,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [commentsuccess, setcommentsucess] = useState(false);
   const [showLikeList, setShowLikeList] = useState(false);
+  const [savedPosts, setSavedPosts] = useState([]);
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -73,7 +74,6 @@ const ViewPost = ({ postId, setShowComponent }) => {
       )
       .then((res) => {
         setPost(res.data.post);
-        // console.log(res.data.post);
         setLikeCount(res.data.post.like.length);
         setComments(res.data.post.comment);
         setLikes(res.data.post.like);
@@ -94,7 +94,6 @@ const ViewPost = ({ postId, setShowComponent }) => {
         if (res.data.liked) {
           setLiked(true);
           setLikeCount(res?.data?.post?.like?.length);
-          // console.log(res?.data?.post?.like);
         } else {
           setLiked(false);
         }
@@ -126,6 +125,27 @@ const ViewPost = ({ postId, setShowComponent }) => {
       })
       .catch((error) => {
         console.error(error);
+      });
+  };
+
+  const handelSave = () => {
+    setLoading(true);
+    axios
+      .post(
+        `http://localhost:5555/user/savedpost/${postId}`,
+        { postid: postId },
+        {
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        console.log(res.data.message);
+        setSavedPosts(res.data.newprofile?.saved);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
       });
   };
 
@@ -260,7 +280,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
                     <Comment />
                   </div>
                 </div>
-                <div className="p-2 cursor-pointer">
+                <div onClick={handelSave} className="p-2 cursor-pointer">
                   <Saved />
                 </div>
               </div>
@@ -361,7 +381,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
                   <Comment />
                 </div>
               </div>
-              <div className="p-2 cursor-pointer">
+              <div onClick={handelSave} className="p-2 cursor-pointer">
                 <Saved />
               </div>
             </div>

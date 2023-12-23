@@ -10,7 +10,8 @@ export const getuser = async (req, res) => {
         populate: [
           { path: "posts", model: "Post" },
           {
-            path: "followers", model: "User",
+            path: "followers",
+            model: "User",
             populate: {
               path: "profile",
               model: "Profile",
@@ -23,6 +24,10 @@ export const getuser = async (req, res) => {
               path: "profile",
               model: "Profile",
             },
+          },
+          {
+            path: "saved",
+            model: "Post",
           },
         ],
       });

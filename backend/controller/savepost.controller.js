@@ -5,10 +5,9 @@ export const savedpost = async (req, res) => {
     try {
         const postid = req.params.postid;
         const userid = req.user.userid;
-        console.log(userid);
         const user = await User.findById(userid);
-        console.log(user);
         const profile = await Profile.findById(user.profile);
+        
         if (user) {
             let newprofile;
             if (profile.saved.includes(postid)) {

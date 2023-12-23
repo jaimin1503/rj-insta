@@ -16,6 +16,7 @@ import { useDispatch } from "react-redux";
 import { getuser } from "../reducers/userReducer.js";
 import axios from "axios";
 import Spinner from "../components/Spinner.jsx";
+import SavedPost from "../components/SavedPost.jsx";
 
 const Profile = () => {
   const [loading, setLoading] = useState(false);
@@ -180,7 +181,7 @@ const Profile = () => {
           )}
           {activeIndex === 2 ? (
             <div className="posts my-5">
-              <UserPosts posts={posts} userid={user} user={user} />
+              <SavedPost />
             </div>
           ) : (
             ""
