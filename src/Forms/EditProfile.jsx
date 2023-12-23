@@ -11,7 +11,6 @@ const EditProfile = () => {
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
   const [user, setUser] = useState({});
-  console.log(id);
   const [formData, setFormData] = useState({
     profilename: "",
     bio: "",

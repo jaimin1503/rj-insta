@@ -19,8 +19,8 @@ function HomepostCard({ postid }) {
   const [loading, setLoading] = useState(false);
   const [showPost, setShowPost] = useState(false);
   const [showLikeList, setShowLikeList] = useState(false);
-  const { likehome, setlikehome } = useContext(Context);
-  const [post, setPost] = useState({})
+  const { likehome } = useContext(Context);
+  const [post, setPost] = useState({});
   const postId = postid;
   const postRef = useRef();
   const likeRef = useRef();
@@ -51,7 +51,6 @@ function HomepostCard({ postid }) {
         console.log(error);
       });
   }, [postid, liked, likehome]);
-
 
   useEffect(() => {
     let handler = (e) => {
@@ -104,7 +103,6 @@ function HomepostCard({ postid }) {
       .then((res) => {
         if (res.status === 200) {
           setLiked(!liked);
-          console.log(res.data.post);
           setLikeCount(res.data.post.like.length);
           setLoading(false);
         } else {
@@ -135,7 +133,7 @@ function HomepostCard({ postid }) {
       .catch((error) => {
         console.log(error);
       });
-  }, [likehome]);
+  }, [likehome, post._id]);
   return (
     <div>
       {loading && <Spinner />}
@@ -211,28 +209,30 @@ function HomepostCard({ postid }) {
                 {showLikeList && (
                   <LikeList post={post} show={setShowLikeList} />
                 )}
-                {likes.length>3&&<div
-                  onClick={() => {
-                    setShowLikeList(!showLikeList);
-                  }}
-                  className=" flex"
-                >
-                  <img
-                    className=" h-[18px] w-[18px] object-cover rounded-full ml-2 -mr-2"
-                    src={likes[0]?.user?.profile?.profilephoto || jatu}
-                    alt="kljhkj"
-                  />
-                  <img
-                    className=" h-[18px] w-[18px] object-cover rounded-full -mr-2"
-                    src={likes[1]?.user?.profile?.profilephoto || jatu}
-                    alt="kljhkj"
-                  />
-                  <img
-                    className=" h-[18px] w-[18px] object-cover rounded-full mr-2"
-                    src={likes[2]?.user?.profile?.profilephoto || jatu}
-                    alt="kljhkj"
-                  />
-                </div>}
+                {likes.length > 2 && (
+                  <div
+                    onClick={() => {
+                      setShowLikeList(!showLikeList);
+                    }}
+                    className=" flex"
+                  >
+                    <img
+                      className=" h-[18px] w-[18px] object-cover rounded-full ml-2 -mr-2"
+                      src={likes[0]?.user?.profile?.profilephoto || jatu}
+                      alt="kljhkj"
+                    />
+                    <img
+                      className=" h-[18px] w-[18px] object-cover rounded-full -mr-2"
+                      src={likes[1]?.user?.profile?.profilephoto || jatu}
+                      alt="kljhkj"
+                    />
+                    <img
+                      className=" h-[18px] w-[18px] object-cover rounded-full mr-2"
+                      src={likes[2]?.user?.profile?.profilephoto || jatu}
+                      alt="kljhkj"
+                    />
+                  </div>
+                )}
               </div>
               <p className=" text-sm mr-5">
                 Liked by <span>{likeCount}</span> people

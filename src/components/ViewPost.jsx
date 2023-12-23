@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef,useContext } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Heart from "./assets/Heart";
@@ -24,8 +24,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [commentsuccess, setcommentsucess] = useState(false);
   const [showLikeList, setShowLikeList] = useState(false);
-  const {likehome,setlikehome} = useContext(Context);
-  const [savedPosts, setSavedPosts] = useState([]);
+  const { likehome, setlikehome } = useContext(Context);
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -121,7 +120,6 @@ const ViewPost = ({ postId, setShowComponent }) => {
           setLiked(!liked);
           setLikeCount(res.data.post.like.length);
           setlikehome(!likehome);
-          console.log(!likehome)
         } else {
           setLiked(!liked);
         }
@@ -144,7 +142,6 @@ const ViewPost = ({ postId, setShowComponent }) => {
       )
       .then((res) => {
         console.log(res.data.message);
-        setSavedPosts(res.data.newprofile?.saved);
         setLoading(false);
       })
       .catch((error) => {
@@ -293,28 +290,30 @@ const ViewPost = ({ postId, setShowComponent }) => {
                   {showLikeList && (
                     <LikeList post={post} show={setShowLikeList} />
                   )}
-                 {likes.length>0&& <div
-                    onClick={() => {
-                      setShowLikeList(!showLikeList);
-                    }}
-                    className=" flex"
-                  >
-                    <img
-                      className=" h-[18px] w-[18px] object-cover rounded-full ml-2 -mr-2"
-                      src={likes[0]?.user?.profile?.profilephoto}
-                      alt="kljhkj"
-                    />
-                    <img
-                      className=" h-[18px] w-[18px] object-cover rounded-full -mr-2"
-                      src={likes[1]?.user?.profile?.profilephoto}
-                      alt="kljhkj"
-                    />
-                    <img
-                      className=" h-[18px] w-[18px] object-cover rounded-full mr-2"
-                      src={likes[2]?.user?.profile?.profilephoto }
-                      alt="kljhkj"
-                    />
-                  </div>}
+                  {likes.length > 2 && (
+                    <div
+                      onClick={() => {
+                        setShowLikeList(!showLikeList);
+                      }}
+                      className=" flex"
+                    >
+                      <img
+                        className=" h-[18px] w-[18px] object-cover rounded-full ml-2 -mr-2"
+                        src={likes[0]?.user?.profile?.profilephoto}
+                        alt="kljhkj"
+                      />
+                      <img
+                        className=" h-[18px] w-[18px] object-cover rounded-full -mr-2"
+                        src={likes[1]?.user?.profile?.profilephoto}
+                        alt="kljhkj"
+                      />
+                      <img
+                        className=" h-[18px] w-[18px] object-cover rounded-full mr-2"
+                        src={likes[2]?.user?.profile?.profilephoto}
+                        alt="kljhkj"
+                      />
+                    </div>
+                  )}
                 </div>
                 <p className=" text-sm mr-5">
                   Liked by <span>{likeCount}</span> people
@@ -394,28 +393,30 @@ const ViewPost = ({ postId, setShowComponent }) => {
                 {showLikeList && (
                   <LikeList post={post} show={setShowLikeList} />
                 )}
-                {likes.length>0&&<div
-                  onClick={() => {
-                    setShowLikeList(!showLikeList);
-                  }}
-                  className="flex"
-                >
-                  <img
-                    className=" h-[18px] w-[18px] object-cover rounded-full ml-2 -mr-2"
-                    src={likes[0]?.user?.profile?.profilephoto}
-                    alt="kljhkj"
-                  />
-                  <img
-                    className=" h-[18px] w-[18px] object-cover rounded-full -mr-2"
-                    src={likes[1]?.user?.profile?.profilephoto}
-                    alt="kljhkj"
-                  />
-                  <img
-                    className=" h-[18px] w-[18px] object-cover rounded-full mr-2"
-                    src={likes[2]?.user?.profile?.profilephoto}
-                    alt="kljhkj"
-                  />
-                </div>}
+                {likes.length > 2 && (
+                  <div
+                    onClick={() => {
+                      setShowLikeList(!showLikeList);
+                    }}
+                    className="flex"
+                  >
+                    <img
+                      className=" h-[18px] w-[18px] object-cover rounded-full ml-2 -mr-2"
+                      src={likes[0]?.user?.profile?.profilephoto}
+                      alt="kljhkj"
+                    />
+                    <img
+                      className=" h-[18px] w-[18px] object-cover rounded-full -mr-2"
+                      src={likes[1]?.user?.profile?.profilephoto}
+                      alt="kljhkj"
+                    />
+                    <img
+                      className=" h-[18px] w-[18px] object-cover rounded-full mr-2"
+                      src={likes[2]?.user?.profile?.profilephoto}
+                      alt="kljhkj"
+                    />
+                  </div>
+                )}
               </div>
               <p className=" text-sm">
                 Liked by <span>{likeCount}</span> people
