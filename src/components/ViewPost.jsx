@@ -337,7 +337,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
               </div>
             </div>
             {/*comment input*/}
-            <div className="comment h-[7.5%] w-full border-t  flex relative">
+            <div className="comment h-[7%] w-full border-t  flex relative m-4">
               <input
                 className="  p-2 pl-5 outline-none bg-gray-100 w-[90%]  "
                 type="text"
