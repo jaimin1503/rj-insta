@@ -38,7 +38,23 @@ const ViewPost = ({ postId, setShowComponent }) => {
       height: window.innerHeight,
     });
   };
-
+  useEffect(() => {
+    axios
+      .get(
+        `http://localhost:5555/user/${postId}/isSaved`,
+        {
+          params: { postid: postId }, // Use 'params' instead of a separate object
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        setIsSaved(res.data.Saved);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+  
   useEffect(() => {
     let handler = (e) => {
       if (!likeRef.current.contains(e.target)) {
@@ -85,11 +101,11 @@ const ViewPost = ({ postId, setShowComponent }) => {
         console.log(error);
       });
   }, [postId, liked, commentsuccess]);
-
   useEffect(() => {
     setLoading(true);
     axios
       .get(`http://localhost:5555/user/getlikepost/${postId}`, {
+        params: { postid: postId },
         withCredentials: true,
       })
       .then((res) => {
@@ -105,9 +121,9 @@ const ViewPost = ({ postId, setShowComponent }) => {
         console.log(error);
       });
   }, [postId]);
+  
 
   const likeClick = async () => {
-    // setLoading(true);
     axios
       .post(
         `http://localhost:5555/user/likepost/${postId}`,
@@ -132,6 +148,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
   };
 
   const handelSave = () => {
+
     setLoading(true);
     axios
       .post(
@@ -179,21 +196,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
     setIsButtonDisabled(true);
   };
 
-  useEffect(() => {
-    axios
-      .get(
-        `http://localhost:/user/${postId}/isSaved`,
-        { postid: postId },
-        { withCredentials: true }
-      )
-      .then((res) => {
-        setIsSaved(res.data.Saved);
-        console.log(res.data.Saved);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, [postId]);
+  
 
   return windowSize.width > 670 ? (
     <div className=" filter-none">

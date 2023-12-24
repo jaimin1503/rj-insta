@@ -4,18 +4,15 @@ dotenv.config();
 export const auth = (req, res, next) => {
   try {
     const token = req.body.token || req.cookies.token;
-    // console.log("inside auth and token is", token);
     if (!token) {
       return res.status(401).json({
         success: false,
         message: "token missing",
       });
     }
-    // verify the token
     try {
       const decode = jwt.verify(token, process.env.JWT_SECRET);
 
-      // console.log(decode);
 
       req.user = decode;
     } catch (e) {

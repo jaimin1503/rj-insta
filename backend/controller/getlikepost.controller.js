@@ -36,7 +36,7 @@ export const getlikepost = async (req, res) => {
     } catch (error) {
         return res.status(400).json({
             success: false,
-            message: `something went wrong while finding loke post and error is${error}`
+            message: `something went wrong while finding like post and error is${error}`
         })
     }
 }
