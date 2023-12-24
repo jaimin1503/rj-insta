@@ -29,6 +29,7 @@ function App() {
           <Route path="/viewprofile/:id" element={<ViewProfile />}></Route>
           <Route path="/viewstory" element={<ViewStory />}></Route>
         </Routes>
+        {/* <ChatPage /> */}
       </div>
     </AppContext>
   );
