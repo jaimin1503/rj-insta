@@ -24,7 +24,6 @@ function HomepostCard({ postid }) {
   const postId = postid;
   const postRef = useRef();
   const likeRef = useRef();
-  console.log(likehome);
 
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
@@ -79,7 +78,6 @@ function HomepostCard({ postid }) {
         }
       )
       .then((res) => {
-        console.log(res.message);
         setLoading(false);
       })
       .catch((error) => {
@@ -116,7 +114,7 @@ function HomepostCard({ postid }) {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:5555/user/getlikepost/${post?._id}`, {
+      .get(`http://localhost:5555/user/getlikepost/${postId}`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -126,7 +124,6 @@ function HomepostCard({ postid }) {
           setLoading(false);
         } else {
           setLiked(false);
-          console.log(res.data.message);
           setLoading(false);
         }
       })
@@ -209,7 +206,7 @@ function HomepostCard({ postid }) {
                 {showLikeList && (
                   <LikeList post={post} show={setShowLikeList} />
                 )}
-                {likes.length > 2 && (
+                {likes?.length > 2 && (
                   <div
                     onClick={() => {
                       setShowLikeList(!showLikeList);
