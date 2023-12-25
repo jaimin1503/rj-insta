@@ -18,7 +18,7 @@ import { getprofilebyid } from "../controller/getprofilebyid.controller.js";
 import { savedpost } from "../controller/savepost.controller.js";
 import { getalluser } from "../controller/getalluser.controller.js";
 import { isSaved } from "../controller/isSaved.controller.js";
-
+import { ctreatestory,getallstory,getstorybyuseriy } from "../controller/story.controller.js";
 router.post("/signup", signup);
 router.post("/login", login);
 router.get("/getuser", auth, getuser);
@@ -37,5 +37,8 @@ router.get("/getprofile", auth, getprofile);
 router.get("/getprofilebyid/:profileid", auth, getprofilebyid);
 router.get("/getalluser", auth, getalluser);
 router.get("/:postid/isSaved", auth, isSaved);
+router.post("/createstory",auth,ctreatestory);
+router.get("/getallstory",auth,getallstory);
+router.get("/getstorybyuserid",auth,getstorybyuseriy);
 
 export default router;
