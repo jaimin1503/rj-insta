@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getuser } from "../reducers/userReducer.js";
 import { useEffect, useContext } from "react";
 import Leftnav from "../components/leftnav.jsx";
@@ -10,6 +10,7 @@ import StoryBar from "../components/story/StoryBar.jsx";
 import HomepostCard from "../components/HomepostCard.jsx";
 import Spinner from "../components/Spinner.jsx";
 import shuffleArray from "../utils/suffleArray.js";
+
 export const Home = () => {
   const dispatch = useDispatch();
   const { loading } = useContext(Context);
@@ -25,6 +26,7 @@ export const Home = () => {
       })
       .catch((error) => {
         console.log(error);
+        setIsLoading(false);
       });
   }, [loading]);
   useEffect(() => {
@@ -32,12 +34,13 @@ export const Home = () => {
     axios
       .get("http://localhost:5555/user/getallpost", { withCredentials: true })
       .then((res) => {
-        setallpost(shuffleArray(res.data.posts))
+        setallpost(shuffleArray(res.data.posts));
         // setallpost(res.data.posts);
         setIsLoading(false);
       })
       .catch((error) => {
         console.log(error);
+        setIsLoading(false);
       });
   }, []);
   return (

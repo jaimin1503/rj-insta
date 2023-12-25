@@ -25,19 +25,19 @@ app.listen(port, () => {
 });
 app.use("/user", user);
 
-cron.schedule('*/3 * * * *', async () => {
-  try {
-    const threeMinutesAgo = new Date();
-    threeMinutesAgo.setMinutes(threeMinutesAgo.getMinutes() - 59);
-    // Assuming 'Story' is your Mongoose model
-    await Story.deleteMany({ createdAt: { $lt: threeMinutesAgo } });
-    console.log('Expired stories removed.');
-  } catch (err) {
-    console.error('Error removing expired stories:', err.message);
-  }
-}, {
-  timezone: 'Asia/Kolkata',
-});
+// cron.schedule('*/3 * * * *', async () => {
+//   try {
+//     const threeMinutesAgo = new Date();
+//     threeMinutesAgo.setMinutes(threeMinutesAgo.getMinutes() - 59);
+//     // Assuming 'Story' is your Mongoose model
+//     await Story.deleteMany({ createdAt: { $lt: threeMinutesAgo } });
+//     console.log('Expired stories removed.');
+//   } catch (err) {
+//     console.error('Error removing expired stories:', err.message);
+//   }
+// }, {
+//   timezone: 'Asia/Kolkata',
+// });
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
