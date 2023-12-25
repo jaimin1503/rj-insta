@@ -40,13 +40,10 @@ const ViewPost = ({ postId, setShowComponent }) => {
   };
   useEffect(() => {
     axios
-      .get(
-        `http://localhost:5555/user/${postId}/isSaved`,
-        {
-          params: { postid: postId }, // Use 'params' instead of a separate object
-          withCredentials: true,
-        }
-      )
+      .get(`http://localhost:5555/user/${postId}/isSaved`, {
+        params: { postid: postId }, // Use 'params' instead of a separate object
+        withCredentials: true,
+      })
       .then((res) => {
         setIsSaved(res.data.Saved);
       })
@@ -54,7 +51,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
         console.error(error);
       });
   }, []);
-  
+
   useEffect(() => {
     let handler = (e) => {
       if (!likeRef.current.contains(e.target)) {
@@ -121,7 +118,6 @@ const ViewPost = ({ postId, setShowComponent }) => {
         console.log(error);
       });
   }, [postId]);
-  
 
   const likeClick = async () => {
     axios
@@ -148,7 +144,6 @@ const ViewPost = ({ postId, setShowComponent }) => {
   };
 
   const handelSave = () => {
-
     setLoading(true);
     axios
       .post(
@@ -160,6 +155,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
       )
       .then((res) => {
         console.log(res.data.message);
+        setIsSaved(!isSaved);
         setLoading(false);
       })
       .catch((error) => {
@@ -195,8 +191,6 @@ const ViewPost = ({ postId, setShowComponent }) => {
     setComment("");
     setIsButtonDisabled(true);
   };
-
-  
 
   return windowSize.width > 670 ? (
     <div className=" filter-none">
@@ -340,7 +334,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
               </div>
             </div>
             {/*comment input*/}
-            <div className="comment h-[7.5%] w-full border-t  flex relative">
+            <div className="comment h-[7%] w-full border-t  flex relative m-4">
               <input
                 className="  p-2 pl-5 outline-none bg-gray-100 w-[90%]  "
                 type="text"

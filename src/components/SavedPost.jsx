@@ -13,7 +13,7 @@ const SavedPost = () => {
 
   useEffect(() => {
     setPosts(user.profile.saved);
-  }, []);
+  }, [user.profile?.saved?.length]);
 
   useEffect(() => {
     let handler = (e) => {
