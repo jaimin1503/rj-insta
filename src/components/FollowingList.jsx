@@ -36,7 +36,6 @@ function ViewprofileFollowingList({ following }) {
       .then((res) => {
         if (res.status === 200) {
           setFollow(!followbtn);
-          setLoading(!loading);
           setLoading(false)
         }
         console.log(res.data.message);

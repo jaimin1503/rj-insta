@@ -3,10 +3,11 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 const LikeList = ({ show, post }) => {
   const [likes, setLikes] = useState([]);
+
   useEffect(() => {
     setLikes(post.like);
   }, []);
-  console.log(likes);
+
   return (
     <div>
       <div
