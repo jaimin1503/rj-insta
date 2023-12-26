@@ -1,12 +1,16 @@
+import io from "socket.io-client";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { getSender, getSenderFull } from "../config/ChatLogics.js";
-import io from "socket.io-client";
+import ProfileModal from "./miscellaneous/ProfileModal.jsx";
+import UpdateGroupChatModal from "./miscellaneous/UpdateGroupChatModal";
 import { ChatState } from "../context/chatProvider.jsx";
-const ENDPOINT = "http://localhost:5555";
+const ENDPOINT = "http://localhost:5173";
 var socket, selectedChatCompare;
 import { ArrowBack } from "@mui/icons-material";
 import Spinner from "../components/Spinner.jsx";
+import { useToast } from "@chakra-ui/react";
+import ScrollableChat from "./ScrollableChat.jsx";
 
 const SingleChat = () => {
   const [messages, setMessages] = useState([]);
@@ -17,14 +21,6 @@ const SingleChat = () => {
   const [istyping, setIsTyping] = useState(false);
   const toast = useToast();
 
-  const defaultOptions = {
-    loop: true,
-    autoplay: true,
-    animationData: animationData,
-    rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice",
-    },
-  };
   const { selectedChat, setSelectedChat, user, notification, setNotification } =
     ChatState();
 
@@ -64,12 +60,6 @@ const SingleChat = () => {
     if (event.key === "Enter" && newMessage) {
       socket.emit("stop typing", selectedChat._id);
       try {
-        const config = {
-          headers: {
-            "Content-type": "application/json",
-            Authorization: `Bearer ${user.token}`,
-          },
-        };
         setNewMessage("");
         const { data } = await axios.post(
           "/api/message",
@@ -77,7 +67,7 @@ const SingleChat = () => {
             content: newMessage,
             chatId: selectedChat,
           },
-          config
+          { withCredentials: true }
         );
         socket.emit("new message", data);
         setMessages([...messages, data]);
@@ -102,7 +92,10 @@ const SingleChat = () => {
     socket.on("stop typing", () => setIsTyping(false));
 
     // eslint-disable-next-line
-  }, []);
+    return () => {
+      socket.disconnect();
+    };
+  }, [user]);
 
   useEffect(() => {
     fetchMessages();
@@ -154,7 +147,7 @@ const SingleChat = () => {
           <>
             <h1 className=" text-sm pb-3 px-2 w-full font-sans flex justify-between items-center">
               <div
-                onClick={() => selectedChat("")}
+                onClick={() => setSelectedChat("")}
                 className="icon flex md:hidden"
               >
                 <ArrowBack />
@@ -178,25 +171,25 @@ const SingleChat = () => {
                   </>
                 ))}
             </h1>
-			<div className="box flex flex-col justify-end p-3 bg-blue-400 h-full w-full rounded-lg overflow-y-hidden">
-			{loading ? (
-              <Spinner />
-            ) : (
-              <div className="messages">
-                <ScrollableChat messages={messages} />
-              </div>
-            )}
-			<form id="first-name" className=" mt-3">
-			{istyping ? (
-                <div>
-                  typing...
-                </div>
+            <div className="box flex flex-col justify-end p-3 bg-blue-400 h-full w-full rounded-lg overflow-y-hidden">
+              {loading ? (
+                <Spinner />
               ) : (
-                <></>
+                <div className="messages">
+                  <ScrollableChat messages={messages} />
+                </div>
               )}
-			  <input type="text" name="message" placeholder="Enter a message.." value={newMessage} onChange={typingHandler}/>
-			</form>
-			</div>
+              <form onKeyDown={sendMessage} id="first-name" className=" mt-3">
+                {istyping ? <div>typing...</div> : <></>}
+                <input
+                  type="text"
+                  name="message"
+                  placeholder="Enter a message.."
+                  value={newMessage}
+                  onChange={typingHandler}
+                />
+              </form>
+            </div>
           </>
         ) : (
           // JSX when no chat is selected
