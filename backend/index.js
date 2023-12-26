@@ -6,6 +6,8 @@ import { databaseconnection } from "./config/database.js";
 import dotenv from "dotenv";
 dotenv.config();
 import user from "./routers/user.js";
+import chatRoutes from "./routers/chatRoutes.js";
+import messageRoutes from "./routers/messageRoutes.js";
 import cors from "cors";
 import Story from "./model/story.model.js";
 import cron from "node-cron"; // Change import statement here
@@ -29,7 +31,10 @@ const port = process.env.PORT;
 app.listen(port, () => {
   console.log(`app is listening on port ${port}`);
 });
+
 app.use("/user", user);
+app.use("/api/chat", chatRoutes);
+app.use("/api/message", messageRoutes);
 
 // cron.schedule('*/3 * * * *', async () => {
 //   try {
@@ -56,7 +61,7 @@ io.on("connection", (socket) => {
     socket.join(room);
     console.log("User Joined Room: " + room);
   });
-  
+
   socket.on("typing", (room) => socket.in(room).emit("typing"));
   socket.on("stop typing", (room) => socket.in(room).emit("stop typing"));
 
