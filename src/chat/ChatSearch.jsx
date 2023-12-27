@@ -1,14 +1,51 @@
+import { Input } from "@chakra-ui/input";
+import { Box, Text } from "@chakra-ui/layout";
+import {
+  Menu,
+  MenuButton,
+  MenuDivider,
+  MenuItem,
+  MenuList,
+} from "@chakra-ui/menu";
+import {
+  Drawer,
+  DrawerBody,
+  DrawerContent,
+  DrawerHeader,
+  DrawerOverlay,
+} from "@chakra-ui/modal";
+import { Tooltip } from "@chakra-ui/tooltip";
+import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
+import { Avatar } from "@chakra-ui/avatar";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { IonItem, IonSpinner } from "@ionic/react";
 import Search from "../components/assets/Search";
 import { Close } from "@mui/icons-material";
+import { useDisclosure, useToast } from "@chakra-ui/react";
+import ProfileModal from "./miscellaneous/ProfileModal";
+import { getSender } from "../config/ChatLogics";
+import UserListItem from "./userAvatar/UserListItem";
+import { ChatState } from "../context/chatProvider";
+import { useNavigate } from "react-router-dom";
 
 const ChatSearch = () => {
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [loadingChat, setLoadingChat] = useState(false);
+  const {
+    setSelectedChat,
+    user,
+    notification,
+    setNotification,
+    chats,
+    setChats,
+  } = ChatState();
+  const toast = useToast();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setLoading(true);
@@ -36,6 +73,30 @@ const ChatSearch = () => {
         value && user.username.toLowerCase().includes(value.toLowerCase())
     );
     setSuggestions(filteredUsers);
+  };
+
+  const accessChat = async (userId) => {
+    console.log(userId);
+
+    try {
+      setLoadingChat(true);
+
+      const { data } = await axios.post(`/api/chat`, { userId }, config);
+
+      if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
+      setSelectedChat(data);
+      setLoadingChat(false);
+      onClose();
+    } catch (error) {
+      toast({
+        title: "Error fetching the chat",
+        description: error.message,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-left",
+      });
+    }
   };
   return (
     <div>
@@ -70,6 +131,44 @@ const ChatSearch = () => {
               )}
             </div>
           </div>
+          <Menu>
+            <MenuButton p={1}>
+              <p>{notification.length}</p>
+              <BellIcon fontSize="2xl" m={1} />
+            </MenuButton>
+            <MenuList pl={2}>
+              {!notification.length && "No New Messages"}
+              {notification.map((notif) => (
+                <MenuItem
+                  key={notif._id}
+                  onClick={() => {
+                    setSelectedChat(notif.chat);
+                    setNotification(notification.filter((n) => n !== notif));
+                  }}
+                >
+                  {notif.chat.isGroupChat
+                    ? `New Message in ${notif.chat.chatName}`
+                    : `New Message from ${getSender(user, notif.chat.users)}`}
+                </MenuItem>
+              ))}
+            </MenuList>
+          </Menu>
+          <Menu>
+            <MenuButton as={Button} bg="white" rightIcon={<ChevronDownIcon />}>
+              <Avatar
+                size="sm"
+                cursor="pointer"
+                name={user?.username}
+                src={user?.pic}
+              />
+            </MenuButton>
+            <MenuList>
+              <ProfileModal user={user}>
+                <MenuItem>My Profile</MenuItem>{" "}
+              </ProfileModal>
+              <MenuDivider />
+            </MenuList>
+          </Menu>
           <ul className="mt-2 mx-5">
             {suggestions.map((user) => (
               <div key={user._id} className=" py-2">
