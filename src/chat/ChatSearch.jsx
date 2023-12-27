@@ -7,13 +7,6 @@ import {
   MenuItem,
   MenuList,
 } from "@chakra-ui/menu";
-import {
-  Drawer,
-  DrawerBody,
-  DrawerContent,
-  DrawerHeader,
-  DrawerOverlay,
-} from "@chakra-ui/modal";
 import { Tooltip } from "@chakra-ui/tooltip";
 import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { Avatar } from "@chakra-ui/avatar";
@@ -75,13 +68,21 @@ const ChatSearch = () => {
     setSuggestions(filteredUsers);
   };
 
+  const [data, setData] = useState([]);
   const accessChat = async (userId) => {
     console.log(userId);
 
     try {
       setLoadingChat(true);
-
-      const { data } = await axios.post(`/api/chat`, { userId }, config);
+      axios
+        .post(
+          `http://localhost:5555/api/chat`,
+          { userId },
+          { withCredentials: true }
+        )
+        .then((res) => {
+          setData(res.data);
+        });
 
       if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
       setSelectedChat(data);
@@ -154,7 +155,7 @@ const ChatSearch = () => {
             </MenuList>
           </Menu>
           <Menu>
-            <MenuButton as={Button} bg="white" rightIcon={<ChevronDownIcon />}>
+            <MenuButton bg="white" rightIcon={<ChevronDownIcon />}>
               <Avatar
                 size="sm"
                 cursor="pointer"
@@ -172,7 +173,10 @@ const ChatSearch = () => {
           <ul className="mt-2 mx-5">
             {suggestions.map((user) => (
               <div key={user._id} className=" py-2">
-                <div className=" flex items-center">
+                <div
+                  className=" flex items-center"
+                  onClick={() => accessChat(user._id)}
+                >
                   <div className="profile_pic">
                     <img
                       className=" h-[36px] w-[36px] object-cover rounded-full mx-2"
