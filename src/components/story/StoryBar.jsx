@@ -11,15 +11,12 @@ const StoryBar = () => {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res);
         setstories(res.data.storys);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
-
-  console.log(stories);
 
   return (
     <div className=" w-full overflow-x-auto">

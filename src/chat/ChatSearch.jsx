@@ -1,3 +1,5 @@
+import { Button } from "@chakra-ui/button";
+import { useDisclosure } from "@chakra-ui/hooks";
 import { Input } from "@chakra-ui/input";
 import { Box, Text } from "@chakra-ui/layout";
 import {
@@ -7,27 +9,32 @@ import {
   MenuItem,
   MenuList,
 } from "@chakra-ui/menu";
+import {
+  Drawer,
+  DrawerBody,
+  DrawerContent,
+  DrawerHeader,
+  DrawerOverlay,
+} from "@chakra-ui/modal";
 import { Tooltip } from "@chakra-ui/tooltip";
 import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { Avatar } from "@chakra-ui/avatar";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
-import { IonItem, IonSpinner } from "@ionic/react";
-import Search from "../components/assets/Search";
-import { Close } from "@mui/icons-material";
-import { useDisclosure, useToast } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/toast";
+import { Spinner } from "@chakra-ui/spinner";
 import ProfileModal from "./miscellaneous/ProfileModal";
 import { getSender } from "../config/ChatLogics";
-import UserListItem from "./userAvatar/UserListItem";
+import UserListItem from "./userAvatar/UserBadgeItem";
 import { ChatState } from "../context/chatProvider";
 import { useNavigate } from "react-router-dom";
 
-const ChatSearch = () => {
-  const [inputValue, setInputValue] = useState("");
-  const [suggestions, setSuggestions] = useState([]);
-  const [users, setUsers] = useState([]);
+function ChatSearch() {
+  const [search, setSearch] = useState("");
+  const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingChat, setLoadingChat] = useState(false);
+  const navigate = useNavigate();
   const {
     setSelectedChat,
     user,
@@ -36,53 +43,62 @@ const ChatSearch = () => {
     chats,
     setChats,
   } = ChatState();
+
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const navigate = useNavigate();
 
-  useEffect(() => {
-    setLoading(true);
-    axios
-      .get(`http://localhost:5555/user/getalluser`, {
-        withCredentials: true,
-      })
-      .then((res) => {
-        setUsers(res.data.alluser);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error(error);
-        setLoading(false);
-      });
-  }, []);
-
-  const handleInputChange = (event) => {
-    const value = event.target.value;
-    setInputValue(value);
-
-    // Filter users locally instead of making an API call on each change
-    const filteredUsers = users.filter(
-      (user) =>
-        value && user.username.toLowerCase().includes(value.toLowerCase())
-    );
-    setSuggestions(filteredUsers);
+  const logoutHandler = () => {
+    localStorage.removeItem("token");
+    navigate("/");
   };
 
-  const [data, setData] = useState([]);
+  const handleSearch = async () => {
+    if (!search) {
+      toast({
+        title: "Please Enter something in search",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "top-left",
+      });
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const { data } = await axios.get(
+        `http://localhost:5555/user?search=${search}`,
+        {
+          withCredentials: true,
+        }
+      );
+
+      setLoading(false);
+      setSearchResult(data);
+    } catch (error) {
+      toast({
+        title: "Error Occured!",
+        description: "Failed to Load the Search Results",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-left",
+      });
+    }
+  };
+
   const accessChat = async (userId) => {
     console.log(userId);
 
     try {
       setLoadingChat(true);
-      axios
-        .post(
-          `http://localhost:5555/api/chat`,
-          { userId },
-          { withCredentials: true }
-        )
-        .then((res) => {
-          setData(res.data);
-        });
+
+      const { data } = await axios.post(
+        `/api/chat`,
+        { userId },
+        { withCredentials: true }
+      );
 
       if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
       setSelectedChat(data);
@@ -99,39 +115,30 @@ const ChatSearch = () => {
       });
     }
   };
+
   return (
-    <div>
-      <div className="header px-5 border-r">
-        <div className="search">
-          <div className=" flex flex-col">
-            <input
-              type="text"
-              className=" rounded-lg p-2 outline-none absolute pl-10 bg-gray-100 my-2"
-              value={inputValue}
-              onChange={handleInputChange}
-              placeholder="Type to Search..."
-            />
-            <div className=" flex justify-between w-[225px]">
-              <div className="relative p-2 cursor-pointer w-[25px] h-[25px] my-2">
-                <Search />
-              </div>
-              {!loading && (
-                <div
-                  onClick={() => setInputValue("")}
-                  className="relative p-2 cursor-pointer float-right text-gray-500 my-[6px]"
-                >
-                  <Close />
-                </div>
-              )}
-              {loading && (
-                <div className="p-2">
-                  <IonItem>
-                    <IonSpinner name="lines-sharp-small"></IonSpinner>
-                  </IonItem>
-                </div>
-              )}
-            </div>
-          </div>
+    <>
+      <Box
+        d="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        bg="white"
+        w="100%"
+        p="5px 10px 5px 10px"
+        borderWidth="5px"
+      >
+        <Tooltip label="Search Users to chat" hasArrow placement="bottom-end">
+          <Button variant="ghost" onClick={onOpen}>
+            <i className="fas fa-search"></i>
+            <Text d={{ base: "none", md: "flex" }} px={4}>
+              Search User
+            </Text>
+          </Button>
+        </Tooltip>
+        <Text fontSize="2xl" fontFamily="Work sans">
+          Talk-A-Tive
+        </Text>
+        <div>
           <Menu>
             <MenuButton p={1}>
               <p>{notification.length}</p>
@@ -155,7 +162,7 @@ const ChatSearch = () => {
             </MenuList>
           </Menu>
           <Menu>
-            <MenuButton bg="white" rightIcon={<ChevronDownIcon />}>
+            <MenuButton as={Button} bg="white" rightIcon={<ChevronDownIcon />}>
               <Avatar
                 size="sm"
                 cursor="pointer"
@@ -170,33 +177,40 @@ const ChatSearch = () => {
               <MenuDivider />
             </MenuList>
           </Menu>
-          <ul className="mt-2 mx-5">
-            {suggestions.map((user) => (
-              <div key={user._id} className=" py-2">
-                <div
-                  className=" flex items-center"
-                  onClick={() => accessChat(user._id)}
-                >
-                  <div className="profile_pic">
-                    <img
-                      className=" h-[36px] w-[36px] object-cover rounded-full mx-2"
-                      src={user?.profile?.profilephoto}
-                      alt="profilepic"
-                    />
-                  </div>
-                  <div className="userinfo">
-                    <p className="">{user?.username}</p>
-                    <p className=" text-gray-400 text-xs">
-                      {user?.profile?.profilename}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </ul>
         </div>
-      </div>
-    </div>
+      </Box>
+
+      <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerHeader borderBottomWidth="1px">Search Users</DrawerHeader>
+          <DrawerBody>
+            <Box d="flex" pb={2}>
+              <Input
+                placeholder="Search by name or email"
+                mr={2}
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+              <Button onClick={handleSearch}>Go</Button>
+            </Box>
+            {loading ? (
+              <Spinner />
+            ) : (
+              searchResult?.map((user) => (
+                <UserListItem
+                  key={user._id}
+                  user={user}
+                  handleFunction={() => accessChat(user._id)}
+                />
+              ))
+            )}
+            {loadingChat && <Spinner ml="auto" d="flex" />}
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
+    </>
   );
-};
+}
+
 export default ChatSearch;

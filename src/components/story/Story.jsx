@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import "./story.css";
 
 const Story = ({ story }) => {
-  console.log("inside story", story);
-  console.log("storyId", story._id);
   return (
     <div>
       <div className="container frame rounded-full cursor-pointer h-[60px] w-[60px] flex justify-center items-center">

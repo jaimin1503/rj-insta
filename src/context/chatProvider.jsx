@@ -5,10 +5,10 @@ import { useNavigate } from "react-router-dom";
 const ChatContext = createContext();
 
 const ChatProvider = ({ children }) => {
-  const [selectedChat, setSelectedChat] = useState(null); // Set default values
-  const [user, setUser] = useState(null); // Set default values
-  const [notification, setNotification] = useState([]); // Set default values
-  const [chats, setChats] = useState([]); // Set default values
+  const [selectedChat, setSelectedChat] = useState(null);
+  const [user, setUser] = useState(null);
+  const [notification, setNotification] = useState([]);
+  const [chats, setChats] = useState([]);
 
   const navigate = useNavigate();
 
@@ -21,12 +21,13 @@ const ChatProvider = ({ children }) => {
       .catch((error) => {
         console.error("Error fetching user:", error);
         // Redirect to an error page or handle the error accordingly
+        navigate("/error");
       });
-  }, []); // Removed unnecessary dependency
+  }, [navigate]);
 
   useEffect(() => {
     if (!user) {
-      navigate("/"); // Redirect if user is not available
+      navigate("/");
     }
   }, [user, navigate]);
 
