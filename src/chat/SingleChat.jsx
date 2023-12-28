@@ -28,23 +28,17 @@ const SingleChat = () => {
     if (!selectedChat) return;
 
     try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
-
       setLoading(true);
 
-      const { data } = await axios.get(
-        `/api/message/${selectedChat._id}`,
-        config
-      );
-      setMessages(data);
+      const { responce } = await axios.get(`/api/message/${selectedChat._id}`, {
+        withCredentials: true,
+      });
+      setMessages(responce);
       setLoading(false);
 
       socket.emit("join chat", selectedChat._id);
     } catch (error) {
+      console.log(error);
       toast({
         title: "Error Occured!",
         description: "Failed to Load the Messages",
@@ -62,7 +56,7 @@ const SingleChat = () => {
       try {
         setNewMessage("");
         const { data } = await axios.post(
-          "/api/message",
+          "http://localhost5555/api/message",
           {
             content: newMessage,
             chatId: selectedChat,
@@ -72,6 +66,7 @@ const SingleChat = () => {
         socket.emit("new message", data);
         setMessages([...messages, data]);
       } catch (error) {
+        console.log(error);
         toast({
           title: "Error Occured!",
           description: "Failed to send the Message",
@@ -80,6 +75,7 @@ const SingleChat = () => {
           isClosable: true,
           position: "bottom",
         });
+        console.log(error);
       }
     }
   };

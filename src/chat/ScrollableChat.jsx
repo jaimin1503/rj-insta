@@ -14,8 +14,8 @@ const ScrollableChat = ({ messages }) => {
 
   return (
     <ScrollableFeed>
-      {messages &&
-        messages.map((m, i) => (
+      {messages ? (
+        messages?.map((m, i) => (
           <div style={{ display: "flex" }} key={m._id}>
             {(isSameSender(messages, m, i, user._id) ||
               isLastMessage(messages, i, user._id)) && (
@@ -45,7 +45,10 @@ const ScrollableChat = ({ messages }) => {
               {m.content}
             </span>
           </div>
-        ))}
+        ))
+      ) : (
+        <></>
+      )}
     </ScrollableFeed>
   );
 };

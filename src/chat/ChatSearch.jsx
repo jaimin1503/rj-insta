@@ -19,7 +19,7 @@ import {
 import { Tooltip } from "@chakra-ui/tooltip";
 import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { Avatar } from "@chakra-ui/avatar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useToast } from "@chakra-ui/toast";
 import { Spinner } from "@chakra-ui/spinner";
@@ -34,6 +34,9 @@ function ChatSearch() {
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingChat, setLoadingChat] = useState(false);
+  const [users, setUsers] = useState([]);
+  const [inputValue, setInputValue] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
   const navigate = useNavigate();
   const {
     setSelectedChat,
@@ -52,41 +55,70 @@ function ChatSearch() {
     navigate("/");
   };
 
-  const handleSearch = async () => {
-    if (!search) {
-      toast({
-        title: "Please Enter something in search",
-        status: "warning",
-        duration: 5000,
-        isClosable: true,
-        position: "top-left",
+  useEffect(() => {
+    // Fetch all users once when the component mounts
+    setLoading(true);
+    axios
+      .get(`http://localhost:5555/user/getalluser`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        setUsers(res.data.alluser);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
       });
-      return;
-    }
+  }, []);
 
-    try {
-      setLoading(true);
+  const handleInputChange = (event) => {
+    const value = event.target.value;
+    setInputValue(value);
 
-      const { data } = await axios.get(
-        `http://localhost:5555/user?search=${search}`,
-        {
-          withCredentials: true,
-        }
-      );
-
-      setLoading(false);
-      setSearchResult(data);
-    } catch (error) {
-      toast({
-        title: "Error Occured!",
-        description: "Failed to Load the Search Results",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom-left",
-      });
-    }
+    // Filter users locally instead of making an API call on each change
+    const filteredUsers = users.filter(
+      (user) =>
+        value && user.username.toLowerCase().includes(value.toLowerCase())
+    );
+    setSuggestions(filteredUsers);
   };
+
+  // const handleSearch = async () => {
+  //   if (!search) {
+  //     toast({
+  //       title: "Please Enter something in search",
+  //       status: "warning",
+  //       duration: 5000,
+  //       isClosable: true,
+  //       position: "top-left",
+  //     });
+  //     return;
+  //   }
+
+  //   try {
+  //     setLoading(true);
+
+  //     const { data } = await axios.get(
+  //       `http://localhost:5555/user?search=${search}`,
+  //       {
+  //         withCredentials: true,
+  //       }
+  //     );
+
+  //     setLoading(false);
+  //     setSearchResult(data);
+  //   } catch (error) {
+  //     toast({
+  //       title: "Error Occured!",
+  //       description: "Failed to Load the Search Results",
+  //       status: "error",
+  //       duration: 5000,
+  //       isClosable: true,
+  //       position: "bottom-left",
+  //     });
+  //   }
+  // };
 
   const accessChat = async (userId) => {
     console.log(userId);
@@ -95,16 +127,26 @@ function ChatSearch() {
       setLoadingChat(true);
 
       const { data } = await axios.post(
-        `/api/chat`,
+        `http://localhost:5555/api/chat`,
         { userId },
         { withCredentials: true }
       );
+      setLoading(false);
 
-      if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
+      // console.log(data);
+
+      // console.log(chats);
+
+      // if (!chats?.find((c) => c._id === data._id)) {
+      //   // Using a functional update to correctly update chats state
+      //   setChats((prevChats) => [data, ...prevChats]);
+      // }
+      setChats((prevChats) => [data, ...prevChats]);
       setSelectedChat(data);
       setLoadingChat(false);
       onClose();
     } catch (error) {
+      console.log(error);
       toast({
         title: "Error fetching the chat",
         description: error.message,
@@ -113,6 +155,7 @@ function ChatSearch() {
         isClosable: true,
         position: "bottom-left",
       });
+      setLoading(false);
     }
   };
 
@@ -189,20 +232,36 @@ function ChatSearch() {
               <Input
                 placeholder="Search by name or email"
                 mr={2}
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                value={inputValue}
+                onChange={handleInputChange}
               />
-              <Button onClick={handleSearch}>Go</Button>
+              {/* <Button onClick={handleSearch}>Go</Button> */}
             </Box>
             {loading ? (
               <Spinner />
             ) : (
-              searchResult?.map((user) => (
-                <UserListItem
+              suggestions.map((user) => (
+                <div
                   key={user._id}
-                  user={user}
-                  handleFunction={() => accessChat(user._id)}
-                />
+                  className=" py-2 cursor-pointer"
+                  onClick={() => accessChat(user._id)}
+                >
+                  <div className=" flex items-center">
+                    <div className="profile_pic">
+                      <img
+                        className=" h-[36px] w-[36px] object-cover rounded-full mx-2"
+                        src={user?.profile?.profilephoto}
+                        alt="profilepic"
+                      />
+                    </div>
+                    <div className="userinfo">
+                      <p className="">{user?.username}</p>
+                      <p className=" text-gray-400 text-xs">
+                        {user?.profile?.profilename}
+                      </p>
+                    </div>
+                  </div>
+                </div>
               ))
             )}
             {loadingChat && <Spinner ml="auto" d="flex" />}

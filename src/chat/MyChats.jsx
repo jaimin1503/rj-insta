@@ -18,9 +18,12 @@ const MyChats = ({ fetchAgain }) => {
 
   const fetchChats = async () => {
     try {
-      const { data } = await axios.get("/api/chat", { withCredentials: true });
+      const { data } = await axios.get("http://localhost:5555/api/chat", {
+        withCredentials: true,
+      });
       setChats(data);
     } catch (error) {
+      console.log(error)
       // Check the type of error and display a specific message accordingly
       if (error.response) {
         // The request was made and the server responded with a status code
@@ -44,6 +47,7 @@ const MyChats = ({ fetchAgain }) => {
           position: "bottom-left",
         });
       } else {
+        console.log(error)
         // Something happened in setting up the request that triggered an error
         toast({
           title: "Error!",
@@ -58,7 +62,7 @@ const MyChats = ({ fetchAgain }) => {
   };
 
   useEffect(() => {
-    setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
+    setLoggedUser(user);
     fetchChats();
   }, [fetchAgain]);
 
@@ -104,7 +108,7 @@ const MyChats = ({ fetchAgain }) => {
         borderRadius="lg"
         overflowY="hidden"
       >
-        {/* {chats ? (
+        {chats ? (
           <Stack overflowY="scroll">
             {chats?.map((chat) => (
               <Box
@@ -135,7 +139,7 @@ const MyChats = ({ fetchAgain }) => {
           </Stack>
         ) : (
           <ChatLoading />
-        )} */}
+        )}
       </Box>
     </Box>
   );
