@@ -13,6 +13,7 @@ import { useToast } from "@chakra-ui/react";
 import ScrollableChat from "./ScrollableChat.jsx";
 import "./styles.css";
 import { Input } from "@chakra-ui/input";
+import typing from "./assets/typing.gif";
 
 const SingleChat = () => {
   const [messages, setMessages] = useState([]);
@@ -60,6 +61,7 @@ const SingleChat = () => {
 
   const sendMessage = async (event) => {
     if (event.key === "Enter" && newMessage) {
+      event.preventDefault();
       socket.emit("stop typing", selectedChat._id);
       try {
         setNewMessage("");
@@ -73,6 +75,7 @@ const SingleChat = () => {
         );
         socket.emit("new message", data);
         setMessages([...messages, data]);
+        fetchMessages();
       } catch (error) {
         console.log(error);
         toast({
@@ -145,73 +148,77 @@ const SingleChat = () => {
     }, timerLength);
   };
   return (
-    <div>
-      <>
-        {selectedChat ? (
-          <div className=" h-[70vh]">
-            <h1 className=" text-sm pb-3 px-2 w-full font-sans flex justify-between items-center">
-              <div
-                onClick={() => setSelectedChat("")}
-                className="icon flex md:hidden"
-              >
-                <ArrowBack />
-              </div>
-              {messages &&
-                (!selectedChat.isGroupChat ? (
-                  <>
-                    {getSender(user, selectedChat.users)}
-                    <ProfileModal
-                      user={getSenderFull(user, selectedChat.users)}
-                    />
-                  </>
-                ) : (
-                  <>
-                    {selectedChat.chatName.toUpperCase()}
-                    <UpdateGroupChatModal
-                      fetchMessages={fetchMessages}
-                      fetchAgain={fetchAgain}
-                      setFetchAgain={setFetchAgain}
-                    />
-                  </>
-                ))}
-            </h1>
-            <div className="box flex flex-col justify-end p-3 bg-blue-400 h-full w-full rounded-lg overflow-y-hidden">
-              {loading ? (
-                <Spinner />
-              ) : (
-                <div className="messages">
-                  <ScrollableChat messages={messages} />
-                </div>
-              )}
-              <form onKeyDown={sendMessage} id="first-name" className=" mt-3">
-                {istyping ? <div>typing...</div> : <></>}
-                <Input
-                  variant="filled"
-                  bg="#E0E0E0"
-                  placeholder="Enter a message.."
-                  value={newMessage}
-                  onChange={typingHandler}
-                />
-              </form>
+    <>
+      {selectedChat ? (
+        <div className=" h-[70vh]">
+          <h1 className=" text-sm pb-3 px-2 w-full font-sans flex justify-between items-center">
+            <div
+              onClick={() => setSelectedChat("")}
+              className="icon flex md:hidden"
+            >
+              <ArrowBack />
             </div>
+            {messages &&
+              (!selectedChat.isGroupChat ? (
+                <>
+                  {getSender(user, selectedChat.users)}
+                  <ProfileModal
+                    user={getSenderFull(user, selectedChat.users)}
+                  />
+                </>
+              ) : (
+                <>
+                  {selectedChat.chatName.toUpperCase()}
+                  <UpdateGroupChatModal
+                    fetchMessages={fetchMessages}
+                    fetchAgain={fetchAgain}
+                    setFetchAgain={setFetchAgain}
+                  />
+                </>
+              ))}
+          </h1>
+          <div className="box flex flex-col justify-end p-3 bg-blue-400 h-full w-full rounded-lg overflow-y-hidden">
+            {loading ? (
+              <Spinner />
+            ) : (
+              <div className="messages">
+                <ScrollableChat messages={messages} />
+              </div>
+            )}
+            <form onKeyDown={sendMessage} id="first-name" className=" mt-3">
+              {istyping ? (
+                <div>
+                  <img src={typing} alt="" />
+                </div>
+              ) : (
+                <></>
+              )}
+              <Input
+                variant="filled"
+                bg="#E0E0E0"
+                placeholder="Enter a message.."
+                value={newMessage}
+                onChange={typingHandler}
+              />
+            </form>
           </div>
-        ) : (
-          // JSX when no chat is selected
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              height: "100%",
-            }}
-          >
-            <p style={{ fontSize: "24px", fontFamily: "Arial, sans-serif" }}>
-              Click on a user to start chatting
-            </p>
-          </div>
-        )}
-      </>
-    </div>
+        </div>
+      ) : (
+        // JSX when no chat is selected
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "100%",
+          }}
+        >
+          <p style={{ fontSize: "24px", fontFamily: "Arial, sans-serif" }}>
+            Click on a user to start chatting
+          </p>
+        </div>
+      )}
+    </>
   );
 };
 export default SingleChat;
