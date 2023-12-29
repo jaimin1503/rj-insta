@@ -30,17 +30,24 @@ const SingleChat = () => {
     try {
       setLoading(true);
 
-      const { responce } = await axios.get(`/api/message/${selectedChat._id}`, {
-        withCredentials: true,
-      });
-      setMessages(responce);
+      const { data } = await axios.get(
+        `http://localhost:5555/api/message/${selectedChat._id}`,
+        {
+          withCredentials: true,
+          params: {
+            chatId: selectedChat._id,
+          },
+        }
+      );
+      setMessages(data);
+      console.log(data);
       setLoading(false);
 
       socket.emit("join chat", selectedChat._id);
     } catch (error) {
       console.log(error);
       toast({
-        title: "Error Occured!",
+        title: "Error Occurred!",
         description: "Failed to Load the Messages",
         status: "error",
         duration: 5000,
@@ -56,7 +63,7 @@ const SingleChat = () => {
       try {
         setNewMessage("");
         const { data } = await axios.post(
-          "http://localhost5555/api/message",
+          "http://localhost:5555/api/message",
           {
             content: newMessage,
             chatId: selectedChat,

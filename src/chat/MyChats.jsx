@@ -22,7 +22,6 @@ const MyChats = ({ fetchAgain }) => {
         withCredentials: true,
       });
       setChats(data);
-      console.log(data);
     } catch (error) {
       console.log(error);
       // Check the type of error and display a specific message accordingly
@@ -132,8 +131,8 @@ const MyChats = ({ fetchAgain }) => {
                 </Text>
                 {chat.latestMessage && (
                   <Text fontSize="xs" zIndex={100}>
-                    <p>{chat.users[1]?.username || "jaimin"}</p>
-                    <b>{chat.latestMessage?.sender?.name || "ashish"} : </b>
+                    <p>{chat.users[1]?.username}</p>
+                    <b>{chat.latestMessage?.sender?.username || "ashish"} : </b>
                     {chat.latestMessage.content.length > 50
                       ? chat.latestMessage.content.substring(0, 51) + "..."
                       : chat.latestMessage.content || "hii"}

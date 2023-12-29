@@ -3,7 +3,9 @@ import Chat from "../model/ChatModel.js";
 import User from "../model/user.model.js";
 
 const accessChat = asyncHandler(async (req, res) => {
-  const { userId, id } = req.body;
+  const { userId } = req.body;
+  const id = req.user.userid;
+  console.log(id);
 
   if (!userId || !id) {
     console.log("UserId param not sent with request");
@@ -30,7 +32,7 @@ const accessChat = asyncHandler(async (req, res) => {
     const chatData = {
       chatName: "sender",
       isGroupChat: false,
-      users: [req.user._id, userId],
+      users: [id, userId],
     };
 
     const createdChat = await Chat.create(chatData);
@@ -46,7 +48,7 @@ const accessChat = asyncHandler(async (req, res) => {
 
 const fetchChats = asyncHandler(async (req, res) => {
   try {
-    Chat.find({ users: { $elemMatch: { $eq: req.user._id } } })
+    Chat.find({ users: { $elemMatch: { $eq: req.user.userid } } })
       .populate("users", "-password")
       .populate("groupAdmin", "-password")
       .populate("latestMessage")
