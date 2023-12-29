@@ -11,6 +11,7 @@ import { ArrowBack } from "@mui/icons-material";
 import Spinner from "../components/Spinner.jsx";
 import { useToast } from "@chakra-ui/react";
 import ScrollableChat from "./ScrollableChat.jsx";
+import "./styles.css";
 
 const SingleChat = () => {
   const [messages, setMessages] = useState([]);
@@ -40,7 +41,6 @@ const SingleChat = () => {
         }
       );
       setMessages(data);
-      console.log(data);
       setLoading(false);
 
       socket.emit("join chat", selectedChat._id);

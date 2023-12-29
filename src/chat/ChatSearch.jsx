@@ -25,7 +25,7 @@ import { useToast } from "@chakra-ui/toast";
 import { Spinner } from "@chakra-ui/spinner";
 import ProfileModal from "./miscellaneous/ProfileModal";
 import { getSender } from "../config/ChatLogics";
-import UserListItem from "./userAvatar/UserBadgeItem";
+import "./styles.css";
 import { ChatState } from "../context/chatProvider";
 import { useNavigate } from "react-router-dom";
 
