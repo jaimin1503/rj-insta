@@ -5,6 +5,8 @@ import { ChatState } from "../../context/chatProvider";
 const UserListItem = ({ handleFunction }) => {
   const { user } = ChatState();
 
+  console.log(user.profile.profilephoto);
+
   return (
     <Box
       onClick={handleFunction}

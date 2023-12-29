@@ -4,7 +4,6 @@ import Chat from "../model/ChatModel.js";
 import User from "../model/user.model.js";
 
 const allMessages = asyncHandler(async (req, res) => {
-  console.log("chatid", req.params.chatId);
   try {
     const messages = await Message.find({ chat: req.params.chatId })
       .populate("sender", "name pic email")

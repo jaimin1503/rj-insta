@@ -127,12 +127,12 @@ const MyChats = ({ fetchAgain }) => {
                 <Text>
                   {!chat.isGroupChat
                     ? getSender(loggedUser, chat.users)
-                    : chat.chatName || "jaimin"}
+                    : chat.chatName}
                 </Text>
                 {chat.latestMessage && (
                   <Text fontSize="xs" zIndex={100}>
                     <p>{chat.users[1]?.username}</p>
-                    <b>{chat.latestMessage?.sender?.username || "ashish"} : </b>
+                    <p>{chat.latestMessage?.sender?.username} </p>
                     {chat.latestMessage.content.length > 50
                       ? chat.latestMessage.content.substring(0, 51) + "..."
                       : chat.latestMessage.content || "hii"}

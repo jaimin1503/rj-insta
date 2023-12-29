@@ -5,7 +5,6 @@ import User from "../model/user.model.js";
 const accessChat = asyncHandler(async (req, res) => {
   const { userId } = req.body;
   const id = req.user.userid;
-  console.log(id);
 
   if (!userId || !id) {
     console.log("UserId param not sent with request");
