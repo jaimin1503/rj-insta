@@ -10,7 +10,7 @@ import { Button } from "@chakra-ui/react";
 import { ChatState } from "../context/chatProvider";
 
 const MyChats = ({ fetchAgain }) => {
-  const [loggedUser, setLoggedUser] = useState();
+  const [loggedUser, setLoggedUser] = useState({});
 
   const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
 
@@ -22,8 +22,9 @@ const MyChats = ({ fetchAgain }) => {
         withCredentials: true,
       });
       setChats(data);
+      console.log(data);
     } catch (error) {
-      console.log(error)
+      console.log(error);
       // Check the type of error and display a specific message accordingly
       if (error.response) {
         // The request was made and the server responded with a status code
@@ -47,7 +48,7 @@ const MyChats = ({ fetchAgain }) => {
           position: "bottom-left",
         });
       } else {
-        console.log(error)
+        console.log(error);
         // Something happened in setting up the request that triggered an error
         toast({
           title: "Error!",
@@ -61,8 +62,13 @@ const MyChats = ({ fetchAgain }) => {
     }
   };
 
+  console.log(chats);
+
   useEffect(() => {
-    setLoggedUser(user);
+    axios
+      .get("http://localhost:5555/user/getuser", { withCredentials: true })
+      .then((res) => setLoggedUser(res.data.user))
+      .catch((error) => console.log(error));
     fetchChats();
   }, [fetchAgain]);
 
@@ -128,6 +134,7 @@ const MyChats = ({ fetchAgain }) => {
                 </Text>
                 {chat.latestMessage && (
                   <Text fontSize="xs">
+                    <p>{chat.users[1].username}</p>
                     <b>{chat.latestMessage.sender.name} : </b>
                     {chat.latestMessage.content.length > 50
                       ? chat.latestMessage.content.substring(0, 51) + "..."

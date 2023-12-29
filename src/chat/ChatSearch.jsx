@@ -121,14 +121,12 @@ function ChatSearch() {
   // };
 
   const accessChat = async (userId) => {
-    console.log(userId);
-
     try {
       setLoadingChat(true);
 
       const { data } = await axios.post(
         `http://localhost:5555/api/chat`,
-        { userId },
+        { userId, id: user._id },
         { withCredentials: true }
       );
       setLoading(false);

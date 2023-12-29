@@ -3,17 +3,19 @@ import Chat from "../model/ChatModel.js";
 import User from "../model/user.model.js";
 
 const accessChat = asyncHandler(async (req, res) => {
-  const { userId } = req.body; //other user's id
+  const { userId, id } = req.body; //other user's id
 
   if (!userId) {
     console.log("UserId param not sent with request");
     return res.sendStatus(400);
   }
 
+  console.log(id);
+
   let isChat = await Chat.find({
     isGroupChat: false,
     $and: [
-      { users: { $elemMatch: { $eq: req.user._id } } },
+      { users: { $elemMatch: { $eq: id } } },
       { users: { $elemMatch: { $eq: userId } } },
     ],
   })
@@ -22,7 +24,7 @@ const accessChat = asyncHandler(async (req, res) => {
 
   isChat = await User.populate(isChat, {
     path: "latestMessage.sender",
-    select: "name pic email",
+    select: "usernamename email",
   });
 
   if (isChat.length > 0) {
