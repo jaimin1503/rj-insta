@@ -3,50 +3,44 @@ import Chat from "../model/ChatModel.js";
 import User from "../model/user.model.js";
 
 const accessChat = asyncHandler(async (req, res) => {
-  const { userId, id } = req.body; //other user's id
+  const { userId, id } = req.body;
 
-  if (!userId) {
+  if (!userId || !id) {
     console.log("UserId param not sent with request");
     return res.sendStatus(400);
   }
 
-  console.log(id);
+  try {
+    let isChat = await Chat.find({
+      isGroupChat: false,
+      users: { $all: [userId, id] },
+    })
+      .populate("users", "-password")
+      .populate("latestMessage");
 
-  let isChat = await Chat.find({
-    isGroupChat: false,
-    $and: [
-      { users: { $elemMatch: { $eq: id } } },
-      { users: { $elemMatch: { $eq: userId } } },
-    ],
-  })
-    .populate("users", "-password")
-    .populate("latestMessage");
+    isChat = await User.populate(isChat, {
+      path: "latestMessage.sender",
+      select: "username email",
+    });
 
-  isChat = await User.populate(isChat, {
-    path: "latestMessage.sender",
-    select: "usernamename email",
-  });
+    if (isChat.length > 0) {
+      return res.send(isChat[0]);
+    }
 
-  if (isChat.length > 0) {
-    res.send(isChat[0]);
-  } else {
     const chatData = {
       chatName: "sender",
       isGroupChat: false,
       users: [req.user._id, userId],
     };
 
-    try {
-      const createdChat = await Chat.create(chatData);
-      const FullChat = await Chat.findOne({ _id: createdChat._id }).populate(
-        "users",
-        "-password"
-      );
-      res.status(200).json(FullChat);
-    } catch (error) {
-      res.status(400);
-      throw new Error(error.message);
-    }
+    const createdChat = await Chat.create(chatData);
+    const fullChat = await Chat.findOne({ _id: createdChat._id }).populate(
+      "users",
+      "-password"
+    );
+    return res.status(200).json(fullChat);
+  } catch (error) {
+    return res.status(400).send(error.message);
   }
 });
 

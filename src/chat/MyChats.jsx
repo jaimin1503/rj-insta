@@ -62,8 +62,6 @@ const MyChats = ({ fetchAgain }) => {
     }
   };
 
-  console.log(chats);
-
   useEffect(() => {
     axios
       .get("http://localhost:5555/user/getuser", { withCredentials: true })
@@ -130,15 +128,15 @@ const MyChats = ({ fetchAgain }) => {
                 <Text>
                   {!chat.isGroupChat
                     ? getSender(loggedUser, chat.users)
-                    : chat.chatName}
+                    : chat.chatName || "jaimin"}
                 </Text>
                 {chat.latestMessage && (
-                  <Text fontSize="xs">
-                    <p>{chat.users[1].username}</p>
-                    <b>{chat.latestMessage.sender.name} : </b>
+                  <Text fontSize="xs" zIndex={100}>
+                    <p>{chat.users[1]?.username || "jaimin"}</p>
+                    <b>{chat.latestMessage?.sender?.name || "ashish"} : </b>
                     {chat.latestMessage.content.length > 50
                       ? chat.latestMessage.content.substring(0, 51) + "..."
-                      : chat.latestMessage.content}
+                      : chat.latestMessage.content || "hii"}
                   </Text>
                 )}
               </Box>
