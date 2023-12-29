@@ -13,7 +13,7 @@ import { useToast } from "@chakra-ui/react";
 import ScrollableChat from "./ScrollableChat.jsx";
 import "./styles.css";
 import { Input } from "@chakra-ui/input";
-import typing from "./assets/typing.gif";
+import typingGif from "./assets/typing.gif";
 
 const SingleChat = () => {
   const [messages, setMessages] = useState([]);
@@ -112,20 +112,28 @@ const SingleChat = () => {
   }, [selectedChat]);
 
   useEffect(() => {
-    socket.on("message recieved", (newMessageRecieved) => {
-      if (
-        !selectedChatCompare || // if chat is not selected or doesn't match current chat
-        selectedChatCompare._id !== newMessageRecieved.chat._id
-      ) {
-        if (!notification.includes(newMessageRecieved)) {
-          setNotification([newMessageRecieved, ...notification]);
-          setFetchAgain(!fetchAgain);
+    if (socket) {
+      socket.on("message received", (newMessageReceived) => {
+        if (
+          !selectedChatCompare || // if chat is not selected or doesn't match current chat
+          selectedChatCompare._id !== newMessageReceived.chat._id
+        ) {
+          if (!notification.includes(newMessageReceived)) {
+            setNotification([newMessageReceived, ...notification]);
+            setFetchAgain(!fetchAgain);
+          }
+        } else {
+          setMessages((prevMessages) => [...prevMessages, newMessageReceived]);
         }
-      } else {
-        setMessages([...messages, newMessageRecieved]);
+      });
+    }
+
+    return () => {
+      if (socket) {
+        socket.off("message received");
       }
-    });
-  });
+    };
+  }, [socket, selectedChatCompare, notification]);
 
   const typingHandler = (e) => {
     setNewMessage(e.target.value);
@@ -188,7 +196,7 @@ const SingleChat = () => {
             <form onKeyDown={sendMessage} id="first-name" className=" mt-3">
               {istyping ? (
                 <div>
-                  <img src={typing} alt="" />
+                  <img src={typingGif} alt="" />
                 </div>
               ) : (
                 <></>
