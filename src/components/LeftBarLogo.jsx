@@ -4,10 +4,22 @@ import Home from "./assets/Home";
 import Video from "./assets/Video";
 import Explore from "./assets/Explore";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const LeftBarLogo = () => {
-  const { user } = useSelector((state) => state.user);
+  const [user, setUser] = useState({});
+  useEffect(() => {
+    axios
+      .get("http://localhost:5555/user/getuser", { withCredentials: true })
+      .then((res) => {
+        setUser(res.data.user);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   return (
     <div className=" h-screen w-[60px] border-r">
       <div className=" flex flex-col items-center">

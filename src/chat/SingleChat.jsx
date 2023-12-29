@@ -12,6 +12,7 @@ import Spinner from "../components/Spinner.jsx";
 import { useToast } from "@chakra-ui/react";
 import ScrollableChat from "./ScrollableChat.jsx";
 import "./styles.css";
+import { Input } from "@chakra-ui/input";
 
 const SingleChat = () => {
   const [messages, setMessages] = useState([]);
@@ -147,7 +148,7 @@ const SingleChat = () => {
     <div>
       <>
         {selectedChat ? (
-          <>
+          <div className=" h-[70vh]">
             <h1 className=" text-sm pb-3 px-2 w-full font-sans flex justify-between items-center">
               <div
                 onClick={() => setSelectedChat("")}
@@ -184,16 +185,16 @@ const SingleChat = () => {
               )}
               <form onKeyDown={sendMessage} id="first-name" className=" mt-3">
                 {istyping ? <div>typing...</div> : <></>}
-                <input
-                  type="text"
-                  name="message"
+                <Input
+                  variant="filled"
+                  bg="#E0E0E0"
                   placeholder="Enter a message.."
                   value={newMessage}
                   onChange={typingHandler}
                 />
               </form>
             </div>
-          </>
+          </div>
         ) : (
           // JSX when no chat is selected
           <div

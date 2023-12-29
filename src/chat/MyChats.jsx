@@ -108,7 +108,7 @@ const MyChats = ({ fetchAgain }) => {
         p={3}
         bg="#F8F8F8"
         w="100%"
-        h="100%"
+        h="90%"
         borderRadius="lg"
         overflowY="hidden"
       >
@@ -124,16 +124,17 @@ const MyChats = ({ fetchAgain }) => {
                 py={2}
                 borderRadius="lg"
                 key={chat._id}
+                d="flex"
               >
-                <Text>
+                <Text fontSize={"sm"}>
                   {!chat.isGroupChat
                     ? getSender(loggedUser, chat.users)
                     : chat.chatName}
                 </Text>
                 {chat.latestMessage && (
                   <Text fontSize="xs" zIndex={100}>
-                    <p>{chat.users[1]?.username}</p>
-                    <p>{chat.latestMessage?.sender?.username} </p>
+                    {/* <p>{chat.users[1]?.username}</p> */}
+                    <b>{chat.latestMessage?.sender?.username} </b>
                     {chat.latestMessage.content.length > 50
                       ? chat.latestMessage.content.substring(0, 51) + "..."
                       : chat.latestMessage.content || "hii"}

@@ -6,7 +6,14 @@ import User from "../model/user.model.js";
 const allMessages = asyncHandler(async (req, res) => {
   try {
     const messages = await Message.find({ chat: req.params.chatId })
-      .populate("sender", "name pic email")
+      .populate({
+        path: "sender",
+        select: "username email",
+        populate: {
+          path: "profile",
+          select: "profilephoto",
+        },
+      })
       .populate("chat");
     res.json(messages);
   } catch (error) {
@@ -35,13 +42,21 @@ const sendMessage = asyncHandler(async (req, res) => {
     message = await Message.findById(message._id)
       .populate({
         path: "sender",
-        select: "username profile.profilephoto",
+        select: "username",
+        populate: {
+          path: "profile",
+          select: "profilephoto",
+        },
       })
       .populate("chat");
 
     message = await User.populate(message, {
       path: "chat.users",
-      select: "username email profile.profilephoto",
+      select: "username email",
+      populate: {
+        path: "profile",
+        select: "profilephoto",
+      }, // Populate profilephoto within profile
     });
 
     await Chat.findByIdAndUpdate(chatId, { latestMessage: message });

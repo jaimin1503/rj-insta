@@ -12,7 +12,7 @@ import "./styles.css";
 
 const ScrollableChat = ({ messages }) => {
   const { user } = ChatState();
-
+  console.log(messages[0]);
   return (
     <ScrollableFeed>
       {messages ? (
