@@ -5,7 +5,7 @@ import { getSender, getSenderFull } from "../config/ChatLogics.js";
 import ProfileModal from "./miscellaneous/ProfileModal.jsx";
 import UpdateGroupChatModal from "./miscellaneous/UpdateGroupChatModal";
 import { ChatState } from "../context/chatProvider.jsx";
-const ENDPOINT = "http://localhost:5173";
+const ENDPOINT = "http://localhost:5555";
 var socket, selectedChatCompare;
 import { ArrowBack } from "@mui/icons-material";
 import Spinner from "../components/Spinner.jsx";
@@ -15,7 +15,7 @@ import "./styles.css";
 import { Input } from "@chakra-ui/input";
 import typingGif from "./assets/typing.gif";
 
-const SingleChat = () => {
+const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [newMessage, setNewMessage] = useState("");
@@ -23,6 +23,8 @@ const SingleChat = () => {
   const [typing, setTyping] = useState(false);
   const [istyping, setIsTyping] = useState(false);
   const toast = useToast();
+
+  console.log(istyping);
 
   const { selectedChat, setSelectedChat, user, notification, setNotification } =
     ChatState();
@@ -75,7 +77,6 @@ const SingleChat = () => {
         );
         socket.emit("new message", data);
         setMessages([...messages, data]);
-        fetchMessages();
       } catch (error) {
         console.log(error);
         toast({
@@ -95,8 +96,15 @@ const SingleChat = () => {
     socket = io(ENDPOINT);
     socket.emit("setup", user);
     socket.on("connected", () => setSocketConnected(true));
-    socket.on("typing", () => setIsTyping(true));
-    socket.on("stop typing", () => setIsTyping(false));
+    socket.on("typing", () => {
+      setTyping(true);
+      setIsTyping(true);
+    });
+
+    socket.on("stop typing", () => {
+      setTyping(false);
+      setIsTyping(false);
+    });
 
     // eslint-disable-next-line
     return () => {
@@ -109,7 +117,7 @@ const SingleChat = () => {
 
     selectedChatCompare = selectedChat;
     // eslint-disable-next-line
-  }, [selectedChat]);
+  }, [selectedChat, fetchAgain, setFetchAgain]);
 
   useEffect(() => {
     if (socket) {
@@ -145,7 +153,7 @@ const SingleChat = () => {
       socket.emit("typing", selectedChat._id);
     }
     let lastTypingTime = new Date().getTime();
-    var timerLength = 3000;
+    var timerLength = 2000;
     setTimeout(() => {
       var timeNow = new Date().getTime();
       var timeDiff = timeNow - lastTypingTime;
@@ -196,7 +204,7 @@ const SingleChat = () => {
             <form onKeyDown={sendMessage} id="first-name" className=" mt-3">
               {istyping ? (
                 <div>
-                  <img src={typingGif} alt="" />
+                  <img className=" h-[25px] m-5" src={typingGif} alt="" />
                 </div>
               ) : (
                 <></>

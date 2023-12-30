@@ -14,8 +14,6 @@ import cron from "node-cron"; // Change import statement here
 
 databaseconnection();
 const app = express();
-const server = http.createServer(app); // Create an HTTP server using Express
-const io = new Server(server);
 
 app.use(express.json());
 app.use(cookieParser());
@@ -26,11 +24,6 @@ app.use(
     credentials: true,
   })
 );
-
-const port = process.env.PORT;
-app.listen(port, () => {
-  console.log(`app is listening on port ${port}`);
-});
 
 app.use("/user", user);
 app.use("/api/chat", chatRoutes);
@@ -50,8 +43,22 @@ app.use("/api/message", messageRoutes);
 //   timezone: 'Asia/Kolkata',
 // });
 
+const port = process.env.PORT || 5555;
+const server = app.listen(port, () => {
+  console.log(`app is listening on port ${port}`);
+});
+
+const io = new Server(server, {
+  pingTimeout: 60000,
+  cors: {
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  },
+});
+
 io.on("connection", (socket) => {
-  console.log("A user connected");
+  console.log("Connected to socket.io");
   socket.on("setup", (userData) => {
     socket.join(userData._id);
     socket.emit("connected");
@@ -61,7 +68,6 @@ io.on("connection", (socket) => {
     socket.join(room);
     console.log("User Joined Room: " + room);
   });
-
   socket.on("typing", (room) => socket.in(room).emit("typing"));
   socket.on("stop typing", (room) => socket.in(room).emit("stop typing"));
 
@@ -77,8 +83,8 @@ io.on("connection", (socket) => {
     });
   });
 
-  socket.on("disconnect", () => {
-    console.log("A user disconnected");
+  socket.off("setup", () => {
+    console.log("USER DISCONNECTED");
     socket.leave(userData._id);
   });
 });
