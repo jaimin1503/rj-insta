@@ -41,12 +41,10 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
 
     try {
       setLoading(true);
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
-      const { data } = await axios.get(`/api/user?search=${search}`, config);
+
+      const { data } = await axios.get(`/api/user?search=${search}`, {
+        withCredentials: true,
+      });
       console.log(data);
       setLoading(false);
       setSearchResult(data);
@@ -68,18 +66,14 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
 
     try {
       setRenameLoading(true);
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
+
       const { data } = await axios.put(
-        `/api/chat/rename`,
+        `http://localhost:5555/api/chat/rename`,
         {
           chatId: selectedChat._id,
           chatName: groupChatName,
         },
-        config
+        { withCredentials: true }
       );
 
       console.log(data._id);
@@ -126,18 +120,14 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
 
     try {
       setLoading(true);
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
+
       const { data } = await axios.put(
-        `/api/chat/groupadd`,
+        `http://localhost:5555/api/chat/groupadd`,
         {
           chatId: selectedChat._id,
           userId: user1._id,
         },
-        config
+        { withCredentials: true }
       );
 
       setSelectedChat(data);
@@ -171,18 +161,14 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
 
     try {
       setLoading(true);
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
+
       const { data } = await axios.put(
-        `/api/chat/groupremove`,
+        `http://localhost:5555/api/chat/groupremove`,
         {
           chatId: selectedChat._id,
           userId: user1._id,
         },
-        config
+        { withCredentials: true }
       );
 
       user1._id === user._id ? setSelectedChat() : setSelectedChat(data);

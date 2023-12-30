@@ -14,10 +14,11 @@ import {
   Box,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChatState } from "../../context/chatProvider";
 import UserBadgeItem from "../userAvatar/UserBadgeItem";
 import UserListItem from "../userAvatar/UserListItem";
+import { useNavigate } from "react-router-dom";
 
 const GroupChatModal = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -27,6 +28,11 @@ const GroupChatModal = ({ children }) => {
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
   const toast = useToast();
+  const [loadingChat, setLoadingChat] = useState(false);
+  const [users, setUsers] = useState([]);
+  const [inputValue, setInputValue] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const navigate = useNavigate();
 
   const { user, chats, setChats } = ChatState();
 
@@ -45,43 +51,72 @@ const GroupChatModal = ({ children }) => {
     setSelectedUsers([...selectedUsers, userToAdd]);
   };
 
-  const handleSearch = async (query) => {
-    setSearch(query);
-    if (!query) {
-      return;
-    }
-
-    try {
-      setLoading(true);
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
-      const { data } = await axios.get(`/api/user?search=${search}`, config);
-      console.log(data);
-      setLoading(false);
-      setSearchResult(data);
-    } catch (error) {
-      toast({
-        title: "Error Occured!",
-        description: "Failed to Load the Search Results",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom-left",
+  useEffect(() => {
+    // Fetch all users once when the component mounts
+    setLoading(true);
+    axios
+      .get(`http://localhost:5555/user/getalluser`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        setUsers(res.data.alluser);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
       });
-    }
+  }, []);
+
+  const handleInputChange = (event) => {
+    const value = event.target.value;
+    setInputValue(value);
+
+    // Filter users locally instead of making an API call on each change
+    const filteredUsers = users.filter(
+      (user) =>
+        value && user.username.toLowerCase().includes(value.toLowerCase())
+    );
+    setSuggestions(filteredUsers);
   };
+
+  // const handleSearch = async (query) => {
+  //   setSearch(query);
+  //   if (!query) {
+  //     return;
+  //   }
+
+  //   try {
+  //     setLoading(true);
+  //     const config = {
+  //       headers: {
+  //         Authorization: `Bearer ${user.token}`,
+  //       },
+  //     };
+  //     const { data } = await axios.get(`/api/user?search=${search}`, config);
+  //     console.log(data);
+  //     setLoading(false);
+  //     setSearchResult(data);
+  //   } catch (error) {
+  //     toast({
+  //       title: "Error Occured!",
+  //       description: "Failed to Load the Search Results",
+  //       status: "error",
+  //       duration: 5000,
+  //       isClosable: true,
+  //       position: "bottom-left",
+  //     });
+  //   }
+  // };
 
   const handleDelete = (delUser) => {
     setSelectedUsers(selectedUsers.filter((sel) => sel._id !== delUser._id));
   };
 
   const handleSubmit = async () => {
-    if (!groupChatName || !selectedUsers) {
+    if (!groupChatName || !selectedUsers || selectedUsers.length === 0) {
       toast({
-        title: "Please fill all the feilds",
+        title: "Please fill all the fields",
         status: "warning",
         duration: 5000,
         isClosable: true,
@@ -91,18 +126,13 @@ const GroupChatModal = ({ children }) => {
     }
 
     try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
       const { data } = await axios.post(
-        `/api/chat/group`,
+        `http://localhost:5555/api/chat/group`,
         {
           name: groupChatName,
-          users: JSON.stringify(selectedUsers.map((u) => u._id)),
+          users: selectedUsers.map((u) => u._id),
         },
-        config
+        { withCredentials: true }
       );
       setChats([data, ...chats]);
       onClose();
@@ -116,7 +146,7 @@ const GroupChatModal = ({ children }) => {
     } catch (error) {
       toast({
         title: "Failed to Create the Chat!",
-        description: error.response.data,
+        description: error.message || "Unknown error occurred",
         status: "error",
         duration: 5000,
         isClosable: true,
@@ -131,7 +161,7 @@ const GroupChatModal = ({ children }) => {
 
       <Modal onClose={onClose} isOpen={isOpen} isCentered>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent className=" h-[50vh] overflow-y-scroll">
           <ModalHeader
             fontSize="35px"
             fontFamily="Work sans"
@@ -153,7 +183,7 @@ const GroupChatModal = ({ children }) => {
               <Input
                 placeholder="Add Users eg: John, Piyush, Jane"
                 mb={1}
-                onChange={(e) => handleSearch(e.target.value)}
+                onChange={handleInputChange}
               />
             </FormControl>
             <Box w="100%" d="flex" flexWrap="wrap">
@@ -169,15 +199,29 @@ const GroupChatModal = ({ children }) => {
               // <ChatLoading />
               <div>Loading...</div>
             ) : (
-              searchResult
-                ?.slice(0, 4)
-                .map((user) => (
-                  <UserListItem
-                    key={user._id}
-                    user={user}
-                    handleFunction={() => handleGroup(user)}
-                  />
-                ))
+              suggestions.map((user) => (
+                <div
+                  key={user._id}
+                  className=" py-2 cursor-pointer"
+                  onClick={() => handleGroup(user)}
+                >
+                  <div className=" flex items-center">
+                    <div className="profile_pic">
+                      <img
+                        className=" h-[36px] w-[36px] object-cover rounded-full mx-2"
+                        src={user?.profile?.profilephoto}
+                        alt="profilepic"
+                      />
+                    </div>
+                    <div className="userinfo">
+                      <p className="">{user?.username}</p>
+                      <p className=" text-gray-400 text-xs">
+                        {user?.profile?.profilename}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))
             )}
           </ModalBody>
           <ModalFooter>

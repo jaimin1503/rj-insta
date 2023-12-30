@@ -126,7 +126,7 @@ const MyChats = ({ fetchAgain }) => {
                 key={chat._id}
                 d="flex"
               >
-                <Text fontSize={"sm"}>
+                <Text fontSize={"lg"} fontWeight={"600"}>
                   {!chat.isGroupChat
                     ? getSender(loggedUser, chat.users)
                     : chat.chatName}
