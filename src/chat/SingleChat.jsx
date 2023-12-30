@@ -8,7 +8,7 @@ import { ChatState } from "../context/chatProvider.jsx";
 const ENDPOINT = "http://localhost:5555";
 var socket, selectedChatCompare;
 import { ArrowBack } from "@mui/icons-material";
-import Spinner from "../components/Spinner.jsx";
+import { Spinner } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 import ScrollableChat from "./ScrollableChat.jsx";
 import "./styles.css";
@@ -110,38 +110,30 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     return () => {
       socket.disconnect();
     };
-  }, [user]);
+  }, []);
 
   useEffect(() => {
     fetchMessages();
 
     selectedChatCompare = selectedChat;
     // eslint-disable-next-line
-  }, [selectedChat, fetchAgain, setFetchAgain]);
+  }, [selectedChat]);
 
   useEffect(() => {
-    if (socket) {
-      socket.on("message received", (newMessageReceived) => {
-        if (
-          !selectedChatCompare || // if chat is not selected or doesn't match current chat
-          selectedChatCompare._id !== newMessageReceived.chat._id
-        ) {
-          if (!notification.includes(newMessageReceived)) {
-            setNotification([newMessageReceived, ...notification]);
-            setFetchAgain(!fetchAgain);
-          }
-        } else {
-          setMessages((prevMessages) => [...prevMessages, newMessageReceived]);
+    socket.on("message recieved", (newMessageRecieved) => {
+      if (
+        !selectedChatCompare || // if chat is not selected or doesn't match current chat
+        selectedChatCompare._id !== newMessageRecieved.chat._id
+      ) {
+        if (!notification.includes(newMessageRecieved)) {
+          setNotification([newMessageRecieved, ...notification]);
+          setFetchAgain(!fetchAgain);
         }
-      });
-    }
-
-    return () => {
-      if (socket) {
-        socket.off("message received");
+      } else {
+        setMessages([...messages, newMessageRecieved]);
       }
-    };
-  }, [socket, selectedChatCompare, notification]);
+    });
+  });
 
   const typingHandler = (e) => {
     setNewMessage(e.target.value);
@@ -195,7 +187,13 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           </h1>
           <div className="box flex flex-col justify-end p-3 bg-blue-400 h-full w-full rounded-lg overflow-y-hidden">
             {loading ? (
-              <Spinner />
+              <Spinner
+                size="xl"
+                w={20}
+                h={20}
+                alignSelf="center"
+                margin="auto"
+              />
             ) : (
               <div className="messages">
                 <ScrollableChat messages={messages} />
@@ -203,13 +201,18 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             )}
             <form onKeyDown={sendMessage} id="first-name" className=" mt-3">
               {istyping ? (
-                <div>
-                  <img className=" h-[25px] m-5" src={typingGif} alt="" />
+                <div className=" mb-16">
+                  <img
+                    className="absolute h-[25px] m-5"
+                    src={typingGif}
+                    alt=""
+                  />
                 </div>
               ) : (
                 <></>
               )}
               <Input
+                color="white"
                 variant="filled"
                 bg="#E0E0E0"
                 placeholder="Enter a message.."

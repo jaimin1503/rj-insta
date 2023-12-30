@@ -17,48 +17,49 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChatState } from "../../context/chatProvider";
 import UserBadgeItem from "../userAvatar/UserBadgeItem";
-import UserListItem from "../userAvatar/UserListItem";
 
 const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [groupChatName, setGroupChatName] = useState();
-  const [search, setSearch] = useState("");
-  const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
   const [renameloading, setRenameLoading] = useState(false);
   const toast = useToast();
+  const [users, setUsers] = useState([]);
+  const [inputValue, setInputValue] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
 
   const { selectedChat, setSelectedChat, user } = ChatState();
 
-  const handleSearch = async (query) => {
-    setSearch(query);
-    if (!query) {
-      return;
-    }
-
-    try {
-      setLoading(true);
-
-      const { data } = await axios.get(`/api/user?search=${search}`, {
+  useEffect(() => {
+    // Fetch all users once when the component mounts
+    setLoading(true);
+    axios
+      .get(`http://localhost:5555/user/getalluser`, {
         withCredentials: true,
+      })
+      .then((res) => {
+        setUsers(res.data.alluser);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
       });
-      console.log(data);
-      setLoading(false);
-      setSearchResult(data);
-    } catch (error) {
-      toast({
-        title: "Error Occured!",
-        description: "Failed to Load the Search Results",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom-left",
-      });
-      setLoading(false);
-    }
+  }, []);
+
+  const handleInputChange = (event) => {
+    const value = event.target.value;
+    setInputValue(value);
+
+    // Filter users locally instead of making an API call on each change
+    const filteredUsers = users.filter(
+      (user) =>
+        value && user.username.toLowerCase().includes(value.toLowerCase())
+    );
+    setSuggestions(filteredUsers);
   };
 
   const handleRename = async () => {
@@ -195,7 +196,7 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
 
       <Modal onClose={onClose} isOpen={isOpen} isCentered>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent className=" h-[50vh] overflow-y-scroll">
           <ModalHeader
             fontSize="35px"
             fontFamily="Work sans"
@@ -238,19 +239,35 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
               <Input
                 placeholder="Add User to group"
                 mb={1}
-                onChange={(e) => handleSearch(e.target.value)}
+                onChange={handleInputChange}
               />
             </FormControl>
 
             {loading ? (
               <Spinner size="lg" />
             ) : (
-              searchResult?.map((user) => (
-                <UserListItem
+              suggestions.map((user) => (
+                <div
                   key={user._id}
-                  user={user}
-                  handleFunction={() => handleAddUser(user)}
-                />
+                  className=" py-2 cursor-pointer"
+                  onClick={() => handleAddUser(user)}
+                >
+                  <div className=" flex items-center">
+                    <div className="profile_pic">
+                      <img
+                        className=" h-[36px] w-[36px] object-cover rounded-full mx-2"
+                        src={user?.profile?.profilephoto}
+                        alt="profilepic"
+                      />
+                    </div>
+                    <div className="userinfo">
+                      <p className="">{user?.username}</p>
+                      <p className=" text-gray-400 text-xs">
+                        {user?.profile?.profilename}
+                      </p>
+                    </div>
+                  </div>
+                </div>
               ))
             )}
           </ModalBody>

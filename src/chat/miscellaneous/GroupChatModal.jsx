@@ -17,22 +17,16 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { ChatState } from "../../context/chatProvider";
 import UserBadgeItem from "../userAvatar/UserBadgeItem";
-import UserListItem from "../userAvatar/UserListItem";
-import { useNavigate } from "react-router-dom";
 
 const GroupChatModal = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [groupChatName, setGroupChatName] = useState();
   const [selectedUsers, setSelectedUsers] = useState([]);
-  const [search, setSearch] = useState("");
-  const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
   const toast = useToast();
-  const [loadingChat, setLoadingChat] = useState(false);
   const [users, setUsers] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
-  const navigate = useNavigate();
 
   const { user, chats, setChats } = ChatState();
 
