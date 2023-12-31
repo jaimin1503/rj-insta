@@ -72,7 +72,7 @@ function ViewprofileFollowingList({ following }) {
                   </p>
                 </div>
                 <div className="followButton w-[45%] flex justify-center">
-                  {user.profile.following &&
+                  {user._id!==follow._id?(user.profile.following &&
                   user.profile.following.some(
                     (userfollow) => userfollow._id === follow._id
                   ) ? (
@@ -93,7 +93,7 @@ function ViewprofileFollowingList({ following }) {
                     >
                       Follow
                     </button>
-                  )}
+                  )):("")}
                 </div>
               </div>
             </div>

@@ -10,14 +10,15 @@ import jatu from "./assets/jatuu.jpg";
 import LikeList from "../components/LikeList";
 import { Context } from "../context/contextApi";
 import SavePostLogo from "./assets/SavePostLogo";
-
+import { useSelector, useDispatch } from "react-redux";
 const ViewPost = ({ postId, setShowComponent }) => {
   const [post, setPost] = useState({});
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [comments, setComments] = useState([]);
-  const [user, setUser] = useState({});
-  const [liked, setLiked] = useState(false);
+  const { user } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState([]);
   const [likeCount, setLikeCount] = useState(0);
   const [comment, setComment] = useState("");
@@ -272,7 +273,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
                           navigate(`/viewprofile/${comment?.user?._id}`);
                         }}
                       >
-                        {comment?.user?.username}
+                        {comment?.user?.username} 
                       </span>
                       // </Link>
                     )}
@@ -344,11 +345,10 @@ const ViewPost = ({ postId, setShowComponent }) => {
                 onChange={handleInputChange}
               />
               <button
-                className={`${
-                  isButtonDisabled
+                className={`${isButtonDisabled
                     ? "hidden"
                     : "p-2 cursor-pointer text-blue-600 font-medium"
-                }  top-0 bottom-0 right-0 border-l-2`}
+                  }  top-0 bottom-0 right-0 border-l-2`}
                 onClick={handleSubmit}
                 disabled={isButtonDisabled}
               >

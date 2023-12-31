@@ -59,22 +59,34 @@ function ViewprofileFollowersList({ followers }) {
             <div key={follow._id}>
               <div className="container flex items-center py-1 m-3">
                 <div className="image flex justify-center items-center w-[20%] ">
+                {user._id!==follow._id?(  <Link to={`/viewprofile/${follow._id}`}>
+                <img
+                    className=" h-[38px] w-[38px] object-cover rounded-full "
+                    src={follow?.profile?.profilephoto}
+                    alt="photo"
+                  />
+                  </Link>):(  <Link to={`/profile`}>
                   <img
                     className=" h-[38px] w-[38px] object-cover rounded-full "
                     src={follow?.profile?.profilephoto}
                     alt="photo"
                   />
+                  </Link>)}
+                  
                 </div>
                 <div className="leading-4 w-[35%] ">
-                  <Link to={`/viewprofile/${follow._id}`}>
+                  {user._id!==follow._id?(  <Link to={`/viewprofile/${follow._id}`}>
                     {follow.username}
-                  </Link>
+                  </Link>):(  <Link to={`/profile`}>
+                    {follow.username}
+                  </Link>)}
+                
                   <p className=" text-sm text-gray-600">
                     {follow.profile.profilename}
                   </p>
                 </div>
                 <div className="followButton w-[45%] flex justify-center">
-                  {user.profile.following &&
+                  {user._id!==follow._id?(user.profile.following &&
                   user.profile.following.some(
                     (userfollow) => userfollow._id === follow._id
                   ) ? (
@@ -95,7 +107,7 @@ function ViewprofileFollowersList({ followers }) {
                     >
                       Follow
                     </button>
-                  )}
+                  )):("")}
                 </div>
               </div>
             </div>
