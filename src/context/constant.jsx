@@ -8,8 +8,8 @@ import Explore from "../components/assets/Explore";
 
 export const categories = [
   { name: "Home", icon: <Home />, type: "home" },
-  { name: "Explore", icon: <Explore />, type: "explore" },
-  { name: "Video", icon: <Video />, type: "video" },
+  // { name: "Explore", icon: <Explore />, type: "explore" },
+  // { name: "Video", icon: <Video />, type: "video" },
   { name: "Create", icon: <Create />, type: "createpost" },
   { name: "Chat", icon: <Chat />, type: "chat" },
 ];
