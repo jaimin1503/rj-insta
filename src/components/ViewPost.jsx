@@ -11,7 +11,7 @@ import { Context } from "../context/contextApi";
 import SavePostLogo from "./assets/SavePostLogo";
 import { useSelector, useDispatch } from "react-redux";
 
-const ViewPost = ({ postId, setShowComponent }) => {
+const ViewPost = ({ postId, setShowComponent, setShowPost }) => {
   const [post, setPost] = useState({});
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -32,6 +32,21 @@ const ViewPost = ({ postId, setShowComponent }) => {
     width: window.innerWidth,
     height: window.innerHeight,
   });
+  const viewPostRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (viewPostRef.current && !viewPostRef.current.contains(event.target)) {
+        setShowPost(false);
+        setShowComponent(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [setShowPost]);
   const likeRef = useRef();
 
   const handleResize = () => {
@@ -198,7 +213,10 @@ const ViewPost = ({ postId, setShowComponent }) => {
   return windowSize.width > 670 ? (
     <div className=" filter-none">
       {loading && <Spinner />}
-      <div className="card rounded-lg bg-gray-100 mx-auto z-50">
+      <div
+        ref={viewPostRef}
+        className="card rounded-lg bg-gray-100 mx-auto z-50 "
+      >
         <div className="flex flex-row justify-center items-center shadow-xl bg-gray-100 h-[360px]  md:h-[480px] w-[82vw] overflow-y-scroll webkit-scrollbar">
           <div className="h-[320px] md:h-[480px]  w-[50%] flex justify-center items-center bg-black">
             <div className="image h-[320px] w-[240px] md:h-[480px] md:w-[360px]  flex items-center justify-center">

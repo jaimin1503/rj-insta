@@ -1,15 +1,30 @@
 import { Close } from "@mui/icons-material";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getuser } from "../reducers/userReducer";
-// import Spinner from "./Spinner";
+import "./UserPost.css";
 import axios from "axios";
-const LikeList = ({ show, post }) => {
+const LikeList = ({ show, post, setShowLikeList }) => {
   const [likes, setLikes] = useState([]);
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [followbtn, setFollow] = useState(true);
+  const likeRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (likeRef.current && !likeRef.current.contains(event.target)) {
+        show(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [show]);
+
   useEffect(() => {
     setLikes(post.like);
   }, []);
@@ -47,8 +62,9 @@ const LikeList = ({ show, post }) => {
       });
   };
   return (
-    <div>
+    <div className="overlay">
       <div
+        ref={likeRef}
         style={{
           position: "absolute",
           top: "50%",

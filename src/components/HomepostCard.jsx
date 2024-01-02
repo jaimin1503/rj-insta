@@ -187,7 +187,7 @@ function HomepostCard({ postid }) {
                     boxShadow: "0 2px 5px rgba(0, 0, 0, 0.2)",
                   }}
                 >
-                  {showPost && <ViewPost postId={postId} />}
+                  {showPost && <ViewPost setShowPost={setShowPost} postId={postId} />}
                 </div>
               </div>
             </div>
