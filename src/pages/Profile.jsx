@@ -116,7 +116,10 @@ const Profile = () => {
             </div>
             <div ref={followersRef}>
               {showFollowers ? (
-                <FollowersList followers={user.profile.followers} />
+                <FollowersList
+                  setShowFollowers={setShowFollowers}
+                  followers={user.profile.followers}
+                />
               ) : (
                 ""
               )}
@@ -131,7 +134,10 @@ const Profile = () => {
 
             <div ref={followingRef}>
               {showFollowing && (
-                <FollowingList following={user.profile.following} />
+                <FollowingList
+                  setShowFollowing={setShowFollowing}
+                  following={user.profile.following}
+                />
               )}
               <div
                 onClick={() => setShowFollowing(!showFollowing)}

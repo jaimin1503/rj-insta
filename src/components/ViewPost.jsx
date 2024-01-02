@@ -6,11 +6,11 @@ import Comment from "./assets/Comment";
 import { Link } from "react-router-dom";
 import "./UserPost.css";
 import Spinner from "./Spinner";
-import jatu from "./assets/jatuu.jpg";
 import LikeList from "../components/LikeList";
 import { Context } from "../context/contextApi";
 import SavePostLogo from "./assets/SavePostLogo";
 import { useSelector, useDispatch } from "react-redux";
+
 const ViewPost = ({ postId, setShowComponent }) => {
   const [post, setPost] = useState({});
   const [loading, setLoading] = useState(false);
@@ -18,14 +18,15 @@ const ViewPost = ({ postId, setShowComponent }) => {
   const [comments, setComments] = useState([]);
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-   const [liked, setLiked] = useState(false);
+  const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState([]);
   const [likeCount, setLikeCount] = useState(0);
   const [comment, setComment] = useState("");
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [commentsuccess, setcommentsucess] = useState(false);
   const [showLikeList, setShowLikeList] = useState(false);
-  const { likehome, setlikehome,savedpost,setsavedpost } = useContext(Context);
+  const { likehome, setlikehome, savedpost, setsavedpost } =
+    useContext(Context);
   const [isSaved, setIsSaved] = useState(false);
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
@@ -157,7 +158,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
       .then((res) => {
         console.log(res.data.message);
         setIsSaved(!isSaved);
-        setsavedpost(!savedpost)
+        setsavedpost(!savedpost);
         setLoading(false);
       })
       .catch((error) => {
@@ -274,7 +275,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
                           navigate(`/viewprofile/${comment?.user?._id}`);
                         }}
                       >
-                        {comment?.user?.username} 
+                        {comment?.user?.username}
                       </span>
                       // </Link>
                     )}
@@ -346,10 +347,11 @@ const ViewPost = ({ postId, setShowComponent }) => {
                 onChange={handleInputChange}
               />
               <button
-                className={`${isButtonDisabled
+                className={`${
+                  isButtonDisabled
                     ? "hidden"
                     : "p-2 cursor-pointer text-blue-600 font-medium"
-                  }  top-0 bottom-0 right-0 border-l-2`}
+                }  top-0 bottom-0 right-0 border-l-2`}
                 onClick={handleSubmit}
                 disabled={isButtonDisabled}
               >

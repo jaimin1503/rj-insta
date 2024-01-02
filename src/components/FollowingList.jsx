@@ -1,16 +1,34 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import { Context } from "../context/contextApi";
 import { getuser } from "../reducers/userReducer";
 import Spinner from "./Spinner";
+import "./UserPost.css";
 
-function ViewprofileFollowingList({ following }) {
+function ViewprofileFollowingList({ following, setShowFollowing }) {
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [followbtn, setFollow] = useState(true);
   const { loading, setLoading } = useContext(Context);
+  const followingRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (
+        followingRef.current &&
+        !followingRef.current.contains(event.target)
+      ) {
+        setShowFollowing(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [setShowFollowing]);
   useEffect(() => {
     setLoading(true);
     axios
@@ -24,7 +42,7 @@ function ViewprofileFollowingList({ following }) {
       });
   }, [followbtn]);
   const handleFollow = (id) => {
-    setLoading(true)
+    setLoading(true);
     axios
       .post(
         `http://localhost:5555/user/follow/${id}`,
@@ -36,7 +54,7 @@ function ViewprofileFollowingList({ following }) {
       .then((res) => {
         if (res.status === 200) {
           setFollow(!followbtn);
-          setLoading(false)
+          setLoading(false);
         }
         console.log(res.data.message);
       })
@@ -46,9 +64,12 @@ function ViewprofileFollowingList({ following }) {
   };
 
   return (
-    <div>
+    <div className="overlay">
       {loading && <Spinner />}
-      <div className="following absolute top-[50%] left-[50%] w-[65vw] translate-x-[-50%] translate-y-[-50%] z-10 bg-white rounded-lg shadow-xl sm:w-[350px] ">
+      <div
+        ref={followingRef}
+        className="following absolute top-[50%] left-[50%] w-[65vw] translate-x-[-50%] translate-y-[-50%] z-10 bg-white rounded-lg shadow-xl sm:w-[350px] "
+      >
         <div className=" border-b p-2 row1 flex justify-center items-center">
           <p className="p-2">Following</p>
         </div>
@@ -72,28 +93,32 @@ function ViewprofileFollowingList({ following }) {
                   </p>
                 </div>
                 <div className="followButton w-[45%] flex justify-center">
-                  {user._id!==follow._id?(user.profile.following &&
-                  user.profile.following.some(
-                    (userfollow) => userfollow._id === follow._id
-                  ) ? (
-                    <button
-                      onClick={() => {
-                        handleFollow(follow._id);
-                      }}
-                      className={`py-1 px-5 text-white rounded-lg cursor-pointer mr-2 bg-gray-400 hover:bg-gray-500`}
-                    >
-                      Following
-                    </button>
+                  {user._id !== follow._id ? (
+                    user.profile.following &&
+                    user.profile.following.some(
+                      (userfollow) => userfollow._id === follow._id
+                    ) ? (
+                      <button
+                        onClick={() => {
+                          handleFollow(follow._id);
+                        }}
+                        className={`py-1 px-5 text-white rounded-lg cursor-pointer mr-2 bg-gray-400 hover:bg-gray-500`}
+                      >
+                        Following
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => {
+                          handleFollow(follow._id);
+                        }}
+                        className={`py-1 px-5 text-white rounded-lg cursor-pointer mr-2 bg-blue-500 hover:bg-blue-600`}
+                      >
+                        Follow
+                      </button>
+                    )
                   ) : (
-                    <button
-                      onClick={() => {
-                        handleFollow(follow._id);
-                      }}
-                      className={`py-1 px-5 text-white rounded-lg cursor-pointer mr-2 bg-blue-500 hover:bg-blue-600`}
-                    >
-                      Follow
-                    </button>
-                  )):("")}
+                    ""
+                  )}
                 </div>
               </div>
             </div>

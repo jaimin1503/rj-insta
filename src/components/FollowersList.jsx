@@ -2,10 +2,29 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
 import Spinner from "./Spinner";
+import { useRef } from "react";
+import { useEffect } from "react";
 
-function FollowersList({ followers }) {
+function FollowersList({ followers, setShowFollowers }) {
   const [followbtn, setFollow] = useState(true);
   const [loading, setLoading] = useState(false);
+  const followersListRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (
+        followersListRef.current &&
+        !followersListRef.current.contains(event.target)
+      ) {
+        setShowFollowers(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [setShowFollowers]);
 
   const handleFollow = (id) => {
     setLoading(true);
@@ -28,9 +47,12 @@ function FollowersList({ followers }) {
       });
   };
   return (
-    <div>
+    <div className="overlay">
       {loading && <Spinner />}
-      <div className="following absolute top-[50%] left-[50%] w-[65vw] translate-x-[-50%] translate-y-[-50%] z-10 bg-white rounded-lg shadow-xl sm:w-[350px] ">
+      <div
+        ref={followersListRef}
+        className="following absolute top-[50%] left-[50%] w-[65vw] translate-x-[-50%] translate-y-[-50%] z-10 bg-white rounded-lg shadow-xl sm:w-[350px] "
+      >
         <div className=" border-b p-2 row1 flex justify-center items-center">
           <p className="p-2">Followers</p>
         </div>

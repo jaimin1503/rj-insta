@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import Heart from "./assets/Heart";
 import Comment from "./assets/Comment";
 import axios from "axios";
-import Spinner from "./Spinner";
 import ViewPost from "./ViewPost";
 import jatu from "./assets/jatuu.jpg";
 import LikeList from "./LikeList";
@@ -31,7 +30,6 @@ function HomepostCard({ postid }) {
     setIsButtonDisabled(inputValue.trim() === "");
   };
   useEffect(() => {
-    setLoading(true);
     axios
       .get(
         `http://localhost:5555/user/getPostByid/${postId}`,
@@ -44,7 +42,6 @@ function HomepostCard({ postid }) {
         setPost(res.data.post);
         setLikeCount(res.data.post.like.length);
         setLikes(res.data.post.like);
-        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
@@ -68,7 +65,6 @@ function HomepostCard({ postid }) {
   }, []);
 
   const handleSubmit = () => {
-    setLoading(true);
     axios
       .post(
         `http://localhost:5555/user/commentpost/${postId}`,
@@ -78,7 +74,7 @@ function HomepostCard({ postid }) {
         }
       )
       .then((res) => {
-        setLoading(false);
+        console.log(res.data?.message);
       })
       .catch((error) => {
         console.error(error);
@@ -89,7 +85,6 @@ function HomepostCard({ postid }) {
   };
 
   const likeClick = async (postId) => {
-    setLoading(true);
     axios
       .post(
         `http://localhost:5555/user/likepost/${postId}`,
@@ -102,7 +97,6 @@ function HomepostCard({ postid }) {
         if (res.status === 200) {
           setLiked(!liked);
           setLikeCount(res.data.post.like.length);
-          setLoading(false);
         } else {
           setLiked(!liked);
         }
@@ -112,7 +106,6 @@ function HomepostCard({ postid }) {
       });
   };
   useEffect(() => {
-    setLoading(true);
     axios
       .get(`http://localhost:5555/user/getlikepost/${postId}`, {
         withCredentials: true,
@@ -121,7 +114,6 @@ function HomepostCard({ postid }) {
         if (res.data.liked) {
           setLiked(true);
           setLikes(post.like);
-          setLoading(false);
         } else {
           setLiked(false);
           setLoading(false);
@@ -133,7 +125,6 @@ function HomepostCard({ postid }) {
   }, [likehome, post._id]);
   return (
     <div>
-      {loading && <Spinner />}
       <div className="card rounded-lg bg-gray-100 mx-auto">
         <div className=" md:flex flex-col">
           <div className="user_info flex p-5 md:h-[20%] ">

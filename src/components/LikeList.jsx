@@ -1,9 +1,7 @@
 import { Close } from "@mui/icons-material";
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
-import { Context } from "../context/contextApi";
 import { getuser } from "../reducers/userReducer";
 // import Spinner from "./Spinner";
 import axios from "axios";
@@ -11,7 +9,7 @@ const LikeList = ({ show, post }) => {
   const [likes, setLikes] = useState([]);
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const [followbtn,setFollow]=useState(true);
+  const [followbtn, setFollow] = useState(true);
   useEffect(() => {
     setLikes(post.like);
   }, []);
@@ -77,44 +75,51 @@ const LikeList = ({ show, post }) => {
               key={index}
               className="likes flex justify-between w-full items-center my-2"
             >
-              {like?.user?._id!==user._id?(<Link to={`/viewprofile/${like?.user?._id}`}>
-                <div className="flex gap-2 coursor-pointer w-34">
-                  <div className="photo sm:mx-2">
-                    <img
-                      className=" h-[40px] w-[40px] object-cover rounded-full"
-                      src={like?.user?.profile?.profilephoto}
-                      alt="sdd"
-                    />
+              {like?.user?._id !== user._id ? (
+                <Link to={`/viewprofile/${like?.user?._id}`}>
+                  <div className="flex gap-2 coursor-pointer w-34">
+                    <div className="photo sm:mx-2">
+                      <img
+                        className=" h-[40px] w-[40px] object-cover rounded-full"
+                        src={like?.user?.profile?.profilephoto}
+                        alt="sdd"
+                      />
+                    </div>
+                    <div className="info items-start bg-yello">
+                      <p className=" text-sm font-bold">
+                        {like?.user?.username}
+                      </p>
+                      <p className=" text-sm text-gray-500">
+                        {like?.user?.profile?.profilename}
+                      </p>
+                    </div>
                   </div>
-                  <div className="info items-start bg-yello">
-                    <p className=" text-sm font-bold">{like?.user?.username}</p>
-                    <p className=" text-sm text-gray-500">
-                      {like?.user?.profile?.profilename}
-                    </p>
+                </Link>
+              ) : (
+                <Link to={`/profile`}>
+                  <div className="flex gap-2 coursor-pointer w-34">
+                    <div className="photo sm:mx-2">
+                      <img
+                        className=" h-[40px] w-[40px] object-cover rounded-full"
+                        src={like?.user?.profile?.profilephoto}
+                        alt="sdd"
+                      />
+                    </div>
+                    <div className="info items-start bg-yello">
+                      <p className=" text-sm font-bold">
+                        {like?.user?.username}
+                      </p>
+                      <p className=" text-sm text-gray-500">
+                        {like?.user?.profile?.profilename}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </Link>):(<Link to={`/profile`}>
-                <div className="flex gap-2 coursor-pointer w-34">
-                  <div className="photo sm:mx-2">
-                    <img
-                      className=" h-[40px] w-[40px] object-cover rounded-full"
-                      src={like?.user?.profile?.profilephoto}
-                      alt="sdd"
-                    />
-                  </div>
-                  <div className="info items-start bg-yello">
-                    <p className=" text-sm font-bold">{like?.user?.username}</p>
-                    <p className=" text-sm text-gray-500">
-                      {like?.user?.profile?.profilename}
-                    </p>
-                  </div>
-                </div>
-              </Link>)}
-              
+                </Link>
+              )}
 
               <div className="followButton w-[45%] flex justify-center">
-                
-                  {user._id!==like?.user?._id?(user.profile.following &&
+                {user._id !== like?.user?._id ? (
+                  user.profile.following &&
                   user.profile.following.some(
                     (userfollow) => userfollow._id === like?.user?._id
                   ) ? (
@@ -135,8 +140,11 @@ const LikeList = ({ show, post }) => {
                     >
                       Follow
                     </button>
-                  )):("")}
-                </div>
+                  )
+                ) : (
+                  ""
+                )}
+              </div>
             </div>
           ))}
         </div>
