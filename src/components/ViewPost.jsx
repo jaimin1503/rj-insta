@@ -25,7 +25,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [commentsuccess, setcommentsucess] = useState(false);
   const [showLikeList, setShowLikeList] = useState(false);
-  const { likehome, setlikehome } = useContext(Context);
+  const { likehome, setlikehome,savedpost,setsavedpost } = useContext(Context);
   const [isSaved, setIsSaved] = useState(false);
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
@@ -157,6 +157,7 @@ const ViewPost = ({ postId, setShowComponent }) => {
       .then((res) => {
         console.log(res.data.message);
         setIsSaved(!isSaved);
+        setsavedpost(!savedpost)
         setLoading(false);
       })
       .catch((error) => {

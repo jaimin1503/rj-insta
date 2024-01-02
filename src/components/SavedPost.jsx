@@ -1,19 +1,35 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect,useContext} from "react";
 import ViewPost from "./ViewPost";
 import { useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
-
+import { useSelector,useDispatch} from "react-redux";
+import { Context } from "../context/contextApi";
+import axios from "axios";
+import { getuser } from "../reducers/userReducer";
 const SavedPost = () => {
   const [showComponent, setShowComponent] = useState(false);
   const [postId, setPostId] = useState(null);
   const [posts, setPosts] = useState([]);
+  const dispatch=useDispatch()
   const location = useLocation();
   const imgRef = useRef();
   const { user } = useSelector((state) => state.user);
-
+  const {savedpost}=useContext(Context);
   useEffect(() => {
-    setPosts(user.profile.saved);
-  }, [user.profile?.saved?.length]);
+    // setLoading(true);
+    axios
+      .get("http://localhost:5555/user/getuser", { withCredentials: true })
+      .then((res) => {
+        dispatch(getuser(res.data.user));
+        setPosts(res.data.user.profile.saved);
+        // setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [savedpost]);
+  // useEffect(() => {
+    
+  // }, [user.profile?.saved?.length]);
 
   useEffect(() => {
     let handler = (e) => {
