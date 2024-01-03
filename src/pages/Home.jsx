@@ -10,6 +10,7 @@ import StoryBar from "../components/story/StoryBar.jsx";
 import HomepostCard from "../components/HomepostCard.jsx";
 import Spinner from "../components/Spinner.jsx";
 import shuffleArray from "../utils/suffleArray.js";
+import NavbarSs from "../components/NavbarSs.jsx";
 
 export const Home = () => {
   const dispatch = useDispatch();
@@ -45,8 +46,11 @@ export const Home = () => {
   }, []);
   return (
     <>
+      <div className=" absolute w-screen top-0 border-b bg-white block sm:hidden">
+        <NavbarSs />
+      </div>
       {isloading && <Spinner />}
-      <div className=" h-screen flex overflow-hidden">
+      <div className=" h-screen flex overflow-hidden pt-10 pb-10 sm:pt-0 sm:pb-0">
         <div className="hidden sm:block">
           {" "}
           <Leftnav />

@@ -17,6 +17,7 @@ import { getuser } from "../reducers/userReducer.js";
 import axios from "axios";
 import Spinner from "../components/Spinner.jsx";
 import SavedPost from "../components/SavedPost.jsx";
+import NavbarSs from "../components/NavbarSs.jsx";
 
 const Profile = () => {
   const [loading, setLoading] = useState(false);
@@ -67,8 +68,11 @@ const Profile = () => {
   const posts = user.profile?.posts || [];
   return (
     <>
+      <div className=" absolute w-screen top-0 bg-white border-b block sm:hidden">
+        <NavbarSs />
+      </div>
       {loading && <Spinner />}
-      <div className=" h-screen flex overflow-hidden">
+      <div className=" h-screen flex overflow-hidden pt-10 pb-7 sm:pt-0 sm:pb-0">
         <div className="hidden sm:block">
           {" "}
           <Leftnav />
@@ -192,7 +196,7 @@ const Profile = () => {
           ) : (
             ""
           )}
-          <div className="fixed w-screen bottom-0 bg-gray-100 py-2 block sm:hidden">
+          <div className="absolute w-screen bottom-0 bg-gray-100 py-2 block sm:hidden">
             <BottomBar />
           </div>
         </div>

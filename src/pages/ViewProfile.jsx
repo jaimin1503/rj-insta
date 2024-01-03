@@ -10,6 +10,8 @@ import Leftnav from "../components/leftnav.jsx";
 import ViewprofileFollowingList from "../components/ViewprofileFollowingList.jsx";
 import ViewprofileFollowersList from "../components/ViewprofileFollowersList.jsx";
 import Spinner from "../components/Spinner.jsx";
+import NavbarSs from "../components/NavbarSs.jsx";
+import BottomBar from "../components/BottomBar.jsx";
 
 const ViewProfile = () => {
   const [loading, setLoading] = useState(false);
@@ -88,8 +90,11 @@ const ViewProfile = () => {
   const posts = viewUser.profile?.posts || [];
   return (
     <>
+      <div className=" absolute w-screen top-0 bg-white border-b block sm:hidden">
+        <NavbarSs />
+      </div>
       {loading && <Spinner />}
-      <div className=" h-screen flex overflow-hidden">
+      <div className=" h-screen flex overflow-hidden pt-10 pb-7 sm:pt-0 sm:pb-0">
         <div className="hidden sm:block">
           {" "}
           <Leftnav />
@@ -203,6 +208,9 @@ const ViewProfile = () => {
           </div>
           <div className="posts my-5">
             <UserPosts posts={posts} />
+          </div>
+          <div className="absolute w-screen bottom-0 bg-gray-100 py-2 block sm:hidden">
+            <BottomBar />
           </div>
         </div>
       </div>
