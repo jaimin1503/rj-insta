@@ -4,17 +4,18 @@ import MyChats from "../chat/MyChats";
 import ChatBox from "../chat/ChatBox";
 import { ChatState } from "../context/chatProvider";
 import { useState } from "react";
+import BottomBar from "../components/BottomBar";
 
 const ChatPage = () => {
   const [fetchAgain, setFetchAgain] = useState(false);
   const { user } = ChatState();
   return (
-    <>
-      <div className=" h-screen fixed">
+    <div className=" h-screen">
+      <div className=" h-screen fixed hidden md:block">
         {" "}
         <LeftBarLogo />
       </div>
-      <div className="search ml-16">
+      <div className="search md:ml-16 ml-0">
         <ChatSearch />
         <div className=" box flex justify-between w-full h-[85vh] pt-10">
           {user && <MyChats fetchAgain={fetchAgain} />}
@@ -23,7 +24,10 @@ const ChatPage = () => {
           )}
         </div>
       </div>
-    </>
+      <div className="absolute w-screen bottom-0 bg-gray-100 py-2 block md:hidden">
+        <BottomBar />
+      </div>
+    </div>
   );
 };
 export default ChatPage;

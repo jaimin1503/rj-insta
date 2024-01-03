@@ -76,23 +76,25 @@ const SearchCompo = () => {
         </div>
         <ul className="mt-2 mx-5">
           {suggestions.map((user) => (
-            <div key={user._id} className=" py-2">
-              <div className=" flex items-center">
-                <div className="profile_pic">
-                  <img
-                    className=" h-[36px] w-[36px] object-cover rounded-full mx-2"
-                    src={user?.profile?.profilephoto}
-                    alt="profilepic"
-                  />
-                </div>
-                <div className="userinfo">
-                  <p className="">{user?.username}</p>
-                  <p className=" text-gray-400 text-xs">
-                    {user?.profile?.profilename}
-                  </p>
+            <Link to={`/viewprofile/${user._id}`}>
+              <div key={user._id} className=" py-2">
+                <div className=" flex items-center">
+                  <div className="profile_pic">
+                    <img
+                      className=" h-[36px] w-[36px] object-cover rounded-full mx-2"
+                      src={user?.profile?.profilephoto}
+                      alt="profilepic"
+                    />
+                  </div>
+                  <div className="userinfo">
+                    <p className="">{user?.username}</p>
+                    <p className=" text-gray-400 text-xs">
+                      {user?.profile?.profilename}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </ul>
       </div>

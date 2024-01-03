@@ -2,8 +2,8 @@ import axios from "axios";
 import Search from "./assets/Search";
 import instaLogo from "./assets/writtenlogo.jpg";
 import { useState, useEffect } from "react";
-import Spinner from "./Spinner";
-import { IonItem, IonSpinner } from "@ionic/react";
+import { Link } from "react-router-dom";
+import { Spinner } from "@chakra-ui/react";
 
 const NavbarSs = () => {
   const [inputValue, setInputValue] = useState("");
@@ -57,27 +57,30 @@ const NavbarSs = () => {
             onChange={handleInputChange}
           />
         </div>
+        {loading && <Spinner />}
         {inputValue && (
-          <div className=" fixed bg-gray-100 m-10 w-[50%] rounded-xl ">
+          <div className="fixed bg-gray-100 m-10 w-[50%] rounded-xl top-[5%] right-0">
             <ul className="mt-2 mx-5">
               {suggestions.map((user) => (
-                <div key={user._id} className=" py-2">
-                  <div className=" flex items-center">
-                    <div className="profile_pic">
-                      <img
-                        className=" h-[36px] w-[36px] object-cover rounded-full mx-2"
-                        src={user?.profile?.profilephoto}
-                        alt="profilepic"
-                      />
-                    </div>
-                    <div className="userinfo">
-                      <p className="">{user?.username}</p>
-                      <p className=" text-gray-400 text-xs">
-                        {user?.profile?.profilename}
-                      </p>
+                <Link to={`/viewprofile/${user._id}`}>
+                  <div key={user._id} className=" py-2">
+                    <div className=" flex items-center">
+                      <div className="profile_pic">
+                        <img
+                          className=" h-[36px] w-[36px] object-cover rounded-full mx-2"
+                          src={user?.profile?.profilephoto}
+                          alt="profilepic"
+                        />
+                      </div>
+                      <div className="userinfo">
+                        <p className="">{user?.username}</p>
+                        <p className=" text-gray-400 text-xs">
+                          {user?.profile?.profilename}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </ul>
           </div>
