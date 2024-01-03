@@ -55,7 +55,7 @@ const fetchChats = asyncHandler(async (req, res) => {
       .then(async (results) => {
         results = await User.populate(results, {
           path: "latestMessage.sender",
-          select: "username profile.profilephoto email",
+          select: "username email",
         });
         res.status(200).send(results);
       });

@@ -8,18 +8,27 @@ import BottomBar from "../components/BottomBar";
 
 const ChatPage = () => {
   const [fetchAgain, setFetchAgain] = useState(false);
-  const { user } = ChatState();
+  const { user, selectedChat } = ChatState();
   return (
     <div className=" h-screen">
       <div className=" h-screen fixed hidden md:block">
         {" "}
         <LeftBarLogo />
       </div>
-      <div className="search md:ml-16 ml-0">
+      <div className="search md:ml-16 ml-0 hidden md:block pb-7">
         <ChatSearch />
         <div className=" box flex justify-between w-full h-[85vh] pt-10">
           {user && <MyChats fetchAgain={fetchAgain} />}
           {user && (
+            <ChatBox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
+          )}
+        </div>
+      </div>
+      <div className="search md:ml-16 ml-0 block md:hidden">
+        <ChatSearch />
+        <div className=" box flex justify-between w-full h-[85vh] md:pt-10">
+          {user && !selectedChat && <MyChats fetchAgain={fetchAgain} />}
+          {selectedChat && (
             <ChatBox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
           )}
         </div>

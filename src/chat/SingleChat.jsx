@@ -24,8 +24,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [istyping, setIsTyping] = useState(false);
   const toast = useToast();
 
-  console.log(istyping);
-
   const { selectedChat, setSelectedChat, user, notification, setNotification } =
     ChatState();
 
@@ -162,7 +160,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           <h1 className=" text-sm pb-3 px-2 w-full font-sans flex justify-between items-center">
             <div
               onClick={() => setSelectedChat("")}
-              className="icon flex md:hidden"
+              className="icon flex md:hidden cursor-pointer"
             >
               <ArrowBack />
             </div>
