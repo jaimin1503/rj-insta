@@ -9,22 +9,25 @@ import GroupChatModal from "./miscellaneous/GroupChatModal";
 import { Button } from "@chakra-ui/react";
 import { ChatState } from "../context/chatProvider";
 import "./styles.css";
+import { IonSpinner, IonItem } from "@ionic/react";
 
 const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState({});
-
+  const [loading, setLoading] = useState(false);
   const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
-
   const toast = useToast();
 
   const fetchChats = async () => {
     try {
+      setLoading(true);
       const { data } = await axios.get("http://localhost:5555/api/chat", {
         withCredentials: true,
       });
       setChats(data);
+      setLoading(false);
     } catch (error) {
       console.log(error);
+      setLoading(false);
       // Check the type of error and display a specific message accordingly
       if (error.response) {
         // The request was made and the server responded with a status code
@@ -63,10 +66,12 @@ const MyChats = ({ fetchAgain }) => {
   };
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get("http://localhost:5555/user/getuser", { withCredentials: true })
       .then((res) => setLoggedUser(res.data.user))
       .catch((error) => console.log(error));
+    setLoading(false);
     fetchChats();
   }, [fetchAgain]);
 
@@ -81,6 +86,11 @@ const MyChats = ({ fetchAgain }) => {
       borderRadius="lg"
       borderWidth="1px"
     >
+      {loading && (
+        <div className=" flex justify-center items-center w-full h-full">
+          <IonItem>{loading && <IonSpinner />}</IonItem>
+        </div>
+      )}
       <Box
         pb={3}
         px={3}

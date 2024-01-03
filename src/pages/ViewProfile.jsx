@@ -151,7 +151,7 @@ const ViewProfile = () => {
             <div ref={followersRef}>
               {showFollowers ? (
                 <ViewprofileFollowersList
-                  setShowFollowers={setShowFollowers}
+                  show={setShowFollowers}
                   followers={viewUser.profile.followers}
                 />
               ) : (
@@ -168,7 +168,7 @@ const ViewProfile = () => {
             <div ref={followingRef}>
               {showFollowing ? (
                 <ViewprofileFollowingList
-                  setShowFollowing={setShowFollowing}
+                  show={setShowFollowing}
                   following={viewUser.profile.following}
                 />
               ) : (
