@@ -11,7 +11,7 @@ import { Context } from "../context/contextApi";
 import SavePostLogo from "./assets/SavePostLogo";
 import { useSelector, useDispatch } from "react-redux";
 
-const ViewPost = ({ postId, setShowComponent, setShowPost }) => {
+const ViewPost = ({ postId, setShowPost }) => {
   const [post, setPost] = useState({});
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -38,7 +38,6 @@ const ViewPost = ({ postId, setShowComponent, setShowPost }) => {
     function handleClickOutside(event) {
       if (viewPostRef.current && !viewPostRef.current.contains(event.target)) {
         setShowPost(false);
-        setShowComponent(false);
       }
     }
 
@@ -211,11 +210,17 @@ const ViewPost = ({ postId, setShowComponent, setShowPost }) => {
   };
 
   return windowSize.width > 670 ? (
-    <div className=" filter-none">
+    <div className=" filter-none overlay">
       {loading && <Spinner />}
       <div
         ref={viewPostRef}
-        className="card rounded-lg bg-gray-100 mx-auto z-50 "
+        className="card rounded-lg bg-gray-100"
+        style={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+        }}
       >
         <div className="flex flex-row justify-center items-center shadow-xl bg-gray-100 h-[360px]  md:h-[480px] w-[82vw] overflow-y-scroll webkit-scrollbar">
           <div className="h-[320px] md:h-[480px]  w-[50%] flex justify-center items-center bg-black">
@@ -260,7 +265,7 @@ const ViewPost = ({ postId, setShowComponent, setShowPost }) => {
                 <div className="p-1 flex " key={index}>
                   <div
                     onClick={() => {
-                      setShowComponent(false);
+                      setShowPost(false);
                     }}
                   >
                     <Link to={`/viewprofile/${comment?.user?._id}`}>
@@ -381,8 +386,17 @@ const ViewPost = ({ postId, setShowComponent, setShowPost }) => {
       </div>
     </div>
   ) : (
-    <div>
-      <div className="card rounded-lg bg-gray-100 mx-auto">
+    <div className="overlay">
+      <div
+        ref={viewPostRef}
+        style={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+        }}
+        className="card rounded-lg bg-gray-100 mx-auto"
+      >
         <div className=" md:flex flex-col">
           <div className="user_info flex p-5 md:h-[20%] ">
             <div className="profile_photo mr-5">

@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { Context } from "../context/contextApi";
 
 const UserPosts = ({ posts }) => {
-  const [showComponent, setShowComponent] = useState(false);
+  const [showPost, setShowPost] = useState(false);
   const [postId, setPostId] = useState(null);
   const location = useLocation();
   const imgRef = useRef();
@@ -15,7 +15,7 @@ const UserPosts = ({ posts }) => {
   useEffect(() => {
     let handler = (e) => {
       if (!imgRef.current.contains(e.target)) {
-        setShowComponent(false);
+        setShowPost(false);
       }
     };
     document.addEventListener("mousedown", handler);
@@ -27,18 +27,18 @@ const UserPosts = ({ posts }) => {
 
   useEffect(() => {
     // Hide the component when the route changes
-    setShowComponent(false);
+    setShowPost(false);
   }, [location]);
 
   const handlePostClick = (postId) => {
-    setShowComponent(!showComponent);
+    setShowPost(!showPost);
     setPostId(postId);
   };
 
   return (
     <div ref={imgRef} className="userpost">
       <div
-        onClick={() => setShowComponent(!showComponent)}
+        onClick={() => setShowPost(!showPost)}
         className="posts flex flex-wrap"
       >
         {posts
@@ -59,22 +59,22 @@ const UserPosts = ({ posts }) => {
       </div>
 
       <div>
-        {showComponent && (
+        {showPost && (
           <div>
             <div
               className=" rounded-lg"
-              style={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                backgroundColor: "white",
-                boxShadow: "0 2px 5px rgba(0, 0, 0, 0.2)",
-              }}
+              // style={{
+              //   position: "absolute",
+              //   top: "50%",
+              //   left: "50%",
+              //   transform: "translate(-50%, -50%)",
+              //   backgroundColor: "white",
+              //   boxShadow: "0 2px 5px rgba(0, 0, 0, 0.2)",
+              // }}
             >
               <ViewPost
                 postId={postId}
-                setShowComponent={setShowComponent}
+                setShowPost={setShowPost}
                 user={user}
               />
             </div>

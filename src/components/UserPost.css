@@ -19,6 +19,7 @@
 /* CSS for the overlay component */
 .overlay {
   position: fixed;
+  /* transform: translate(-50%, -50%); */
   top: 0;
   left: 0;
   width: 100%;

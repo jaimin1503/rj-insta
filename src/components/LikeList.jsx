@@ -94,7 +94,7 @@ const LikeList = ({ show, post, setShowLikeList }) => {
               {like?.user?._id !== user._id ? (
                 <Link to={`/viewprofile/${like?.user?._id}`}>
                   <div className="flex gap-2 coursor-pointer w-34">
-                    <div className="photo sm:mx-2">
+                    <div className="photo mx-2">
                       <img
                         className=" h-[40px] w-[40px] object-cover rounded-full"
                         src={like?.user?.profile?.profilephoto}

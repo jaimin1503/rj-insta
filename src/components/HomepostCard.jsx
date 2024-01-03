@@ -177,17 +177,10 @@ function HomepostCard({ postid }) {
                   {" "}
                   <Comment />
                 </div>
-                <div
-                  style={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                    backgroundColor: "white",
-                    boxShadow: "0 2px 5px rgba(0, 0, 0, 0.2)",
-                  }}
-                >
-                  {showPost && <ViewPost setShowPost={setShowPost} postId={postId} />}
+                <div>
+                  {showPost && (
+                    <ViewPost setShowPost={setShowPost} postId={postId} />
+                  )}
                 </div>
               </div>
             </div>
