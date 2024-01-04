@@ -8,7 +8,6 @@ import ViewPost from "./ViewPost";
 import jatu from "./assets/jatuu.jpg";
 import LikeList from "./LikeList";
 import { Context } from "../context/contextApi";
-
 function HomepostCard({ postid }) {
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
@@ -248,5 +247,4 @@ function HomepostCard({ postid }) {
     </div>
   );
 }
-
 export default HomepostCard;
