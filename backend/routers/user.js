@@ -22,6 +22,7 @@ import {
   ctreatestory,
   getallstory,
   getstorybyid,
+  getuserstory
 } from "../controller/story.controller.js";
 
 router.post("/signup", signup);
@@ -45,5 +46,6 @@ router.get("/:postid/isSaved", auth, isSaved);
 router.post("/createstory", auth, ctreatestory);
 router.get("/getallstory", auth, getallstory);
 router.get("/getstorybyid/:storyid", getstorybyid);
+router.get("/getuserstory",auth, getuserstory);
 
 export default router;

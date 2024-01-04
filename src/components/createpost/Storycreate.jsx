@@ -1,15 +1,17 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback,useContext } from "react";
 import PostOverView from "./PostOverView";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../Spinner";
-
-const CreatePost = () => {
+import { Context } from "../../context/contextApi";
+export const StoryCreate  = () => {
   const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState(null);
   const [showpost, setShowpost] = useState(false);
   const navigate = useNavigate();
+  const {story,setstory,isstory,setisstory}=useContext(Context)
+
   const handleImageChange = useCallback((e) => {
     const file = e.target.files[0];
     setImage(file);
@@ -39,13 +41,16 @@ const CreatePost = () => {
       setUrl(responseData.url);
       axios
         .post(
-          `http://localhost:5555/user/createpost`,
-          { posturl: responseData.url },
+          `http://localhost:5555/user/createstory`,
+          { storyurl: responseData.url },
           { withCredentials: true }
         )
         .then((res) => {
           setLoading(false);
-          navigate("/profile");
+          setisstory(true);
+          setstory(res.data.story);
+          console.log("tygrfhgbfvjhg",res.data)
+          navigate("/home");
         })
         .catch((error) => {
           console.error(error);
@@ -109,4 +114,4 @@ const CreatePost = () => {
     </>
   );
 };
-export default CreatePost;
+

@@ -10,6 +10,9 @@ export const AppContext = (props) => {
   const [mobileMenu, setMobileMenu] = useState(false);
   const [likehome,setlikehome]=useState(false)
   const [savedpost,setsavedpost]=useState(false);
+  const [story,setstory]=useState({});
+  const [isstory, setisstory] = useState(false);
+
   useEffect(() => {
     fetchSelectedCategoryData(selectedCategory);
   }, [selectedCategory]);
@@ -37,7 +40,11 @@ export const AppContext = (props) => {
         likehome,
         setlikehome,
         savedpost,
-        setsavedpost
+        setsavedpost,
+        setstory,
+        story,
+        isstory, 
+        setisstory
       }}
     >
       {props.children}
