@@ -71,7 +71,7 @@ const LikeList = ({ show, post, setShowLikeList }) => {
           left: "50%",
           transform: "translate(-50%, -50%)",
         }}
-        className="container h-[50vh] w-[55vw] max-w-xs bg-white rounded-xl z-50"
+        className="container h-[50vh] w-[70vw] sm:w-[55vw] max-w-xs bg-white rounded-xl z-50"
       >
         <div className="row1 justify-center border-b">
           <div
@@ -114,7 +114,7 @@ const LikeList = ({ show, post, setShowLikeList }) => {
               ) : (
                 <Link to={`/profile`}>
                   <div className="flex gap-2 coursor-pointer w-34">
-                    <div className="photo sm:mx-2">
+                    <div className="photo mx-2">
                       <img
                         className=" h-[40px] w-[40px] object-cover rounded-full"
                         src={like?.user?.profile?.profilephoto}

@@ -56,11 +56,11 @@ export const Home = () => {
           <Leftnav />
         </div>
         <div className="w-full sm:w-[85vw] overflow-y-scroll">
-          <div className="container flex flex-col items-center translate-x-[-">
+          <div className="container flex flex-col items-center pt-10 md:pt-0">
             <div className=" max-w-sm md:max-w-lg lg:max-w-xl">
               <StoryBar />
             </div>
-            <div className="allposts w-[50%]  mt-6 flex justify-center">
+            <div className="allposts w-[50%] flex justify-center">
               <div className="">
                 {allpost?.map((post, index) => {
                   return (

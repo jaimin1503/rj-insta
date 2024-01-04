@@ -2,7 +2,6 @@ import Chat from "./assets/Chat";
 import Create from "./assets/Create";
 import Home from "./assets/Home";
 import Video from "./assets/Video";
-import Explore from "./assets/Explore";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -29,11 +28,7 @@ const BottomBar = () => {
             <Home />
           </Link>
         </div>
-        <div className=" cursor-pointer">
-          <Link to="/explore">
-            <Explore />
-          </Link>
-        </div>
+
         <div className=" cursor-pointer">
           <Link to="/createpost">
             <Create />

@@ -83,7 +83,7 @@ function Leftnav() {
             })}
             <div
               onClick={() => setShowSearch(!showSearch)}
-              className=" flex mb-3 cursor-pointer"
+              className=" flex mb-3 cursor-pointer py-3 "
             >
               <div>
                 <Search />

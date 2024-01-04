@@ -20,7 +20,7 @@ function SignIn() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    email: "",
+    identifier: "",
     password: "",
     remember: false,
   });
@@ -51,13 +51,16 @@ function SignIn() {
     } catch (error) {
       if (error.response && error.response.data.message) {
         setError(error.response.data.message);
-        setLoading(false)
+        setLoading(false);
       } else {
         setError("An error occurred during login.");
       }
     }
   };
-
+  const isEmail = (input) => {
+    // Simple email validation
+    return /\S+@\S+\.\S+/.test(input);
+  };
   return (
     <>
       {loading && <Spinner />}
@@ -89,12 +92,12 @@ function SignIn() {
                 margin="normal"
                 required
                 fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
+                id="identifier"
+                label="Email Address or Username"
+                name="identifier"
+                autoComplete="username"
                 autoFocus
-                value={formData.email}
+                value={formData.identifier}
                 onChange={handleChange}
               />
               <TextField

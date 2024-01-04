@@ -99,14 +99,14 @@ export const signup = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
-    const { email, password, username } = req.body;
+    const { identifier, password } = req.body;
 
     let user;
 
-    if (email) {
-      user = await User.findOne({ email });
-    } else if (username) {
-      user = await User.findOne({ username });
+    if (identifier) {
+      user = await User.findOne({
+        $or: [{ email: identifier }, { username: identifier }],
+      });
     } else {
       return res.status(400).json({
         success: false,
