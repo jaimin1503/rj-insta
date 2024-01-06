@@ -15,7 +15,10 @@ const EditProfile = () => {
     profilename: "",
     bio: "",
   });
+
   const navigate = useNavigate();
+  const cloudname = import.meta.env.VITE_CLOUD_NAME;
+  const preset = import.meta.env.VITE_UPLOAD_PRESET;
 
   const toggleVisibility = useCallback(() => {
     setIsVisible((prev) => !prev);
@@ -64,11 +67,11 @@ const EditProfile = () => {
     try {
       const data = new FormData();
       data.append("file", image);
-      data.append("upload_preset", "x8ekhtm9");
-      data.append("cloud_name", "daqldosvw");
+      data.append("upload_preset", preset);
+      data.append("cloud_name", cloudname);
       setLoading(true);
       const response = await fetch(
-        "http://api.cloudinary.com/v1_1/daqldosvw/image/upload",
+        `http://api.cloudinary.com/v1_1/${cloudname}/image/upload`,
         {
           method: "POST",
           body: data,

@@ -1,16 +1,18 @@
-import { useState, useCallback,useContext } from "react";
+import { useState, useCallback, useContext } from "react";
 import PostOverView from "./PostOverView";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../Spinner";
 import { Context } from "../../context/contextApi";
-export const StoryCreate  = () => {
+export const StoryCreate = () => {
   const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState(null);
   const [showpost, setShowpost] = useState(false);
   const navigate = useNavigate();
-  const {story,setstory,isstory,setisstory}=useContext(Context)
+  const { story, setstory, isstory, setisstory } = useContext(Context);
+  const cloudname = import.meta.env.VITE_CLOUD_NAME;
+  const preset = import.meta.env.VITE_UPLOAD_PRESET;
 
   const handleImageChange = useCallback((e) => {
     const file = e.target.files[0];
@@ -23,11 +25,11 @@ export const StoryCreate  = () => {
       setLoading(true);
       const data = new FormData();
       data.append("file", image);
-      data.append("upload_preset", "x8ekhtm9");
-      data.append("cloud_name", "daqldosvw");
+      data.append("upload_preset", preset);
+      data.append("cloud_name", cloudname);
 
       const response = await fetch(
-        "http://api.cloudinary.com/v1_1/daqldosvw/image/upload",
+        `http://api.cloudinary.com/v1_1/${cloudname}/image/upload`,
         {
           method: "POST",
           body: data,
@@ -49,7 +51,6 @@ export const StoryCreate  = () => {
           setLoading(false);
           setisstory(true);
           setstory(res.data.story);
-          console.log("tygrfhgbfvjhg",res.data)
           navigate("/home");
         })
         .catch((error) => {
@@ -114,4 +115,3 @@ export const StoryCreate  = () => {
     </>
   );
 };
-
