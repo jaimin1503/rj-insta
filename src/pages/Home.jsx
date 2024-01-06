@@ -20,8 +20,8 @@ export const Home = () => {
   const { loading } = useContext(Context);
   const [allpost, setallpost] = useState([]);
   const [isloading, setIsLoading] = useState(false);
-  const { user } = useSelector((state) => state.user)
-  const { story, setstory, isstory, setisstory } = useContext(Context)
+  const { user } = useSelector((state) => state.user);
+  const { story, setstory, isstory, setisstory } = useContext(Context);
   useEffect(() => {
     setIsLoading(true);
     axios
@@ -76,7 +76,7 @@ export const Home = () => {
           <Leftnav />
         </div>
         <div className="w-full sm:w-[85vw] overflow-y-scroll">
-          <div className="container flex flex-col items-center translate-x-[-">
+          <div className="container flex flex-col items-center ">
             <div className=" max-w-sm md:max-w-lg lg:max-w-xl flex items-center ">
               <div>
                 {isstory ? (
@@ -91,19 +91,20 @@ export const Home = () => {
                       </Link>
                     </div>
                     <p className=" ">{user?.username}</p>
-
                   </div>
                 ) : (
                   <div className="flex flex-col justify-center items-center">
                     <div className="container frame rounded-full cursor-pointer h-[60px] w-[60px] flex justify-center items-center">
-                    <img
-                      className="h-[56px] w-[56px] frame rounded-full object-cover border-2"
-                      src={user?.profile?.profilephoto}
-                      alt="profilePic" onClick={() => { navigate("/storycreate") }}
-                    />
-                    <p>{user?.username}</p>
-                  </div>
-                  <p className=" font-semibold">{user?.username}</p>
+                      <img
+                        className="h-[56px] w-[56px] frame rounded-full object-cover border-2"
+                        src={user?.profile?.profilephoto}
+                        alt="profilePic"
+                        onClick={() => {
+                          navigate("/storycreate");
+                        }}
+                      />
+                    </div>
+                    <p className=" font-semibold">{user?.username}</p>
                   </div>
                 )}
               </div>

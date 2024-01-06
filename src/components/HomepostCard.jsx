@@ -8,6 +8,8 @@ import ViewPost from "./ViewPost";
 import jatu from "./assets/jatuu.jpg";
 import LikeList from "./LikeList";
 import { Context } from "../context/contextApi";
+import "./UserPost.css";
+
 function HomepostCard({ postid }) {
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
@@ -151,6 +153,9 @@ function HomepostCard({ postid }) {
           </div>
           <div className="image h-[420px] w-[340px] sm:h-[580px] sm:w-[470px]">
             <img
+              onDoubleClick={() => {
+                likeClick(post?._id);
+              }}
               className=" object-cover h-full w-full"
               src={post?.posturl}
               alt=""

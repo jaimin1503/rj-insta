@@ -23,7 +23,7 @@ const StoryBar = () => {
       <div className=" whitespace-nowrap w-full overflow-x-scroll flex webkit-scrollbar items-start">
         {stories?.map((story, index) => {
           return (
-            <div key={index} className=" m-2">
+            <div key={index} className=" m-2 mx-3">
               <Story story={story} />
             </div>
           );
