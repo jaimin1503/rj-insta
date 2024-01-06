@@ -115,7 +115,7 @@ export const login = async (req, res) => {
     }
 
     if (!user) {
-      return res.status(400).json({
+      return res.status(404).json({
         success: false,
         message: "User does not exist please check Username or Email",
       });

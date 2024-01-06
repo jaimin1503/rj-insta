@@ -17,7 +17,7 @@ const allMessages = asyncHandler(async (req, res) => {
       .populate("chat");
     res.json(messages);
   } catch (error) {
-    res.status(400);
+    res.status(500);
     throw new Error(error.message);
   }
 });

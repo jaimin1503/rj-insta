@@ -56,7 +56,7 @@ const SavedPost = () => {
 
   return (
     <div ref={imgRef}>
-      <div onClick={() => set(!showPost)} className="posts flex flex-wrap">
+      <div onClick={() => setShowPost(!showPost)} className="posts flex flex-wrap">
         {posts.map((post, index) => (
           <div key={index} className="w-1/3 p-[2px]">
             <div className="aspect-square cursor-pointer">

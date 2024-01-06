@@ -14,13 +14,13 @@ export const getprofilebyid =async (req,res)=>{
                     profile:profiledetails
                 })
             }else{
-            return res.status(400).json({
+            return res.status(404).json({
                 success:false,
                 message:"profileid is not  found"
             })
         }
     }catch(error){
-        return res.status(400).json({
+        return res.status(500).json({
             success:false,
             message:`somethong went wrong while getprofile and error is ${error}`
         })

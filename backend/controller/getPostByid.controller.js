@@ -10,6 +10,7 @@ export const getPostByid = async (req, res) => {
       populate: {
         path: "user",
         model: "User",
+        select: '-password',
         populate: {
           path: "profile",
           model: "Profile",
@@ -23,6 +24,7 @@ export const getPostByid = async (req, res) => {
       populate: {
         path: "user",
         model: "User",
+        select: '-password',
         populate: {
           path: "profile",
           model: "Profile",
@@ -33,6 +35,7 @@ export const getPostByid = async (req, res) => {
     })
     .populate({
       path: "user",
+      select: '-password',
       populate: {
         path: "profile",
         model: "Profile",

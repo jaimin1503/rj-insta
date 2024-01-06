@@ -16,19 +16,19 @@ export const getprofile =async (req,res)=>{
                     profile:profiledetails
                 })
             }else{
-                return res.status(400).json({
+                return res.status(404).json({
                     success:false,
                     message:"userdetails not found"
                 })
             }
         }else{
-            return res.status(400).json({
+            return res.status(404).json({
                 success:false,
                 message:"userid is not  found"
             })
         }
     }catch(error){
-        return res.status(400).json({
+        return res.status(500).json({
             success:false,
             message:`somethong went wrong while getprofile and error is ${error}`
         })

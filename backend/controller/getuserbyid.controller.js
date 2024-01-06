@@ -11,6 +11,7 @@ export const getuserbyid = async (req, res) => {
           { path: "posts", model: "Post" },
           {
             path: "followers", model: "User",
+            select: '-password',
             populate: {
               path: "profile",
               model: "Profile",
@@ -19,6 +20,7 @@ export const getuserbyid = async (req, res) => {
           {
             path: "following",
             model: "User",
+            select: '-password',
             populate: {
               path: "profile",
               model: "Profile",
@@ -49,7 +51,7 @@ export const getuserbyid = async (req, res) => {
       });
     }
   } catch (error) {
-    return res.status(400).json({
+    return res.status(500).json({
       success: false,
       message: `something went wrong and error is ${error}`,
     });
