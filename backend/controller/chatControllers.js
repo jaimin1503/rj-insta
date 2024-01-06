@@ -41,7 +41,7 @@ const accessChat = asyncHandler(async (req, res) => {
     );
     return res.status(200).json(fullChat);
   } catch (error) {
-    return res.status(400).send(error.message);
+    return res.status(500).send(error.message);
   }
 });
 
@@ -60,7 +60,7 @@ const fetchChats = asyncHandler(async (req, res) => {
         res.status(200).send(results);
       });
   } catch (error) {
-    res.status(400);
+    res.status(500);
     throw new Error(error.message);
   }
 });

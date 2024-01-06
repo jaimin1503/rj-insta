@@ -81,7 +81,7 @@ export const removefollow = async (req, res) => {
     const followerid = req.params.followid;
     const userid = req.user.userid;
     if (followerid === userid) {
-      return res.status(400).json({
+      return res.status(406).json({
         success: false,
         message: "You cannot follow yourself",
       });

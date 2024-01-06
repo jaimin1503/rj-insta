@@ -41,7 +41,7 @@ export const editprofile = async (req, res) => {
       });
     }
   } catch (error) {
-    return res.status(400).json({
+    return res.status(500).json({
       success: false,
       message: `Something went wrong while editing profile. Error: ${error}`,
     });

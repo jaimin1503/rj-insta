@@ -27,7 +27,7 @@ export const createpost = async (req, res) => {
       });
     }
   } catch (error) {
-    return res.status(400).json({
+    return res.status(500).json({
       success: false,
       message: `somethin want wrong while creating post and error is ${error}`,
     });

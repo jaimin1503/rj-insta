@@ -23,7 +23,7 @@ export const commentpost = async (req, res) => {
           { _id: postid }, 
           { $push: { comment: newcomment } }, 
           { new: true }
-      );
+      ).select("-password");
       return res.status(200).json({
         success: true,
         message: 'comment on post  successfully',

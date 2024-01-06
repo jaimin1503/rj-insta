@@ -45,7 +45,7 @@ export const isSaved = async (req, res) => {
       });
     }
   } catch (error) {
-    return res.status(400).json({
+    return res.status(500).json({
       success: false,
       message: `something went wrong while finding loke post and error is${error}`,
     });

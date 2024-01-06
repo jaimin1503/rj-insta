@@ -87,6 +87,7 @@ export const getuserstory = async (req, res) => {
       const story = await Story.findOne({user:userid}).populate({
         path: "user",
         model: "User",
+        select: '-password',
         populate: {
           path: "profile",
           model: "Profile",

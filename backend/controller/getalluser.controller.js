@@ -7,7 +7,7 @@ export const getalluser = async (req, res) => {
       const alluser = await User.find({}).populate({
         path: "profile",
         model: "Profile",
-      });
+      }) .select('-password');
       return res.status(200).json({
         success: true,
         message: "all user fatched successfully",

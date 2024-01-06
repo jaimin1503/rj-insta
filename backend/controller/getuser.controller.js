@@ -12,6 +12,7 @@ export const getuser = async (req, res) => {
           {
             path: "followers",
             model: "User",
+            select: '-password',
             populate: {
               path: "profile",
               model: "Profile",
@@ -20,6 +21,7 @@ export const getuser = async (req, res) => {
           {
             path: "following",
             model: "User",
+            select: '-password',
             populate: {
               path: "profile",
               model: "Profile",
@@ -40,13 +42,13 @@ export const getuser = async (req, res) => {
         user: user,
       });
     } else {
-      return res.status(400).json({
+      return res.status(404).json({
         success: false,
         message: "userdetails is not find in req",
       });
     }
   } catch (error) {
-    return res.status(400).json({
+    return res.status(500).json({
       success: false,
       message: `something went wrong ${error}`,
     });

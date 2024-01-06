@@ -9,7 +9,8 @@ export const getallpost = async (req, res) => {
           path: "like",
           populate: {
             path: "user",
-            model: "User",
+            model: "User",  
+            select: '-password', 
             populate: {
               path: "profile",
               model: "Profile",
@@ -23,6 +24,7 @@ export const getallpost = async (req, res) => {
           populate: {
             path: "user",
             model: "User",
+            select: '-password', 
             populate: {
               path: "profile",
               model: "Profile",
@@ -33,6 +35,7 @@ export const getallpost = async (req, res) => {
         })
         .populate({
           path: "user",
+          select: '-password', 
           populate: {
             path: "profile",
             model: "Profile",
@@ -47,7 +50,7 @@ export const getallpost = async (req, res) => {
         posts: posts,
       });
     } else {
-      return res.status(400).json({
+      return res.status(401).json({
         success: false,
         message: "please login or signup first",
       });
