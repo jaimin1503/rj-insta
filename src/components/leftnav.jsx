@@ -3,11 +3,11 @@ import { categories } from "../context/constant";
 import Leftnavitem from "./leftnavitem";
 import { useNavigate } from "react-router";
 import { Context } from "../context/contextApi";
-import instagramlogo from "./assets/writtenlogo.jpg";
 import axios from "axios";
 import Spinner from "./Spinner";
 import Search from "./assets/Search";
 import SearchCompo from "./SearchCompo";
+import FriendsFlock from "./assets/UntitledFriendsFlock.svg";
 
 function Leftnav() {
   const navigate = useNavigate();
@@ -64,10 +64,13 @@ function Leftnav() {
           className={` w-[240px] overflow-y-auto h-full py-4 text-black z-10 translate-x-[-240px] sm:translate-x-0 transition-all`}
         >
           <div ref={searchRef} className="flex px-5 flex-col mx-auto gap-4    ">
-            <img
-              src={instagramlogo}
-              className="bg-white h-10 w-24 object-contain "
-            ></img>
+            <div className="logo flex items-center">
+              <img
+                src={FriendsFlock}
+                className="bg-white h-12 w-12 object-contain "
+              ></img>
+              <p className=" font-mono">FriendsFlock</p>
+            </div>
             {categories.map((navitem) => {
               return (
                 <Leftnavitem

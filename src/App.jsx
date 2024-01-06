@@ -11,8 +11,7 @@ import VideoPage from "./pages/VideoPage";
 import { AppContext } from "./context/contextApi";
 import CreatePost from "./components/createpost/CreatePost";
 import ViewStory from "./components/story/ViewStory";
-import CreateStory from "./components/story/CreateStory";
-import {StoryCreate } from "./components/createpost/Storycreate"
+import { StoryCreate } from "./components/createpost/Storycreate";
 function App() {
   return (
     <AppContext>
@@ -29,7 +28,6 @@ function App() {
           <Route path="/editprofile/:id" element={<EditProfile />}></Route>
           <Route path="/viewprofile/:id" element={<ViewProfile />}></Route>
           <Route path="/viewstory/:id" element={<ViewStory />}></Route>
-          <Route path="/createstory" element={<CreateStory />}></Route>
           <Route path="/storycreate" element={<StoryCreate />}></Route>
         </Routes>
       </div>
