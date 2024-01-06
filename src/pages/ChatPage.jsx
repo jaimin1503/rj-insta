@@ -28,7 +28,7 @@ const ChatPage = () => {
         <ChatSearch />
         <div className=" box flex justify-between w-full h-[85vh] md:pt-10">
           {user && !selectedChat && <MyChats fetchAgain={fetchAgain} />}
-          {selectedChat && (
+          {user && selectedChat && (
             <ChatBox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
           )}
         </div>

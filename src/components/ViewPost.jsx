@@ -417,6 +417,9 @@ const ViewPost = ({ postId, setShowPost }) => {
           </div>
           <div className="image h-[420px] w-[340px] sm:h-[420px] sm:w-[340px]">
             <img
+              onDoubleClick={() => {
+                likeClick();
+              }}
               className=" object-cover h-full w-full"
               src={post.posturl}
               alt=""
