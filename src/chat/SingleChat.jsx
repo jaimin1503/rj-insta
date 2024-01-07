@@ -34,7 +34,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       setLoading(true);
 
       const { data } = await axios.get(
-        `http://localhost:5555/api/message/${selectedChat._id}`,
+        `${import.meta.env.VITE_BASE_URL}/api/message/${selectedChat._id}`,
         {
           withCredentials: true,
           params: {
@@ -66,7 +66,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       try {
         setNewMessage("");
         const { data } = await axios.post(
-          "http://localhost:5555/api/message",
+          `${import.meta.env.VITE_BASE_URL}/api/message`,
           {
             content: newMessage,
             chatId: selectedChat,

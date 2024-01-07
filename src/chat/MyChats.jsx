@@ -20,7 +20,7 @@ const MyChats = ({ fetchAgain }) => {
   const fetchChats = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get("http://localhost:5555/api/chat", {
+      const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/chat`, {
         withCredentials: true,
       });
       setChats(data);
@@ -68,7 +68,7 @@ const MyChats = ({ fetchAgain }) => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:5555/user/getuser", { withCredentials: true })
+      .get(`${import.meta.env.VITE_BASE_URL}/user/getuser`, { withCredentials: true })
       .then((res) => setLoggedUser(res.data.user))
       .catch((error) => console.log(error));
     setLoading(false);

@@ -26,7 +26,7 @@ const ViewProfile = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:5555/user/getuserbyid/${id}`, {
+      .get(`${import.meta.env.VITE_BASE_URL}/user/getuserbyid/${id}`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -62,7 +62,7 @@ const ViewProfile = () => {
     setLoading(true);
     axios
       .post(
-        `http://localhost:5555/user/follow/${id}`,
+        `${import.meta.env.VITE_BASE_URL}/user/follow/${id}`,
         { userid: id },
         {
           withCredentials: true,

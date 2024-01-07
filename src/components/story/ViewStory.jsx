@@ -16,7 +16,7 @@ const ViewStory = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:5555/user/getstorybyid/${id}`, { storyid: id })
+      .get(`${import.meta.env.VITE_BASE_URL}/user/getstorybyid/${id}`, { storyid: id })
       .then((res) => {
         setStory(res.data.story);
         setLoading(false);

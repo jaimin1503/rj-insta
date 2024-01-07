@@ -31,7 +31,7 @@ const LikeList = ({ show, post, setShowLikeList }) => {
   useEffect(() => {
     // setLoading(true);
     axios
-      .get("http://localhost:5555/user/getuser", { withCredentials: true })
+      .get(`${import.meta.env.VITE_BASE_URL}/user/getuser`, { withCredentials: true })
       .then((res) => {
         dispatch(getuser(res.data.user));
         // setLoading(false);
@@ -44,7 +44,7 @@ const LikeList = ({ show, post, setShowLikeList }) => {
     // setLoading(true)
     axios
       .post(
-        `http://localhost:5555/user/follow/${id}`,
+        `${import.meta.env.VITE_BASE_URL}/user/follow/${id}`,
         { userid: id },
         {
           withCredentials: true,

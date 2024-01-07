@@ -7,7 +7,7 @@ const StoryBar = () => {
   const [stories, setstories] = useState([]);
   useEffect(() => {
     axios
-      .get(`http://localhost:5555/user/getallstory`, {
+      .get(`${import.meta.env.VITE_BASE_URL}/user/getallstory`, {
         withCredentials: true,
       })
       .then((res) => {

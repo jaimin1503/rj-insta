@@ -58,7 +58,7 @@ function ChatSearch() {
     // Fetch all users once when the component mounts
     setLoading(true);
     axios
-      .get(`http://localhost:5555/user/getalluser`, {
+      .get(`${import.meta.env.VITE_BASE_URL}/user/getalluser`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -88,7 +88,7 @@ function ChatSearch() {
       setLoadingChat(true);
 
       const { data } = await axios.post(
-        `http://localhost:5555/api/chat`,
+        `${import.meta.env.VITE_BASE_URL}/api/chat`,
         { userId, id: user._id },
         { withCredentials: true }
       );

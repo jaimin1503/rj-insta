@@ -28,7 +28,7 @@ function ViewprofileFollowingList({ following, show }) {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:5555/user/getuser", { withCredentials: true })
+      .get(`${import.meta.env.VITE_BASE_URL}/user/getuser`, { withCredentials: true })
       .then((res) => {
         // setUser(res.data.user);
         dispatch(getuser(res.data.user));
@@ -42,7 +42,7 @@ function ViewprofileFollowingList({ following, show }) {
     setLoading(true);
     axios
       .post(
-        `http://localhost:5555/user/follow/${id}`,
+        `${import.meta.env.VITE_BASE_URL}/user/follow/${id}`,
         { userid: id },
         {
           withCredentials: true,

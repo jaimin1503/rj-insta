@@ -16,7 +16,7 @@ const NavbarSs = () => {
     // Fetch all users once when the component mounts
     setLoading(true);
     axios
-      .get(`http://localhost:5555/user/getalluser`, {
+      .get(`${import.meta.env.VITE_BASE_URL}/user/getalluser`, {
         withCredentials: true,
       })
       .then((res) => {

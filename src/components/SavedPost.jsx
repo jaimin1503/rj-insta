@@ -17,7 +17,7 @@ const SavedPost = () => {
   useEffect(() => {
     // setLoading(true);
     axios
-      .get("http://localhost:5555/user/getuser", { withCredentials: true })
+      .get(`${import.meta.env.VITE_BASE_URL}/user/getuser`, { withCredentials: true })
       .then((res) => {
         dispatch(getuser(res.data.user));
         setPosts(res.data.user.profile.saved);

@@ -48,7 +48,7 @@ export default function SignUp() {
     });
     setLoading(true);
     axios
-      .post("http://localhost:5555/user/signup", data, {
+      .post(`${import.meta.env.VITE_BASE_URL}/user/signup`, data, {
         withCredentials: true,
       })
       .then(() => {
@@ -160,7 +160,6 @@ export default function SignUp() {
           </Box>
           <Copyright sx={{ mt: 5 }} />
         </Container>
-        <Link href="/profile">profile</Link>
       </ThemeProvider>
     </>
   );

@@ -42,7 +42,7 @@ const CreatePost = () => {
       setUrl(responseData.url);
       axios
         .post(
-          `http://localhost:5555/user/createpost`,
+          `${import.meta.env.VITE_BASE_URL}/user/createpost`,
           { posturl: responseData.url },
           { withCredentials: true }
         )

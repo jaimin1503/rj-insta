@@ -37,7 +37,7 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
     // Fetch all users once when the component mounts
     setLoading(true);
     axios
-      .get(`http://localhost:5555/user/getalluser`, {
+      .get(`${import.meta.env.VITE_BASE_URL}/user/getalluser`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -69,7 +69,7 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
       setRenameLoading(true);
 
       const { data } = await axios.put(
-        `http://localhost:5555/api/chat/rename`,
+        `${import.meta.env.VITE_BASE_URL}/api/chat/rename`,
         {
           chatId: selectedChat._id,
           chatName: groupChatName,
@@ -123,7 +123,7 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
       setLoading(true);
 
       const { data } = await axios.put(
-        `http://localhost:5555/api/chat/groupadd`,
+        `${import.meta.env.VITE_BASE_URL}/api/chat/groupadd`,
         {
           chatId: selectedChat._id,
           userId: user1._id,
@@ -164,7 +164,7 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
       setLoading(true);
 
       const { data } = await axios.put(
-        `http://localhost:5555/api/chat/groupremove`,
+        `${import.meta.env.VITE_BASE_URL}/api/chat/groupremove`,
         {
           chatId: selectedChat._id,
           userId: user1._id,

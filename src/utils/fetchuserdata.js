@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const fetchuserdata = async () => {
   const data = axios
-    .get("http://localhost:5555/user/getuser", { withCredentials: true })
+    .get(`${import.meta.env.VITE_BASE_URL}/user/getuser`, { withCredentials: true })
     .then((res) => {
       return res.data.user;
     })

@@ -33,7 +33,7 @@ function HomepostCard({ postid }) {
   useEffect(() => {
     axios
       .get(
-        `http://localhost:5555/user/getPostByid/${postId}`,
+        `${import.meta.env.VITE_BASE_URL}/getPostByid/${postId}`,
 
         {
           withCredentials: true,
@@ -68,7 +68,7 @@ function HomepostCard({ postid }) {
   const handleSubmit = () => {
     axios
       .post(
-        `http://localhost:5555/user/commentpost/${postId}`,
+        `${import.meta.env.VITE_BASE_URL}/user/commentpost/${postId}`,
         { postid: postId, comment },
         {
           withCredentials: true,
@@ -88,7 +88,7 @@ function HomepostCard({ postid }) {
   const likeClick = async (postId) => {
     axios
       .post(
-        `http://localhost:5555/user/likepost/${postId}`,
+        `${import.meta.env.VITE_BASE_URL}/user/likepost/${postId}`,
         { postid: postId },
         {
           withCredentials: true,
@@ -108,7 +108,7 @@ function HomepostCard({ postid }) {
   };
   useEffect(() => {
     axios
-      .get(`http://localhost:5555/user/getlikepost/${postId}`, {
+      .get(`${import.meta.env.VITE_BASE_URL}/user/getlikepost/${postId}`, {
         withCredentials: true,
       })
       .then((res) => {

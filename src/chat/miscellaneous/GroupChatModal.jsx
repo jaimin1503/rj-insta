@@ -49,7 +49,7 @@ const GroupChatModal = ({ children }) => {
     // Fetch all users once when the component mounts
     setLoading(true);
     axios
-      .get(`http://localhost:5555/user/getalluser`, {
+      .get(`${import.meta.env.VITE_BASE_URL}/user/getalluser`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -92,7 +92,7 @@ const GroupChatModal = ({ children }) => {
 
     try {
       const { data } = await axios.post(
-        `http://localhost:5555/api/chat/group`,
+        `${import.meta.env.VITE_BASE_URL}/api/chat/group`,
         {
           name: groupChatName,
           users: selectedUsers.map((u) => u._id),

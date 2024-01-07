@@ -43,7 +43,7 @@ export const StoryCreate = () => {
       setUrl(responseData.url);
       axios
         .post(
-          `http://localhost:5555/user/createstory`,
+          `${import.meta.env.VITE_BASE_URL}/user/createstory`,
           { storyurl: responseData.url },
           { withCredentials: true }
         )

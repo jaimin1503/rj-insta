@@ -20,7 +20,7 @@ function Leftnav() {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:5555/user/getuser", { withCredentials: true })
+      .get(`${import.meta.env.VITE_BASE_URL}/getuser`, { withCredentials: true })
       .then((res) => {
         setUser(res.data.user);
         setLoading(false);

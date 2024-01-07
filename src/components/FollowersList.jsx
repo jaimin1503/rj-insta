@@ -30,7 +30,7 @@ function FollowersList({ followers, setShowFollowers }) {
     setLoading(true);
     axios
       .post(
-        `http://localhost:5555/user/removefollow/${id}`,
+        `${import.meta.env.VITE_BASE_URL}/user/removefollow/${id}`,
         { userid: id },
         {
           withCredentials: true,

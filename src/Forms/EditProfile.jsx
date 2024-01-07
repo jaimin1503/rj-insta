@@ -38,7 +38,7 @@ const EditProfile = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:5555/user/getuserbyid/${id}`, {
+      .get(`${import.meta.env.VITE_BASE_URL}/user/getuserbyid/${id}`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -53,7 +53,7 @@ const EditProfile = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:5555/user/getprofile", { withCredentials: true })
+      .get(`${import.meta.env.VITE_BASE_URL}/user/getprofile`, { withCredentials: true })
       .then((res) => {
         setFormData(res.data.profile);
         setLoading(false);
@@ -101,7 +101,7 @@ const EditProfile = () => {
     setLoading(true);
     axios
       .put(
-        "http://localhost:5555/user/editprofile",
+        `${import.meta.env.VITE_BASE_URL}/user/editprofile`,
         { url, formData },
         { withCredentials: true }
       )

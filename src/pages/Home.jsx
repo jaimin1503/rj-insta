@@ -25,7 +25,7 @@ export const Home = () => {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get("http://localhost:5555/user/getuser", { withCredentials: true })
+      .get(`${import.meta.env.VITE_BASE_URL}/user/getuser`, { withCredentials: true })
       .then((res) => {
         dispatch(getuser(res.data.user));
         setIsLoading(false);
@@ -38,7 +38,7 @@ export const Home = () => {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get("http://localhost:5555/user/getallpost", { withCredentials: true })
+      .get(`${import.meta.env.VITE_BASE_URL}/user/getallpost`, { withCredentials: true })
       .then((res) => {
         setallpost(shuffleArray(res.data.posts));
         // setallpost(res.data.posts);
@@ -52,7 +52,7 @@ export const Home = () => {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get("http://localhost:5555/user/getuserstory", { withCredentials: true })
+      .get(`${import.meta.env.VITE_BASE_URL}/user/getuserstory`, { withCredentials: true })
       .then((res) => {
         if (res.data.success) {
           setisstory(true);

@@ -14,7 +14,7 @@ const ChatProvider = ({ children }) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5555/user/getuser", { withCredentials: true })
+      .get(`${import.meta.env.VITE_BASE_URL}/user/getuser`, { withCredentials: true })
       .then((res) => {
         setUser(res.data.user);
       })

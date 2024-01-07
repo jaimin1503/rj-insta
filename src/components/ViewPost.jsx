@@ -56,7 +56,7 @@ const ViewPost = ({ postId, setShowPost }) => {
   };
   useEffect(() => {
     axios
-      .get(`http://localhost:5555/user/${postId}/isSaved`, {
+      .get(`${import.meta.env.VITE_BASE_URL}/user/${postId}/isSaved`, {
         params: { postid: postId }, // Use 'params' instead of a separate object
         withCredentials: true,
       })
@@ -97,7 +97,7 @@ const ViewPost = ({ postId, setShowPost }) => {
     setLoading(true);
     axios
       .get(
-        `http://localhost:5555/user/getPostByid/${postId}`,
+        `${import.meta.env.VITE_BASE_URL}/user/getPostByid/${postId}`,
 
         {
           withCredentials: true,
@@ -117,7 +117,7 @@ const ViewPost = ({ postId, setShowPost }) => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:5555/user/getlikepost/${postId}`, {
+      .get(`${import.meta.env.VITE_BASE_URL}/user/getlikepost/${postId}`, {
         params: { postid: postId },
         withCredentials: true,
       })
@@ -138,7 +138,7 @@ const ViewPost = ({ postId, setShowPost }) => {
   const likeClick = async () => {
     axios
       .post(
-        `http://localhost:5555/user/likepost/${postId}`,
+        `${import.meta.env.VITE_BASE_URL}/user/likepost/${postId}`,
         { postid: postId },
         {
           withCredentials: true,
