@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: ["https://vercel.com/jaimins-projects-d1715da4/rj-insta/C6KoW4D7Hx1nNVFQvPAcwVjF3JdF"],
+    origin: ["https://rj-insta.vercel.app"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
@@ -51,7 +51,7 @@ const server = app.listen(port, () => {
 const io = new Server(server, {
   pingTimeout: 60000,
   cors: {
-    origin: "https://vercel.com/jaimins-projects-d1715da4/rj-insta/C6KoW4D7Hx1nNVFQvPAcwVjF3JdF",
+    origin: "https://rj-insta.vercel.app",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   },
