@@ -5,7 +5,7 @@ dotenv.config();
 export const auth = (req, res, next) => {
   try {
     const token =
-      req.body.token || req.cookies.token || (req.headers['authorization'] && req.headers['authorization'].split(" ")[1]);
+      req.body.token || req.cookies.token || (req.headers['Authorization'] && req.headers['Authorization'].split(" ")[1]);
 
     if (!token) {
       return res.status(401).json({
