@@ -1,4 +1,3 @@
-import SettingsLogo from "./assets/Settings.svg";
 import Saved from "./assets/Saved";
 import Video from "./assets/Video.jsx";
 import Grid from "./assets/Grid.jsx";
