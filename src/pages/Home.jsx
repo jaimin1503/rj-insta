@@ -75,7 +75,7 @@ export const Home = () => {
           {" "}
           <Leftnav />
         </div>
-        <div className="w-full sm:w-[85vw] overflow-y-scroll">
+        <div className="w-full sm:w-[85vw] overflow-y-scroll pt-10 md:pt-3">
           <div className="container flex flex-col items-center ">
             <div className=" max-w-sm md:max-w-lg lg:max-w-xl flex items-center ">
               <div>

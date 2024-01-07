@@ -4,6 +4,7 @@ import instaLogo from "./assets/writtenlogo.jpg";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Spinner } from "@chakra-ui/react";
+import logo from "./assets/logoff.svg";
 
 const NavbarSs = () => {
   const [inputValue, setInputValue] = useState("");
@@ -43,7 +44,7 @@ const NavbarSs = () => {
     <div className=" sm:hidden">
       <div className="nav flex justify-between items-center">
         <div className="logo">
-          <img className=" h-[30px] m-3" src={instaLogo} alt="Instagram" />
+          <img className=" h-[30px] m-3" src={logo} alt="Instagram" />
         </div>
         <div className="search">
           <div className=" fixed ml-6 mt-4  m-3">

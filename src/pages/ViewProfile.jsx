@@ -103,7 +103,7 @@ const ViewProfile = () => {
           <div className="profile_row1 flex p-5">
             <div className="profile_photo mr-5">
               <img
-                className=" cursor-pointer rounded-full object-cover border-2 h-[110px] w-[110px] "
+                className=" cursor-pointer rounded-full object-cover border-2 h-[90px] w-[90px] sm:h-[110px] sm:w-[110px] "
                 src={viewUser?.profile?.profilephoto}
                 alt="Profile_Pic"
               />

@@ -89,10 +89,6 @@ const Profile = () => {
             <div className="profile_info flex flex-col justify-center">
               <div className="user_name flex items-center pb-2">
                 <h2 className=" pr-2">{user?.username}</h2>
-                <img
-                  className=" h-8 w-8 cursor-pointer hover:scale-105"
-                  src={SettingsLogo}
-                />
               </div>
               <div className="edit_profile">
                 <Link to={`/editprofile/${user._id}`}>

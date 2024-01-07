@@ -66,7 +66,7 @@ function ViewprofileFollowersList({ followers, show }) {
       {loading && <Spinner />}
       <div
         ref={follwRef}
-        className="following absolute top-[50%] left-[50%] w-[65vw] translate-x-[-50%] translate-y-[-50%] z-10 bg-white rounded-lg shadow-xl sm:w-[350px] "
+        className="following absolute top-[50%] left-[50%] w-[340px] translate-x-[-50%] translate-y-[-50%] z-10 bg-white rounded-lg shadow-xl sm:w-[350px] "
       >
         <div className=" border-b p-2 row1 flex justify-center items-center">
           <p className="p-2">Following</p>
