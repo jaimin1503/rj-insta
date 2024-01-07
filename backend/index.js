@@ -51,7 +51,7 @@ const server = app.listen(port, () => {
 const io = new Server(server, {
   pingTimeout: 60000,
   cors: {
-    origin: "https://rj-insta.vercel.app",
+    origin: ["https://rj-insta.vercel.app", "http://localhost:5173"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   },
