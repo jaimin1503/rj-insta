@@ -139,10 +139,20 @@ export const login = async (req, res) => {
     console.log("token", token);
     user.token = token;
     user.password = undefined;
+    const options = {
+      expires : new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+      httpOnly : true,
+  }
 
+  res.cookie("token",token,options)
     // Set the token in the "Authorization" header
     res.set('Authorization', `Bearer ${token}`);
-
+    return res.status(200).json({
+      success : true,
+      token,
+      user,
+      message:"User logged in successfully"
+  });
     return res.status(200).json({
       success: true,
       token,
