@@ -163,7 +163,7 @@ const ViewPost = ({ postId, setShowPost }) => {
     setLoading(true);
     axios
       .post(
-        `http://localhost:5555/user/savedpost/${postId}`,
+        `${import.meta.env.VITE_BASE_URL}/user/savedpost/${postId}`,
         { postid: postId },
         {
           withCredentials: true,
@@ -191,7 +191,7 @@ const ViewPost = ({ postId, setShowPost }) => {
     setLoading(true);
     axios
       .post(
-        `http://localhost:5555/user/commentpost/${postId}`,
+        `${import.meta.env.VITE_BASE_URL}/user/commentpost/${postId}`,
         { postid: postId, comment },
         {
           withCredentials: true,

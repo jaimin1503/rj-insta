@@ -5,7 +5,7 @@ import { getSender, getSenderFull } from "../config/ChatLogics.js";
 import ProfileModal from "./miscellaneous/ProfileModal.jsx";
 import UpdateGroupChatModal from "./miscellaneous/UpdateGroupChatModal";
 import { ChatState } from "../context/chatProvider.jsx";
-const ENDPOINT = "http://localhost:5555";
+const ENDPOINT = `${import.meta.env.VITE_BASE_URL}`;
 var socket, selectedChatCompare;
 import { ArrowBack } from "@mui/icons-material";
 import { Spinner } from "@chakra-ui/react";
