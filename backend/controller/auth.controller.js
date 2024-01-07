@@ -117,7 +117,7 @@ export const login = async (req, res) => {
     if (!user) {
       return res.status(404).json({
         success: false,
-        message: "User does not exist please check Username or Email",
+        message: "User does not exist. Please check Username or Email",
       });
     }
 
@@ -136,17 +136,14 @@ export const login = async (req, res) => {
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
       expiresIn: "30d",
     });
-    console.log("token",token);
+    console.log("token", token);
     user.token = token;
     user.password = undefined;
 
-    const options = {
-      // expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
-      httpOnly: false,
-      withCredentials: true,
-    };
+    // Set the token in the "Authorization" header
+    res.set('Authorization', `Bearer ${token}`);
 
-   return  res.cookie("token", token, options).status(200).json({
+    return res.status(200).json({
       success: true,
       token,
       user,
@@ -159,3 +156,4 @@ export const login = async (req, res) => {
     });
   }
 };
+
