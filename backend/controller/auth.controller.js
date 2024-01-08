@@ -18,14 +18,14 @@ export const signup = async (req, res) => {
     if (!email || !emailRegex.test(email)) {
       return res.status(400).json({
         success: false,
-        message: "please provide a valide email ",
+        message: "please provide a valid email ",
       });
     }
     if (password.length < 6) {
       return res.status(400).json({
         success: false,
         message:
-          "your password is to sort please provide at least 6 charcter password ",
+          "your password is to short please provide at least 6 charcter password ",
       });
     }
     const userexist = await User.findOne({ email });
@@ -33,7 +33,7 @@ export const signup = async (req, res) => {
     if (userexist) {
       return res.status(400).json({
         success: false,
-        message: `user is already exist please login `,
+        message: `user already exist please login `,
       });
     }
     let hashedpassword;
@@ -66,7 +66,7 @@ export const signup = async (req, res) => {
       password: hashedpassword,
       profile,
     });
-    user.password=undefined
+    user.password = undefined;
     return res.status(200).json({
       success: true,
       message: "User Created Successfully",
@@ -101,18 +101,16 @@ export const login = async (req, res) => {
   try {
     const { identifier, password } = req.body;
 
-    let user;
-
-    if (identifier) {
-      user = await User.findOne({
-        $or: [{ email: identifier }, { username: identifier }],
-      });
-    } else {
+    if (!identifier || !password) {
       return res.status(400).json({
         success: false,
-        message: "Please provide username or an email",
+        message: "Please provide both username or email and password",
       });
     }
+
+    const user = await User.findOne({
+      $or: [{ email: identifier }, { username: identifier }],
+    });
 
     if (!user) {
       return res.status(404).json({
@@ -122,8 +120,10 @@ export const login = async (req, res) => {
     }
 
     const passwordMatch = await bcrypt.compare(password, user.password);
+
     if (!passwordMatch) {
-      return res.status(401).send({
+      return res.status(401).json({
+        success: false,
         message: "Invalid email or password. Please try again.",
       });
     }
@@ -133,26 +133,25 @@ export const login = async (req, res) => {
       email: user.email,
       username: user.username,
     };
+
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
       expiresIn: "30d",
     });
-    console.log("token", token);
+
     user.token = token;
     user.password = undefined;
-    const options = {
-      expires : new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
-      httpOnly : true,
-  }
 
-  res.cookie("token",token,options)
-    // Set the token in the "Authorization" header
-    res.set('Authorization', `Bearer ${token}`);
-    return res.status(200).json({
-      success : true,
-      token,
-      user,
-      message:"User logged in successfully"
-  });
+    const options = {
+      expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+      httpOnly: true,
+    };
+
+    // Set token in a cookie
+    res.cookie("token", token, options);
+
+    // Set the token in the "Authorization" header (optional)
+    res.set("Authorization", `Bearer ${token}`);
+
     return res.status(200).json({
       success: true,
       token,
@@ -166,4 +165,3 @@ export const login = async (req, res) => {
     });
   }
 };
-
