@@ -14,7 +14,7 @@ export function sendOtp(email,navigate) {
   
         // console.log(response.data.success)
         axios
-          .post(`https://friendsflock.onrender.com/user/sendotp`, {email}, {
+          .post(`${import.meta.env.VITE_BASE_URL}/user/sendotp`, {email}, {
             withCredentials: true,
           })
           .then((res) => {
@@ -40,7 +40,7 @@ export function signUp(data,navigate) {
       const toastId = toast.loading("Loading...")
       try {
         axios
-          .post(`https://friendsflock.onrender.com/user/user/signup`, {data}, {
+          .post(`${import.meta.env.VITE_BASE_URL}/user/signup`, data, {
             withCredentials: true,
           })
           .then(() => {
@@ -53,7 +53,7 @@ export function signUp(data,navigate) {
   
         
         toast.success("Signup Successful")
-        navigate("/login")
+        // navigate("/login")
       } catch (error) {
         console.log("SIGNUP API ERROR............", error)
         toast.error("Signup Failed")

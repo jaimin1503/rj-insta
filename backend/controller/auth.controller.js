@@ -8,6 +8,7 @@ import otpGenerator from 'otp-generator';
 dotenv.config();
 export const signup = async (req, res) => {
   try {
+    console.log(req)
     const { firstName, lastName, email, password, username,otp } = req.body;
     if (!firstName || !lastName || !email || !password || !username) {
       res.status(400).json({
@@ -39,7 +40,8 @@ export const signup = async (req, res) => {
       });
     }
     const otpverify = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1);
-    if(otpverify!==otp){
+    console.log("otp of db",otpverify)
+    if(otpverify[0].otp!==otp){
         return res.status(401).json({
           success:false,
           message:"otp is invalide please try again"
