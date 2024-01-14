@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 
-import { signup, login } from "../controller/auth.controller.js";
+import { signup, login,sendotp } from "../controller/auth.controller.js";
 import { getuser } from "../controller/getuser.controller.js";
 import { getuserbyid } from "../controller/getuserbyid.controller.js";
 import { createpost } from "../controller/createpost.controller.js";
@@ -27,6 +27,8 @@ import {
 
 router.post("/signup", signup);
 router.post("/login", login);
+router.post("/sendotp", sendotp);
+
 router.get("/getuser", auth, getuser);
 router.get("/getuserbyid/:userid", auth, getuserbyid);
 router.post("/createpost", auth, createpost);

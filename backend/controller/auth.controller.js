@@ -1,8 +1,10 @@
 import User from "../model/user.model.js";
 import Profile from "../model/profile.model.js";
+import OTP from "../model/Otp.model.js"
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import otpGenerator from 'otp-generator';
 dotenv.config();
 export const signup = async (req, res) => {
   try {
@@ -96,7 +98,36 @@ export const signup = async (req, res) => {
     }
   }
 };
-
+export const sendotp=async(req,res)=>{
+try{
+    const {email}=req.body;
+    const  user=await User.findOne({email});
+    if(user){
+      return res.status(401).json({
+        success:false,
+        message:`user is already registered`
+      })
+    }
+    let otp=otpGenerator.generate(6,{
+      upperCaseAlphabets:false,
+      lowerCaseAlphabets:false,
+      specialChars:false,
+    })
+    const otpBOdy=await OTP.create({
+      email,otp
+    })
+    return res.status(200).json({
+      success:true,
+      message:"otp sent successfully",
+      OTP:otp
+    })
+}catch(error){
+  return res.status(500).json({
+    success:false,
+    message:`somthing went wrong while sending otp and error is ${error}`
+  })
+}
+}
 export const login = async (req, res) => {
   try {
     const { identifier, password } = req.body;
