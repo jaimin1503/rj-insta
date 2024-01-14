@@ -12,6 +12,7 @@ import { AppContext } from "./context/contextApi";
 import CreatePost from "./components/createpost/CreatePost";
 import ViewStory from "./components/story/ViewStory";
 import { StoryCreate } from "./components/createpost/Storycreate";
+import VerifyEmail from "./Forms/VerifyEmail"
 function App() {
   return (
     <AppContext>
@@ -29,6 +30,8 @@ function App() {
           <Route path="/viewprofile/:id" element={<ViewProfile />}></Route>
           <Route path="/viewstory/:id" element={<ViewStory />}></Route>
           <Route path="/storycreate" element={<StoryCreate />}></Route>
+          <Route path="/verify-email" element={<VerifyEmail />}></Route>
+
         </Routes>
       </div>
     </AppContext>

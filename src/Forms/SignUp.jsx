@@ -14,6 +14,9 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {setsignupdata} from "../reducers/authReducer";
+import {sendOtp} from "../Forms/Sendotp"
 function Copyright(props) {
   return (
     <Typography
@@ -37,6 +40,7 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignUp() {
+  const dispatch=useDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const handleSubmit = (event) => {
@@ -46,19 +50,22 @@ export default function SignUp() {
     formData.forEach((value, key) => {
       data[key] = value;
     });
-    setLoading(true);
-    axios
-      .post(`${import.meta.env.VITE_BASE_URL}/user/signup`, data, {
-        withCredentials: true,
-      })
-      .then(() => {
-        navigate("/");
-        setLoading(false);
-      })
-      .catch((error) => {
-        alert("Error occurred");
-        console.log(error);
-      });
+    dispatch(setsignupdata(data));
+    dispatch(sendOtp(data.email,navigate))
+    // setLoading(true);
+    // axios
+    //   .post(`${import.meta.env.VITE_BASE_URL}/user/signup`, data, {
+    //     withCredentials: true,
+    //   })
+    //   .then(() => {
+    //     navigate("/");
+    //     setLoading(false);
+    //   })
+    //   .catch((error) => {
+    //     alert("Error occurred");
+    //     console.log(error);
+    //   });
+
   };
 
   return (

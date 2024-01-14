@@ -8,7 +8,7 @@ import otpGenerator from 'otp-generator';
 dotenv.config();
 export const signup = async (req, res) => {
   try {
-    const { firstName, lastName, email, password, username } = req.body;
+    const { firstName, lastName, email, password, username,otp } = req.body;
     if (!firstName || !lastName || !email || !password || !username) {
       res.status(400).json({
         success: false,
@@ -37,6 +37,13 @@ export const signup = async (req, res) => {
         success: false,
         message: `user already exist please login `,
       });
+    }
+    const otpverify = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1);
+    if(otpverify!==otp){
+        return res.status(401).json({
+          success:false,
+          message:"otp is invalide please try again"
+        })
     }
     let hashedpassword;
     try {
