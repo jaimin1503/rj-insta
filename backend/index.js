@@ -1,5 +1,4 @@
 import express from "express";
-import http from "http";
 import { Server } from "socket.io";
 import cookieParser from "cookie-parser";
 import { databaseconnection } from "./config/database.js";
