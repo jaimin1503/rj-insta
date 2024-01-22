@@ -33,7 +33,7 @@ function HomepostCard({ postid }) {
   useEffect(() => {
     axios
       .get(
-        `${import.meta.env.VITE_BASE_URL}/getPostByid/${postId}`,
+        `${import.meta.env.VITE_BASE_URL}/user/getPostByid/${postId}`,
 
         {
           withCredentials: true,
