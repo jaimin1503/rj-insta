@@ -11,6 +11,8 @@ const profileSchema = new mongoose.Schema({
   },
   profilephoto: {
     type: String,
+    default:
+      "https://www.shutterstock.com/image-vector/user-profile-icon-vector-avatar-600nw-2220431045.jpg",
   },
   posts: [
     {
@@ -21,7 +23,7 @@ const profileSchema = new mongoose.Schema({
   followers: [
     {
       type: mongoose.Schema.Types.ObjectId, // Use mongoose.Schema.Types.ObjectId
-      ref: "User",  
+      ref: "User",
     },
   ],
   following: [
@@ -30,10 +32,12 @@ const profileSchema = new mongoose.Schema({
       ref: "User",
     },
   ],
-  saved: [{
+  saved: [
+    {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Post"
-  }]
+      ref: "Post",
+    },
+  ],
 });
 
 const Profile = mongoose.model("Profile", profileSchema);
