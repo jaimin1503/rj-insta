@@ -28,7 +28,6 @@ import {
 router.post("/signup", signup);
 router.post("/login", login);
 router.post("/sendotp", sendotp);
-
 router.get("/getuser", auth, getuser);
 router.get("/getuserbyid/:userid", auth, getuserbyid);
 router.post("/createpost", auth, createpost);

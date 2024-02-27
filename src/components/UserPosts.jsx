@@ -44,7 +44,7 @@ const UserPosts = ({ posts }) => {
         {posts
           .slice()
           .reverse()
-          .map((post, index) => (
+          .map((post) => (
             <div key={post._id} className="w-1/3 p-[2px]">
               <div className="aspect-square cursor-pointer">
                 <img

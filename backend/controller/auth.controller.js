@@ -67,7 +67,7 @@ export const signup = async (req, res) => {
         success: false,
         message: `Error occurred while creating profile.`,
       });
-    }
+    }a
 
     const user = await User.create({
       firstName,
