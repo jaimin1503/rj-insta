@@ -65,6 +65,9 @@ const fetchChats = asyncHandler(async (req, res) => {
   }
 });
 
+//@description     Create New Group Chat
+//@route           POST /api/chat/group
+//@access          Protected
 const createGroupChat = asyncHandler(async (req, res) => {
   if (!req.body.users || !req.body.name) {
     return res.status(400).send({ message: "Please Fill all the fields" });
@@ -98,9 +101,6 @@ const createGroupChat = asyncHandler(async (req, res) => {
       .json({ message: error.message || "Failed to create the group chat" });
   }
 });
-//@description     Create New Group Chat
-//@route           POST /api/chat/group
-//@access          Protected
 
 // @desc    Rename Group
 // @route   PUT /api/chat/rename
