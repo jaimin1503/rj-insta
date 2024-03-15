@@ -13,6 +13,7 @@ import shuffleArray from "../utils/suffleArray.js";
 import NavbarSs from "../components/NavbarSs.jsx";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import Suggestion from "../components/suggestions/Suggestion.jsx";
 
 export const Home = () => {
   const navigate = useNavigate();
@@ -25,7 +26,9 @@ export const Home = () => {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get(`${import.meta.env.VITE_BASE_URL}/user/getuser`, { withCredentials: true })
+      .get(`${import.meta.env.VITE_BASE_URL}/user/getuser`, {
+        withCredentials: true,
+      })
       .then((res) => {
         dispatch(getuser(res.data.user));
         setIsLoading(false);
@@ -38,7 +41,9 @@ export const Home = () => {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get(`${import.meta.env.VITE_BASE_URL}/user/getallpost`, { withCredentials: true })
+      .get(`${import.meta.env.VITE_BASE_URL}/user/getallpost`, {
+        withCredentials: true,
+      })
       .then((res) => {
         setallpost(shuffleArray(res.data.posts));
         // setallpost(res.data.posts);
@@ -52,7 +57,9 @@ export const Home = () => {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get(`${import.meta.env.VITE_BASE_URL}/user/getuserstory`, { withCredentials: true })
+      .get(`${import.meta.env.VITE_BASE_URL}/user/getuserstory`, {
+        withCredentials: true,
+      })
       .then((res) => {
         if (res.data.success) {
           setisstory(true);
@@ -123,7 +130,9 @@ export const Home = () => {
             </div>
           </div>
         </div>
-
+        <div>
+          <Suggestion />
+        </div>
         <div className="fixed w-screen bottom-0 bg-gray-100 py-2 block sm:hidden">
           <BottomBar />
         </div>
