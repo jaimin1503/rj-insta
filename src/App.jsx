@@ -31,7 +31,6 @@ function App() {
           <Route path="/viewstory/:id" element={<ViewStory />}></Route>
           <Route path="/storycreate" element={<StoryCreate />}></Route>
           <Route path="/verify-email" element={<VerifyEmail />}></Route>
-
         </Routes>
       </div>
     </AppContext>
