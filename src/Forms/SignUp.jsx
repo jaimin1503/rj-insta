@@ -10,13 +10,13 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import axios from "axios";
+import google from "./assets/google.svg";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {setsignupdata} from "../reducers/authReducer";
-import {sendOtp} from "../Forms/Sendotp"
+import { setsignupdata } from "../reducers/authReducer";
+import { sendOtp } from "../Forms/Sendotp";
 function Copyright(props) {
   return (
     <Typography
@@ -40,7 +40,7 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignUp() {
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const handleSubmit = (event) => {
@@ -51,7 +51,7 @@ export default function SignUp() {
       data[key] = value;
     });
     dispatch(setsignupdata(data));
-    dispatch(sendOtp(data.email,navigate))
+    dispatch(sendOtp(data.email, navigate));
     // setLoading(true);
     // axios
     //   .post(`${import.meta.env.VITE_BASE_URL}/user/signup`, data, {
@@ -65,7 +65,6 @@ export default function SignUp() {
     //     alert("Error occurred");
     //     console.log(error);
     //   });
-
   };
 
   return (
@@ -148,6 +147,10 @@ export default function SignUp() {
                   />
                 </Grid>
               </Grid>
+              <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+                Continue with Google{" "}
+                <img className="h-5 pl-3" src={google} alt="" />
+              </Button>
               <Button
                 type="submit"
                 fullWidth
