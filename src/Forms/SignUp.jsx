@@ -16,6 +16,7 @@ import Spinner from "../components/Spinner";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setsignupdata } from "../reducers/authReducer";
+import { Google } from "@mui/icons-material";
 import { sendOtp } from "../Forms/Sendotp";
 function Copyright(props) {
   return (
@@ -148,8 +149,9 @@ export default function SignUp() {
                 </Grid>
               </Grid>
               <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+                <Google />
                 Continue with Google{" "}
-                <img className="h-5 pl-3" src={google} alt="" />
+                {/* <img className="h-5 pl-3" src={google} alt="" /> */}
               </Button>
               <Button
                 type="submit"
