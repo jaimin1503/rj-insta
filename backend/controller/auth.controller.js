@@ -67,7 +67,7 @@ export const signup = async (req, res) => {
         success: false,
         message: `Error occurred while creating profile.`,
       });
-    }a
+    }
 
     const user = await User.create({
       firstName,
@@ -102,13 +102,14 @@ export const signup = async (req, res) => {
       console.error("Unexpected error occurred:", error);
       return res.status(400).json({
         success: false,
-        message: `Something went wrong while signing up.`,
+        message: `Something went wrong while signing up. and error is ${err}`,
       });
     }
   }
 };
 export const sendotp=async(req,res)=>{
 try{
+  console.log("inside send otp controller")
     const {email}=req.body;
     const  user=await User.findOne({email});
     if(user){
@@ -117,11 +118,13 @@ try{
         message:`user is already registered`
       })
     }
+
     let otp=otpGenerator.generate(6,{
       upperCaseAlphabets:false,
       lowerCaseAlphabets:false,
       specialChars:false,
     })
+    console.log("otp generated ",otp)
     const otpBOdy=await OTP.create({
       email,otp
     })

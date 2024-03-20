@@ -22,7 +22,8 @@ import {otpTemplate} from "../utils/emailtemplet.js"
  const sendVerificationEmail=async (email,otp)=>{
     try{
         const mailresponse=await mailSender(email,"Verification Email",otpTemplate(otp));
-        console.log("Email sent successfully: ", mailresponse.response);
+        console.log("mailresponse is",mailresponse)
+        console.log("Email sent successfully: ", mailresponse?.response);
     }catch(error){
         console.log("error occurred while sending email and error is",error)
         throw error
