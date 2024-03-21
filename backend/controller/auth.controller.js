@@ -139,7 +139,7 @@ try{
     message:`somthing went wrong while sending otp and error is ${error}`
   })
 }
-}
+};
 export const login = async (req, res) => {
   try {
     const { identifier, password } = req.body;
