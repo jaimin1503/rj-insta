@@ -6,13 +6,7 @@ export function sendOtp(email,navigate) {
       const toastId = toast.loading("Loading...")
       
       try {
-        // const response = await apiConnector("POST", SENDOTP_API, {
-        //   email,
-        //   checkUserPresent: true,
-        // })
-        // console.log("SENDOTP API RESPONSE............", response)
-  
-        // console.log(response.data.success)
+        console.log("inside sendotp function")
         axios
           .post(`${import.meta.env.VITE_BASE_URL}/user/sendotp`, {email}, {
             withCredentials: true,

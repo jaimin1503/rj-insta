@@ -23,6 +23,7 @@ const sendVerificationEmail = async (email, otp) => {
       "Verification Email",
       otpTemplate(otp)
     );
+    console.log("mailresponse is", mailresponse);
     console.log("Email sent successfully: ", mailresponse?.response);
   } catch (error) {
     console.log("error occurred while sending email and error is", error);

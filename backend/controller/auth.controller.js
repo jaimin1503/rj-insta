@@ -70,7 +70,6 @@ export const signup = async (req, res) => {
         message: `Error occurred while creating profile.`,
       });
     }
-    a;
 
     const user = await User.create({
       firstName,
@@ -105,52 +104,44 @@ export const signup = async (req, res) => {
       console.error("Unexpected error occurred:", error);
       return res.status(400).json({
         success: false,
-        message: `Something went wrong while signing up.`,
+        message: `Something went wrong while signing up. and error is ${err}`,
       });
     }
   }
 };
-
-export const sendotp = async (req, res) => {
-  try {
-    console.log("Request body:", req.body);
-    const { email } = req.body;
-    console.log("Email:", email);
-
-    const user = await User.findOne({ email });
-    console.log("User:", user);
-
-    if (user) {
+export const sendotp=async(req,res)=>{
+try{
+  console.log("inside send otp controller")
+    const {email}=req.body;
+    const  user=await User.findOne({email});
+    if(user){
       return res.status(401).json({
         success: false,
         message: `User is already registered`,
       });
     }
 
-    let otp = otpGenerator.generate(6, {
-      upperCaseAlphabets: false,
-      lowerCaseAlphabets: false,
-      specialChars: false,
-    });
-    console.log("Generated OTP:", otp);
-
-    const otpBody = await OTP.create({ email, otp });
-    console.log("OTP Body:", otpBody);
-
+    let otp=otpGenerator.generate(6,{
+      upperCaseAlphabets:false,
+      lowerCaseAlphabets:false,
+      specialChars:false,
+    })
+    console.log("otp generated ",otp)
+    const otpBOdy=await OTP.create({
+      email,otp
+    })
     return res.status(200).json({
-      success: true,
-      message: "OTP sent successfully",
-      OTP: otp,
-    });
-  } catch (error) {
-    console.error("Error:", error);
-    return res.status(500).json({
-      success: false,
-      message: `Something went wrong while sending OTP. Error: ${error}`,
-    });
-  }
+      success:true,
+      message:"otp sent successfully",
+      OTP:otp
+    })
+}catch(error){
+  return res.status(500).json({
+    success:false,
+    message:`somthing went wrong while sending otp and error is ${error}`
+  })
+}
 };
-
 export const login = async (req, res) => {
   try {
     const { identifier, password } = req.body;
