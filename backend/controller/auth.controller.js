@@ -1,15 +1,15 @@
 import User from "../model/user.model.js";
 import Profile from "../model/profile.model.js";
-import OTP from "../model/Otp.model.js"
+import OTP from "../model/Otp.model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import otpGenerator from 'otp-generator';
+import otpGenerator from "otp-generator";
 dotenv.config();
 export const signup = async (req, res) => {
   try {
-    console.log(req)
-    const { firstName, lastName, email, password, username,otp } = req.body;
+    console.log(req);
+    const { firstName, lastName, email, password, username, otp } = req.body;
     if (!firstName || !lastName || !email || !password || !username) {
       res.status(400).json({
         success: false,
@@ -39,13 +39,15 @@ export const signup = async (req, res) => {
         message: `user already exist please login `,
       });
     }
-    const otpverify = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1);
-    console.log("otp of db",otpverify)
-    if(otpverify[0].otp!==otp){
-        return res.status(401).json({
-          success:false,
-          message:"otp is invalide please try again"
-        })
+    const otpverify = await OTP.find({ email })
+      .sort({ createdAt: -1 })
+      .limit(1);
+    console.log("otp of db", otpverify);
+    if (otpverify[0].otp !== otp) {
+      return res.status(401).json({
+        success: false,
+        message: "otp is invalide please try again",
+      });
     }
     let hashedpassword;
     try {
@@ -67,7 +69,8 @@ export const signup = async (req, res) => {
         success: false,
         message: `Error occurred while creating profile.`,
       });
-    }a
+    }
+    a;
 
     const user = await User.create({
       firstName,
@@ -107,36 +110,47 @@ export const signup = async (req, res) => {
     }
   }
 };
-export const sendotp=async(req,res)=>{
-try{
-    const {email}=req.body;
-    const  user=await User.findOne({email});
-    if(user){
+
+export const sendotp = async (req, res) => {
+  try {
+    console.log("Request body:", req.body);
+    const { email } = req.body;
+    console.log("Email:", email);
+
+    const user = await User.findOne({ email });
+    console.log("User:", user);
+
+    if (user) {
       return res.status(401).json({
-        success:false,
-        message:`user is already registered`
-      })
+        success: false,
+        message: `User is already registered`,
+      });
     }
-    let otp=otpGenerator.generate(6,{
-      upperCaseAlphabets:false,
-      lowerCaseAlphabets:false,
-      specialChars:false,
-    })
-    const otpBOdy=await OTP.create({
-      email,otp
-    })
+
+    let otp = otpGenerator.generate(6, {
+      upperCaseAlphabets: false,
+      lowerCaseAlphabets: false,
+      specialChars: false,
+    });
+    console.log("Generated OTP:", otp);
+
+    const otpBody = await OTP.create({ email, otp });
+    console.log("OTP Body:", otpBody);
+
     return res.status(200).json({
-      success:true,
-      message:"otp sent successfully",
-      OTP:otp
-    })
-}catch(error){
-  return res.status(500).json({
-    success:false,
-    message:`somthing went wrong while sending otp and error is ${error}`
-  })
-}
-}
+      success: true,
+      message: "OTP sent successfully",
+      OTP: otp,
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    return res.status(500).json({
+      success: false,
+      message: `Something went wrong while sending OTP. Error: ${error}`,
+    });
+  }
+};
+
 export const login = async (req, res) => {
   try {
     const { identifier, password } = req.body;
