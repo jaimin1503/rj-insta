@@ -7,15 +7,18 @@ import { store } from "./reducers/store.js";
 import { Provider } from "react-redux";
 import ChatProvider from "./context/chatProvider.jsx";
 import { ChakraProvider } from "@chakra-ui/react";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <ChakraProvider>
-    <BrowserRouter>
-      <ChatProvider>
-        <Provider store={store}>
-          <App />
-        </Provider>
-      </ChatProvider>
-    </BrowserRouter>
-  </ChakraProvider>
+  <GoogleOAuthProvider clientId={import.meta.env.VITE_CLIENT_ID}>
+    <ChakraProvider>
+      <BrowserRouter>
+        <ChatProvider>
+          <Provider store={store}>
+            <App />
+          </Provider>
+        </ChatProvider>
+      </BrowserRouter>
+    </ChakraProvider>
+  </GoogleOAuthProvider>
 );
