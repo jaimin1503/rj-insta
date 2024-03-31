@@ -10,14 +10,15 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import google from "./assets/google.svg";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setsignupdata } from "../reducers/authReducer";
-import { Google } from "@mui/icons-material";
 import { sendOtp } from "../Forms/Sendotp";
+import { GoogleLogin } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode";
+
 function Copyright(props) {
   return (
     <Typography
@@ -148,11 +149,7 @@ export default function SignUp() {
                   />
                 </Grid>
               </Grid>
-              <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-                <Google />
-                Continue with Google{" "}
-                {/* <img className="h-5 pl-3" src={google} alt="" /> */}
-              </Button>
+
               <Button
                 type="submit"
                 fullWidth
@@ -161,6 +158,25 @@ export default function SignUp() {
               >
                 Sign Up
               </Button>
+
+              <div className=" mb-3">
+                <GoogleLogin
+                  onSuccess={(response) => {
+                    const decoded = jwtDecode(response.credential);
+                    console.log(decoded);
+                    const data = {
+                      email: decoded.email,
+                      username: decoded.email,
+                      password: decoded.sub,
+                      firstName: decoded.given_name,
+                      lastName: decoded.family_name,
+                    };
+                    dispatch(setsignupdata(data));
+                    dispatch(sendOtp(data.email, navigate));
+                  }}
+                />
+              </div>
+
               <Grid container justifyContent="flex-end">
                 <Grid item>
                   <Link href="/" variant="body2">
