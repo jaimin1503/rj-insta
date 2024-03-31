@@ -14,16 +14,19 @@ import NavbarSs from "../components/NavbarSs.jsx";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Suggestion from "../components/suggestions/Suggestion.jsx";
+import { setpost } from "../reducers/postReducer.js";
 
 export const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { loading } = useContext(Context);
-  const [allpost, setallpost] = useState([]);
+  // const [allpost, setallpost] = useState([]);
+  const allpost=useSelector((state)=>state.post)
   const [isloading, setIsLoading] = useState(false);
   const { user } = useSelector((state) => state.user);
   const { story, setstory, isstory, setisstory } = useContext(Context);
   useEffect(() => {
+    console.log("home render")
     setIsLoading(true);
     axios
       .get(`${import.meta.env.VITE_BASE_URL}/user/getuser`, {
@@ -37,22 +40,31 @@ export const Home = () => {
         console.log(error);
         setIsLoading(false);
       });
-  }, [loading]);
+  }, []);
   useEffect(() => {
-    setIsLoading(true);
-    axios
-      .get(`${import.meta.env.VITE_BASE_URL}/user/getallpost`, {
-        withCredentials: true,
-      })
-      .then((res) => {
-        setallpost(shuffleArray(res.data.posts));
-        // setallpost(res.data.posts);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setIsLoading(false);
-      });
+    console.log(allpost);
+    if (allpost.length > 0) {
+      console.log("inside if");
+      return;
+    } else {
+      console.log("inside else");
+      setIsLoading(true);
+      axios
+        .get(`${import.meta.env.VITE_BASE_URL}/user/getallpost`, {
+          withCredentials: true,
+        })
+        .then((res) => {
+          console.log("post of ", res.data);
+          dispatch(setpost(shuffleArray(res.data.posts)));
+          // setallpost(res.data.posts);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setIsLoading(false);
+        });
+    }
+
   }, []);
   useEffect(() => {
     setIsLoading(true);
@@ -119,7 +131,7 @@ export const Home = () => {
             </div>
             <div className="allposts w-[50%] flex justify-center">
               <div className="">
-                {allpost?.map((post, index) => {
+                {allpost[0]?.map((post, index) => {
                   return (
                     <div className="mt-4" key={index}>
                       <HomepostCard postid={post._id} />

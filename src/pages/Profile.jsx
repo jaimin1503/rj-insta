@@ -17,8 +17,8 @@ import axios from "axios";
 import Spinner from "../components/Spinner.jsx";
 import SavedPost from "../components/SavedPost.jsx";
 import NavbarSs from "../components/NavbarSs.jsx";
-
 const Profile = () => {
+  const allpost=useSelector((state)=>state.post)
   const [loading, setLoading] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [showFollowing, setShowFollowing] = useState(false);
@@ -28,6 +28,7 @@ const Profile = () => {
   const location = useLocation();
   let followingRef = useRef();
   let followersRef = useRef();
+  console.log("allpost",allpost[0])
   useEffect(() => {
     setLoading(true);
     axios
