@@ -45,7 +45,7 @@ function HomepostCard({ postid }) {
         setLikes(res.data.post.like);
       })
       .catch((error) => {
-        console.log(error);
+        console.log("error accure in home componets",error);
       });
   }, [postid, liked, likehome]);
 

@@ -49,7 +49,7 @@ export const getPostByid = async (req, res) => {
         message: "Post not found",
       });
     }
-    post.user.password=undefined
+    // post.user.password=undefined
     return res.status(200).json({
       success: true,
       post: post,
