@@ -4,7 +4,7 @@ import UserAvatar from "../UserAvatar";
 export default function Suggestion() {
   const data = [
     {
-      id: "",
+      id: "660a42c96fac49d9bfb35b11",
       name: "Jaimin",
       username: "Jaimin_15",
       image:
@@ -74,27 +74,28 @@ export default function Suggestion() {
       name: "Michael Brown",
     },
   ];
-  const Suggestion = []
-  const indexs = []
+  const Suggestion = [];
+  const indexs = [];
   while (indexs.length < 5) {
     const index = Math.floor(Math.random() * data.length);
     if (!indexs.includes(index)) {
-      indexs.push(index)
+      indexs.push(index);
     }
   }
   for (const i in indexs) {
-    Suggestion.push(data[i])
+    Suggestion.push(data[i]);
   }
   return (
     <>
       <div className="w-80 h-screen border-l">
         <p className="p-5 text-xl font-semibold border-b">Suggestions</p>
         {Suggestion?.map((profile) => {
-          return <Link to={`/viewprofile/${profile.id}`}>
-            <UserAvatar profile={profile} key={profile.id} />
-          </Link>
-        }
-        )}
+          return (
+            <Link to={`/viewprofile/${profile.id}`}>
+              <UserAvatar profile={profile} key={profile.id} />
+            </Link>
+          );
+        })}
       </div>
     </>
   );
