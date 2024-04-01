@@ -15,6 +15,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../components/Spinner";
+import { GoogleLogin } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode";
 
 function SignIn() {
   const [loading, setLoading] = useState(false);
@@ -131,6 +133,19 @@ function SignIn() {
               >
                 Sign In
               </Button>
+              <div className=" mb-3">
+                <GoogleLogin
+                  onSuccess={(response) => {
+                    const decoded = jwtDecode(response.credential);
+                    console.log(decoded);
+                    const data = {
+                      identifier: decoded.email,
+                      password: decoded.sub,
+                    };
+                    setFormData(data);
+                  }}
+                />
+              </div>
               <Grid container>
                 <Grid item xs>
                   <Link href="#" variant="body2">

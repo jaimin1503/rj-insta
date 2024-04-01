@@ -8,7 +8,6 @@ import BottomBar from "../components/BottomBar.jsx";
 import { Context } from "../context/contextApi.jsx";
 import StoryBar from "../components/story/StoryBar.jsx";
 import HomepostCard from "../components/HomepostCard.jsx";
-import Spinner from "../components/Spinner.jsx";
 import shuffleArray from "../utils/suffleArray.js";
 import NavbarSs from "../components/NavbarSs.jsx";
 import { Link } from "react-router-dom";
@@ -19,14 +18,13 @@ import { setpost } from "../reducers/postReducer.js";
 export const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loading } = useContext(Context);
   // const [allpost, setallpost] = useState([]);
-  const allpost=useSelector((state)=>state.post)
+  const allpost = useSelector((state) => state.post);
   const [isloading, setIsLoading] = useState(false);
   const { user } = useSelector((state) => state.user);
   const { story, setstory, isstory, setisstory } = useContext(Context);
   useEffect(() => {
-    console.log("home render")
+    console.log("home render");
     setIsLoading(true);
     axios
       .get(`${import.meta.env.VITE_BASE_URL}/user/getuser`, {
@@ -64,7 +62,6 @@ export const Home = () => {
           setIsLoading(false);
         });
     }
-
   }, []);
   useEffect(() => {
     setIsLoading(true);
@@ -88,7 +85,6 @@ export const Home = () => {
       <div className=" absolute w-screen top-0 border-b bg-white block sm:hidden">
         <NavbarSs />
       </div>
-      {isloading && <Spinner />}
       <div className=" h-screen flex overflow-hidden pt-10 pb-10 sm:pt-0 sm:pb-0">
         <div className="hidden sm:block">
           {" "}

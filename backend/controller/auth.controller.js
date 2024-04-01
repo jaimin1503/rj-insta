@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import otpGenerator from "otp-generator";
 dotenv.config();
+
 export const signup = async (req, res) => {
   try {
     console.log(req);
