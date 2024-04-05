@@ -138,7 +138,7 @@ export const Home = () => {
             </div>
           </div>
         </div>
-        <div>
+        <div className=" hidden lg:block">
           <Suggestion />
         </div>
         <div className="fixed w-screen bottom-0 bg-gray-100 py-2 block sm:hidden">

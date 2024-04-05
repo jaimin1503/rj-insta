@@ -71,7 +71,7 @@ const Profile = () => {
       <div className=" absolute w-screen top-0 bg-white border-b block sm:hidden">
         <NavbarSs />
       </div>
-      {loading && <Spinner />}
+      {/* {loading && <Spinner />} */}
       <div className=" h-screen flex overflow-hidden pt-10 pb-7 sm:pt-0 sm:pb-0">
         <div className="hidden sm:block">
           {" "}

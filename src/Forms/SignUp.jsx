@@ -71,7 +71,7 @@ export default function SignUp() {
 
   return (
     <>
-      {loading && <Spinner />}
+      {/* {loading && <Spinner />} */}
       <ThemeProvider theme={defaultTheme}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />

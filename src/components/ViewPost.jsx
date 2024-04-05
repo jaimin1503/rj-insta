@@ -211,7 +211,7 @@ const ViewPost = ({ postId, setShowPost }) => {
 
   return windowSize.width > 670 ? (
     <div className=" filter-none overlay">
-      {loading && <Spinner />}
+      {/* {loading && <Spinner />} */}
       <div
         ref={viewPostRef}
         className="card rounded-lg bg-gray-100"

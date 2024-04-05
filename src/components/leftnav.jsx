@@ -60,7 +60,7 @@ function Leftnav() {
   };
   return (
     <>
-      {loading && <Spinner />}
+      {/* {loading && <Spinner />} */}
       <div className=" h-screen border-r-2">
         <div
           className={` w-[240px] overflow-y-auto h-full py-4 text-black z-10 translate-x-[-240px] sm:translate-x-0 transition-all`}

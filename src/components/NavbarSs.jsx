@@ -58,7 +58,7 @@ const NavbarSs = () => {
             onChange={handleInputChange}
           />
         </div>
-        {loading && <Spinner />}
+        {/* {loading && <Spinner />} */}
         {inputValue && (
           <div className="fixed bg-gray-100 m-10 w-[50%] rounded-xl top-[5%] right-0">
             <ul className="mt-2 mx-5">

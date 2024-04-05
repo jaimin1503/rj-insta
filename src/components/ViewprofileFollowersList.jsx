@@ -63,7 +63,7 @@ function ViewprofileFollowersList({ followers, show }) {
 
   return (
     <div className="overlay">
-      {loading && <Spinner />}
+      {/* {loading && <Spinner />} */}
       <div
         ref={follwRef}
         className="following absolute top-[50%] left-[50%] w-[340px] translate-x-[-50%] translate-y-[-50%] z-10 bg-white rounded-lg shadow-xl sm:w-[350px] "

@@ -42,7 +42,7 @@ const SearchCompo = () => {
 
   return (
     <>
-      {loading && <Spinner />}
+      {/* {loading && <Spinner />} */}
       <div className="container absolute top-[50%] left-[50%] w-full h-full translate-x-[-50%] translate-y-[-50%] bg-gray-50 ">
         <div className="h1 text-2xl p-5 font-semibold">Search</div>
         <div className=" flex flex-col">

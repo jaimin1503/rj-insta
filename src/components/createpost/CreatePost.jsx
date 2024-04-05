@@ -60,7 +60,7 @@ const CreatePost = () => {
 
   return (
     <>
-      {loading && <Spinner />}
+      {/* {loading && <Spinner />} */}
       <div className="flex justify-center items-center w-screen h-screen">
         <div className="createpost max-w-sm h-[80vh] w-[85vw] bg-gray-100 rounded-xl flex justify-center flex-col items-center shadow-xl ">
           <div className="image pb-10">
