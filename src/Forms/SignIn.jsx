@@ -65,7 +65,7 @@ function SignIn() {
   };
   return (
     <>
-      {/* {loading && <Spinner />} */}
+      {loading && <Spinner />}
       <ThemeProvider theme={createTheme()}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />
@@ -137,7 +137,6 @@ function SignIn() {
                 <GoogleLogin
                   onSuccess={(response) => {
                     const decoded = jwtDecode(response.credential);
-                    console.log(decoded);
                     const data = {
                       identifier: decoded.email,
                       password: decoded.sub,

@@ -28,7 +28,7 @@ const Profile = () => {
   const location = useLocation();
   let followingRef = useRef();
   let followersRef = useRef();
-  console.log("allpost",allpost[0])
+
   useEffect(() => {
     setLoading(true);
     axios

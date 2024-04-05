@@ -24,7 +24,6 @@ export const Home = () => {
   const { user } = useSelector((state) => state.user);
   const { story, setstory, isstory, setisstory } = useContext(Context);
   useEffect(() => {
-    console.log("home render");
     setIsLoading(true);
     axios
       .get(`${import.meta.env.VITE_BASE_URL}/user/getuser`, {
@@ -40,7 +39,6 @@ export const Home = () => {
       });
   }, []);
   useEffect(() => {
-    console.log(allpost);
     if (allpost.length > 0) {
       console.log("inside if");
       return;

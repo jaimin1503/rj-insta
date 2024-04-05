@@ -71,7 +71,7 @@ export default function SignUp() {
 
   return (
     <>
-      {/* {loading && <Spinner />} */}
+      {loading && <Spinner />}
       <ThemeProvider theme={defaultTheme}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />
@@ -163,7 +163,6 @@ export default function SignUp() {
                 <GoogleLogin
                   onSuccess={(response) => {
                     const decoded = jwtDecode(response.credential);
-                    console.log(decoded);
                     const data = {
                       email: decoded.email,
                       username: decoded.email,
