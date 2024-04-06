@@ -23,8 +23,6 @@ const EditProfile = () => {
   });
 
   const navigate = useNavigate();
-  const cloudname = import.meta.env.VITE_CLOUD_NAME;
-  const preset = import.meta.env.VITE_UPLOAD_PRESET;
 
   const toggleVisibility = useCallback(() => {
     setIsVisible((prev) => !prev);
@@ -62,6 +60,7 @@ const EditProfile = () => {
 
   const handleUpload = () => {
     try {
+      if (!File) return;
       console.log("uploading...");
       const formData = new FormData();
       formData.append("displayPicture", File);
