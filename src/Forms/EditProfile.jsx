@@ -2,15 +2,21 @@ import axios from "axios";
 import { useState, useCallback, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Spinner from "../components/Spinner";
+import { updateDisplayPicture } from "../utils/profile";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 const EditProfile = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [url, setUrl] = useState("");
+  const [File, setFile] = useState(null);
+  const dispatch = useDispatch();
+  const [previewSource, setPreviewSource] = useState(null);
   const [image, setImage] = useState(null);
   const [isDisabled, setIsDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
-  const [user, setUser] = useState({});
+  const { user } = useSelector((state) => state.user);
   const [formData, setFormData] = useState({
     profilename: "",
     bio: "",
@@ -29,31 +35,22 @@ const EditProfile = () => {
     // Your logic for handling the update click here
   }, []);
 
-  const handleImageChange = useCallback((e) => {
-    const file = e.target.files[0];
-    setImage(file);
-    setIsDisabled(false);
-  }, []);
+  const handleImageChange = (e) => {
+    setFile(e.target.files[0]);
+    const reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onloadend = () => {
+      setPreviewSource(reader.result);
+      setIsDisabled(false);
+    };
+  };
 
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`${import.meta.env.VITE_BASE_URL}/user/getuserbyid/${id}`, {
+      .get(`${import.meta.env.VITE_BASE_URL}/user/getprofile`, {
         withCredentials: true,
       })
-      .then((res) => {
-        setUser(res.data.newuser);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, [id]);
-
-  useEffect(() => {
-    setLoading(true);
-    axios
-      .get(`${import.meta.env.VITE_BASE_URL}/user/getprofile`, { withCredentials: true })
       .then((res) => {
         setFormData(res.data.profile);
         setLoading(false);
@@ -63,31 +60,20 @@ const EditProfile = () => {
       });
   }, []);
 
-  const handleImageUpload = useCallback(async () => {
+  const handleUpload = () => {
     try {
-      const data = new FormData();
-      data.append("file", image);
-      data.append("upload_preset", preset);
-      data.append("cloud_name", cloudname);
-      setLoading(true);
-      const response = await fetch(
-        `http://api.cloudinary.com/v1_1/${cloudname}/image/upload`,
-        {
-          method: "POST",
-          body: data,
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(`Image upload failed with status: ${response.status}`);
-      }
-      const responseData = await response.json();
-      setUrl(responseData.url);
-      setLoading(false);
+      console.log("uploading...");
+      const formData = new FormData();
+      formData.append("displayPicture", File);
+      console.log("formdata", formData);
+      dispatch(updateDisplayPicture(formData, id)).then(() => {
+        setLoading(false);
+      });
     } catch (error) {
-      console.error("Error while uploading image:", error);
+      setLoading(false);
+      console.log("ERROR MESSAGE - ", error.message);
     }
-  }, [image]);
+  };
 
   const handleInputChange = useCallback((e) => {
     const { id, value } = e.target;
@@ -129,13 +115,13 @@ const EditProfile = () => {
           <div className="profile_photo mr-5">
             <img
               className="rounded-full object-cover border-2 w-[50px] h-[50px]"
-              src={user?.profile?.profilephoto}
+              src={previewSource ? previewSource : user?.profile?.profilephoto}
               alt="Profile_Pic"
             />
           </div>
           <div className="profile_info flex flex-col justify-center">
             <div className="user_name flex items-center">
-              <h2 className="pr-2">{user.username}</h2>
+              <h2 className="pr-2">{user?.username}</h2>
             </div>
             <div className="change_photo">
               <p
@@ -179,12 +165,8 @@ const EditProfile = () => {
           <div className="upload_button ml-2">
             <button
               disabled={isDisabled}
-              onClick={handleImageUpload}
-              className={
-                !isDisabled
-                  ? "py-2 px-5 bg-blue-500 rounded-lg cursor-pointer"
-                  : "py-2 px-5 bg-gray-500 rounded-lg"
-              }
+              onClick={handleUpload}
+              className={"py-2 px-5 bg-blue-500 rounded-lg cursor-pointer"}
             >
               Upload Photo
             </button>

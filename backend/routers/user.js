@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 
-import { signup, login,sendotp } from "../controller/auth.controller.js";
+import { signup, login, sendotp } from "../controller/auth.controller.js";
 import { getuser } from "../controller/getuser.controller.js";
 import { getuserbyid } from "../controller/getuserbyid.controller.js";
 import { createpost } from "../controller/createpost.controller.js";
@@ -12,7 +12,10 @@ import { likePost } from "../controller/like.controller.js";
 import { commentpost } from "../controller/comment.controller.js";
 import { follow, removefollow } from "../controller/folllower.controller.js";
 import { getlikepost } from "../controller/getlikepost.controller.js";
-import { editprofile } from "../controller/editprofile.controller.js";
+import {
+  editprofile,
+  editProfilePicture,
+} from "../controller/editprofile.controller.js";
 import { getprofile } from "../controller/getprofile.controller.js";
 import { getprofilebyid } from "../controller/getprofilebyid.controller.js";
 import { savedpost } from "../controller/savepost.controller.js";
@@ -22,7 +25,7 @@ import {
   ctreatestory,
   getallstory,
   getstorybyid,
-  getuserstory
+  getuserstory,
 } from "../controller/story.controller.js";
 
 router.post("/signup", signup);
@@ -40,6 +43,7 @@ router.post("/follow/:followid", auth, follow);
 router.post("/removefollow/:followid", auth, removefollow);
 router.post("/savedpost/:postid", auth, savedpost);
 router.put("/editprofile", auth, editprofile);
+router.put("/editProfilePicture/:id", auth, editProfilePicture);
 router.get("/getprofile", auth, getprofile);
 router.get("/getprofilebyid/:profileid", auth, getprofilebyid);
 router.get("/getalluser", auth, getalluser);
@@ -47,6 +51,6 @@ router.get("/:postid/isSaved", auth, isSaved);
 router.post("/createstory", auth, ctreatestory);
 router.get("/getallstory", auth, getallstory);
 router.get("/getstorybyid/:storyid", getstorybyid);
-router.get("/getuserstory",auth, getuserstory);
+router.get("/getuserstory", auth, getuserstory);
 
 export default router;

@@ -1,5 +1,7 @@
 import Profile from "../model/profile.model.js";
 import User from "../model/user.model.js";
+import uploadImageToCloudinary from "../utils/imageUploader.js";
+
 export const editprofile = async (req, res) => {
   try {
     const url = req.body.url;
@@ -45,5 +47,32 @@ export const editprofile = async (req, res) => {
       success: false,
       message: `Something went wrong while editing profile. Error: ${error}`,
     });
+  }
+};
+
+export const editProfilePicture = async (req, res) => {
+  try {
+    const displayPicture = req.files.displayPicture;
+    const pId = req.params.id;
+    const image = await uploadImageToCloudinary(
+      displayPicture,
+      process.env.FOLDER_NAME
+    );
+    const updatedProfile = await Profile.findByIdAndUpdate(
+      pId,
+      { profilephoto: image.secure_url },
+      { new: true }
+    );
+    const updatedUser = await User.findOne({ profile: pId }).populate(
+      "profile"
+    );
+    return res.status(200).json({
+      success: true,
+      message: `Image Updated successfully`,
+      data: updatedUser,
+    });
+  } catch (error) {
+    console.error(error.message);
+    return res.status(500).send({ message: error.message });
   }
 };

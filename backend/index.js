@@ -8,6 +8,8 @@ import user from "./routers/user.js";
 import chatRoutes from "./routers/chatRoutes.js";
 import messageRoutes from "./routers/messageRoutes.js";
 import cors from "cors";
+import fileUpload from "express-fileupload";
+import cloudinaryConnect from "./utils/cloudinary.js";
 import Story from "./model/story.model.js";
 import cron from "node-cron"; // Change import statement here
 
@@ -18,11 +20,19 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: ["https://friends-flock.vercel.app","http://localhost:5173"],
+    origin: ["https://friends-flock.vercel.app", "http://localhost:5173"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
+
+app.use(
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: "/tmp",
+  })
+);
+cloudinaryConnect();
 
 app.use("/user", user);
 app.use("/api/chat", chatRoutes);
@@ -50,7 +60,7 @@ const server = app.listen(port, () => {
 const io = new Server(server, {
   pingTimeout: 60000,
   cors: {
-    origin: ["https://friends-flock.vercel.app","http://localhost:5173"],
+    origin: ["https://friends-flock.vercel.app", "http://localhost:5173"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   },

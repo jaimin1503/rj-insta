@@ -91,7 +91,7 @@ export default function Suggestion() {
         <p className="p-5 text-xl font-semibold border-b">Suggestions</p>
         {Suggestion?.map((profile) => {
           return (
-            <Link to={`/viewprofile/${profile.id}`}>
+            <Link key={profile.id} to={`/viewprofile/${profile.id}`}>
               <UserAvatar profile={profile} key={profile.id} />
             </Link>
           );
