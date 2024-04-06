@@ -13,7 +13,7 @@ export function updateDisplayPicture(formData, pId) {
         .then((res) => {
           console.log(res.data.message);
           toast.success("Display Picture Updated Successfully");
-          dispatch(getuser(res?.data?.data));
+          dispatch(getuser(res?.data?.data?.updatedUser));
         })
         .catch((error) => {
           console.log("error accure in update display", error);
