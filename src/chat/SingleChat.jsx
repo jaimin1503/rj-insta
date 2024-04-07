@@ -183,7 +183,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 </>
               ))}
           </h1>
-          <div className="box flex flex-col justify-end p-3 bg-blue-400 h-full w-full rounded-lg overflow-y-hidden">
+          <div className="box flex flex-col justify-end p-3 bg-blue-950 h-full w-full rounded-lg overflow-y-hidden">
             {loading ? (
               <Spinner
                 size="xl"

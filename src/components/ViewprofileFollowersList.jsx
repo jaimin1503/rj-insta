@@ -28,7 +28,9 @@ function ViewprofileFollowersList({ followers, show }) {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`${import.meta.env.VITE_BASE_URL}/user/getuser`, { withCredentials: true })
+      .get(`${import.meta.env.VITE_BASE_URL}/user/getuser`, {
+        withCredentials: true,
+      })
       .then((res) => {
         // setUser(res.data.user);
         dispatch(getuser(res.data.user));
@@ -66,15 +68,15 @@ function ViewprofileFollowersList({ followers, show }) {
       {/* {loading && <Spinner />} */}
       <div
         ref={follwRef}
-        className="following absolute top-[50%] left-[50%] w-[340px] translate-x-[-50%] translate-y-[-50%] z-10 bg-white rounded-lg shadow-xl sm:w-[350px] "
+        className="following absolute top-[50%] left-[50%] w-[340px] h-[450px] overflow-y-scroll translate-x-[-50%] translate-y-[-50%] z-10 bg-white rounded-lg shadow-xl sm:w-[350px] "
       >
         <div className=" border-b p-2 row1 flex justify-center items-center">
-          <p className="p-2">Following</p>
+          <p className="p-2">Followers</p>
         </div>
         <div className="list">
           {followers?.map((follow) => (
             <div key={follow._id}>
-              <div className="container flex items-center py-1 m-3">
+              <div className="container flex items-center py-1 m-3 whitespace-nowrap">
                 <div className="image flex justify-center items-center w-[20%] ">
                   {user._id !== follow._id ? (
                     <Link to={`/viewprofile/${follow._id}`}>

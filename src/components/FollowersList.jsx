@@ -51,15 +51,15 @@ function FollowersList({ followers, setShowFollowers }) {
       {/* {loading && <Spinner />} */}
       <div
         ref={followersListRef}
-        className="following absolute top-[50%] left-[50%] w-[340px] translate-x-[-50%] translate-y-[-50%] z-10 bg-white rounded-lg shadow-xl sm:w-[350px] "
+        className="following absolute top-[50%] left-[50%] w-[340px] h-[450px] overflow-y-scroll translate-x-[-50%] translate-y-[-50%] z-10 bg-white rounded-lg shadow-xl sm:w-[350px] "
       >
         <div className=" border-b p-2 row1 flex justify-center items-center">
           <p className="p-2">Followers</p>
         </div>
-        <div className="list">
+        <div className="list ">
           {followers?.map((follower) => (
             <div key={follower._id}>
-              <div className="container flex items-center py-1 m-3">
+              <div className="container flex items-center py-1 m-3 whitespace-nowrap">
                 <div className="image flex justify-center items-center w-[20%] ">
                   <img
                     className=" h-[38px] w-[38px] object-cover rounded-full "

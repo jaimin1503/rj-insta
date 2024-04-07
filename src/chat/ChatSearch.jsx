@@ -2,6 +2,7 @@ import { Button } from "@chakra-ui/button";
 import { useDisclosure } from "@chakra-ui/hooks";
 import { Input } from "@chakra-ui/input";
 import { Box, Text } from "@chakra-ui/layout";
+
 import {
   Menu,
   MenuButton,
@@ -29,6 +30,7 @@ import "./styles.css";
 import { ChatState } from "../context/chatProvider";
 import { useNavigate } from "react-router-dom";
 import { Search } from "@mui/icons-material";
+import Badge from "@mui/material/Badge";
 
 function ChatSearch() {
   const [loading, setLoading] = useState(false);
@@ -139,7 +141,7 @@ function ChatSearch() {
         <Text fontSize="2xl" fontFamily="Work sans" fontWeight="600">
           Chats
         </Text>
-        <div>
+        <div className="test flex">
           <Menu>
             <MenuButton p={1}>
               <div className=" flex items-center">

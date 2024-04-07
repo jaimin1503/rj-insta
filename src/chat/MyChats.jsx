@@ -20,9 +20,12 @@ const MyChats = ({ fetchAgain }) => {
   const fetchChats = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/chat`, {
-        withCredentials: true,
-      });
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_BASE_URL}/api/chat`,
+        {
+          withCredentials: true,
+        }
+      );
       setChats(data);
       setLoading(false);
     } catch (error) {
@@ -68,7 +71,9 @@ const MyChats = ({ fetchAgain }) => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`${import.meta.env.VITE_BASE_URL}/user/getuser`, { withCredentials: true })
+      .get(`${import.meta.env.VITE_BASE_URL}/user/getuser`, {
+        withCredentials: true,
+      })
       .then((res) => setLoggedUser(res.data.user))
       .catch((error) => console.log(error));
     setLoading(false);
@@ -100,8 +105,9 @@ const MyChats = ({ fetchAgain }) => {
         w="100%"
         justifyContent="space-between"
         alignItems="center"
+        className=" flex"
       >
-        My Chats
+        <p>My Chats</p>
         <GroupChatModal>
           <Button
             d="flex"
@@ -138,12 +144,15 @@ const MyChats = ({ fetchAgain }) => {
               >
                 <Text fontSize={"lg"} fontWeight={"600"}>
                   {!chat.isGroupChat
-                    ? getSender(loggedUser, chat.users)
-                    : chat.chatName}
+                    ? getSender(loggedUser, chat.users) || "Sender"
+                    : chat.chatName || "Group Chat"}
                 </Text>
                 {chat.latestMessage && (
                   <Text fontSize="xs" zIndex={100}>
-                    <b>{chat.latestMessage?.sender?.username} </b>
+                    <b>
+                      {chat.latestMessage?.sender?.username ||
+                        "FriendsFlock User"}{" "}
+                    </b>
                     {chat.latestMessage.content.length > 50
                       ? chat.latestMessage.content.substring(0, 51) + "..."
                       : chat.latestMessage.content || "hii"}
