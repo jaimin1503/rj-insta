@@ -39,7 +39,7 @@ const CreatePost = () => {
         throw new Error(`Image upload failed with status: ${response.status}`);
       }
       const responseData = await response.json();
-      setUrl(responseData.url);
+      setUrl(responseData.secure_url);
       axios
         .post(
           `${import.meta.env.VITE_BASE_URL}/user/createpost`,

@@ -5,7 +5,7 @@ import Spinner from "../components/Spinner";
 import { updateDisplayPicture } from "../utils/profile";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-
+import { getuser } from "../reducers/userReducer";
 const EditProfile = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [url, setUrl] = useState("");
@@ -65,7 +65,8 @@ const EditProfile = () => {
       const formData = new FormData();
       formData.append("displayPicture", File);
       console.log("formdata", formData);
-      dispatch(updateDisplayPicture(formData, id)).then(() => {
+      dispatch(updateDisplayPicture(formData, id,setLoading)).then(() => {
+        console.log("image uploaded")
         setLoading(false);
       });
     } catch (error) {
@@ -87,10 +88,12 @@ const EditProfile = () => {
     axios
       .put(
         `${import.meta.env.VITE_BASE_URL}/user/editprofile`,
-        { url, formData },
+        {formData },
         { withCredentials: true }
       )
       .then((res) => {
+        console.log("edite profile inpute",res.data)
+        dispatch(getuser(res?.data?.data));
         navigate("/profile");
         setLoading(false);
       })

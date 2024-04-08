@@ -1,17 +1,16 @@
 import Profile from "../model/profile.model.js";
 import User from "../model/user.model.js";
 import uploadImageToCloudinary from "../utils/imageUploader.js";
-
+import mongoose from "mongoose";
 export const editprofile = async (req, res) => {
   try {
-    const url = req.body.url;
     const profilename = req.body.formData.profilename;
     const bio = req.body.formData.bio;
     const userid = req.user.userid;
     const userdetails = await User.findById(userid);
     if (userdetails) {
       const profileid = userdetails.profile;
-      const profileUpdate = {};
+      const profileUpdate = await Profile.findById(profileid)
 
       if (profilename) {
         profileUpdate.profilename = profilename;
@@ -21,20 +20,49 @@ export const editprofile = async (req, res) => {
         profileUpdate.bio = bio ? bio : "";
       }
 
-      if (url) {
-        profileUpdate.profilephoto = url;
-      }
+      // if (url) {
+      //   profileUpdate.profilephoto = url;
+      // }
 
-      const updatesprofile = await Profile.findByIdAndUpdate(
-        profileid,
-        profileUpdate,
-        { new: true }
-      );
-
+      // const updatesprofile = await Profile.findByIdAndUpdate(
+      //   profileid,
+      //   profileUpdate,
+      //   { new: true }
+      // );
+      await profileUpdate.save();
+      const updatedUser = await User.findOne({ profile: profileid }).populate({
+            path: "profile",
+            populate: [
+              { path: "posts", model: "Post" },
+              {
+                path: "followers",
+                model: "User",
+                select: '-password',
+                populate: {
+                  path: "profile",
+                  model: "Profile",
+                },
+              },
+              {
+                path: "following",
+                model: "User",
+                select: '-password',
+                populate: {
+                  path: "profile",
+                  model: "Profile",
+                },
+              },
+              {
+                path: "saved",
+                model: "Post",
+              },
+            ],
+          });
       return res.status(200).json({
         success: true,
         message: "Profile updated successfully",
-        profile: updatesprofile,
+        // profile: updatesprofile,
+        data:updatedUser
       });
     } else {
       return res.status(404).json({
@@ -53,19 +81,57 @@ export const editprofile = async (req, res) => {
 export const editProfilePicture = async (req, res) => {
   try {
     const displayPicture = req.files.displayPicture;
-    const pId = req.params.id;
+    const userid = req.params.id;
+    const user=await User.findById(userid)
+    if(!user){
+      return res.status(404).json({
+        suucess:false,
+        message:"user does not exist"
+      })
+    }
+    console.log("displaypicture",displayPicture)
     const image = await uploadImageToCloudinary(
       displayPicture,
       process.env.FOLDER_NAME
     );
+    const profileId=user.profile
+    // const profile = await Profile.findById(profileId);
+    // console.log(" profile", profile);
+
     const updatedProfile = await Profile.findByIdAndUpdate(
-      pId,
+      profileId, // Use objectId here
       { profilephoto: image.secure_url },
       { new: true }
     );
-    const updatedUser = await User.findOne({ profile: pId }).populate(
-      "profile"
-    );
+    const updatedUser = await User.findOne({ profile: profileId }).populate({
+      path: "profile",
+      populate: [
+        { path: "posts", model: "Post" },
+        {
+          path: "followers",
+          model: "User",
+          select: '-password',
+          populate: {
+            path: "profile",
+            model: "Profile",
+          },
+        },
+        {
+          path: "following",
+          model: "User",
+          select: '-password',
+          populate: {
+            path: "profile",
+            model: "Profile",
+          },
+        },
+        {
+          path: "saved",
+          model: "Post",
+        },
+      ],
+    });
+
     return res.status(200).json({
       success: true,
       message: `Image Updated successfully`,
@@ -76,3 +142,4 @@ export const editProfilePicture = async (req, res) => {
     return res.status(500).send({ message: error.message });
   }
 };
+

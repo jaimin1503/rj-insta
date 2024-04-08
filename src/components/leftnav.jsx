@@ -8,10 +8,13 @@ import Spinner from "./Spinner";
 import Search from "./assets/Search";
 import SearchCompo from "./SearchCompo";
 import FriendsFlock from "./assets/UntitledFriendsFlock.svg";
-
+import { useDispatch, useSelector } from "react-redux";
+import { getuser } from "../reducers/userReducer";
 function Leftnav() {
   const navigate = useNavigate();
+  // const dispatch=useDispatch
   const [user, setUser] = useState(null);
+  // const {user}=useSelector((state)=>state.user)
   const [loading, setLoading] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const searchRef = useRef();
