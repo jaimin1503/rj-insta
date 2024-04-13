@@ -25,7 +25,11 @@ This web application aims to provide users with a platform to connect, share, an
 
 ## Demo-pictures
 
+Here are some screenshots of our social media web application:
 
+![Screenshot 1](images/Profile.png)
+![Screenshot 1](images/chat.png)
+![Screenshot 1](images/home.png)
 
 ## Setup
 
