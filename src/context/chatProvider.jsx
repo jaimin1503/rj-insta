@@ -20,17 +20,8 @@ const ChatProvider = ({ children }) => {
       })
       .catch((error) => {
         console.error("Error fetching user:", error);
-        // Redirect to an error page or handle the error accordingly
-        // navigate("/error");
       });
   }, [navigate]);
-
-  // useEffect(() => {
-  //   if (!user) {
-  //     navigate("/");
-  //   }
-  // }, [user, navigate]);
-
   return (
     <ChatContext.Provider
       value={{
